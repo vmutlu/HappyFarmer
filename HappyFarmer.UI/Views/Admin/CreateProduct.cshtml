@@ -1,0 +1,138 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+
+    <marquee direction=right><h2 style="color:green;">Yeni Ürün Ekleme Ekranı</h2></marquee>
+</div>
+
+@section Scripts{
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#edit'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '800px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-10">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-controller="Admin" asp-action="CreateProduct" asp-route-type="@ViewBag.Type" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label">Ürün Adı</label>
+                <div class="col-md-10">
+                    <input name="Name" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="ImageURL" class="col-md-2 col-form-label">Ürün Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImageURL" />
+                    <input type="file" name="file" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Ürün Açıklaması</label>
+                <div class="col-md-10 ck-editor__editable_inline">
+                    <textarea id="edit" style="min-height: 40%;" name="Description" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Price" class="col-md-2 col-form-label">Ürün Fiyatı</label>
+                <div class="col-md-10">
+                    <input name="Price" type="number" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="FarmerDeclareType" class="col-md-2 col-form-label">Ürün Kategori Tipi Seçiniz</label>
+                <div class="col-md-10">
+                    <select name="FarmerDeclareType" id="FarmerDeclareType" class="form-control">
+                        <option value="10">Büyükbaş Hayvan</option>
+                        <option value="11">Küçükbaş Hayvan</option>
+
+
+                        <option value="12">
+                            Kümes Hayvanı
+                        </option>
+
+
+                        <option value="13">
+                            Evcil Hayvan
+                        </option>
+
+
+                        <option value="14">
+                            Süt
+                        </option>
+
+                        <option value="15">
+                            Hayvansal Gıda
+                        </option>
+
+
+                        <option value="20">
+                            Traktör
+                        </option>
+
+                        <option value="21">
+                            Tarla
+                        </option>
+
+                        <option value="22">
+                            Traktör Ekipmanları
+                        </option>
+
+                        <option value="23">
+                            Sebze
+                        </option>
+
+                        <option value="24">
+                            Meyve
+                        </option>
+
+                        <option value="25">
+                            Tahıl Ürünleri
+                        </option>
+
+                        <option value="26">
+                            Yem & Otsu Bitkiler
+                        </option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <center><button style="width:100%; margin-left:222px;" type="submit" class="btn btn-success btn-sm">Ürün Kaydet</button> </center>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

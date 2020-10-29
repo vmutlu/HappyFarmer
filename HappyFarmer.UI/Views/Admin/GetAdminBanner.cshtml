@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BannerModel>
+@{
+    ViewData["Title"] = "GetAdminBanner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="clearfix">
+    <div align="right">
+        <a href="/Admin/CreateBanner"><button class="btn btn-success" btn-xs>Yeni Banner Ekle</button></a>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p style="color:red;">Site Banner Alanları</p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Banner Resmi</th>
+                                <th>Banner Sıra Numarası</th>
+                                <th>Banner AKTİF/PASİF</th>
+                                <th>Banner ALT/ÜST</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td><img height="60" width="60" src="~/img/BannerImages/@item.ImageURL" /></td>
+                                    <td>@item.QueueNumber</td>
+                                    <td>
+                                        @if (@item.Active == true)
+                                        {
+                                            <p>Yayında</p>
+                                        }
+
+                                        else
+                                        {
+                                            <p>Yayında Değil</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@item.LowerUpper == true)
+                                        {
+                                            <p>Üst Bilgi Banner</p>
+                                        }
+
+                                        else
+                                        {
+                                            <p>Alt Bilgi Banner</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="EditBanner" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                        <form asp-controller="Admin" asp-action="DeleteBanner" method="post" style="display:inline;">
+                                            <input type="hidden" name="bannerId" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

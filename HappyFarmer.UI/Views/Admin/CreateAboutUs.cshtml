@@ -1,0 +1,83 @@
+﻿@model AboutUsModel
+@{
+    ViewData["Title"] = "CreateAboutUs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '400px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-controller="Admin" asp-action="CreateAboutUs" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="Title" class="col-md-2 col-form-label">Hakkımızda Başlık</label>
+                <div class="col-md-8">
+                    <input type="text" required name="Title" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Content" class="col-md-2 col-form-label">Hakkımızda İçerik</label>
+                <div class="col-md-8">
+                    <textarea id="editor" name="Content" rows="40" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Vision" class="col-md-2 col-form-label">Vizyon</label>
+                <div class="col-md-8">
+                    <input type="text" required name="Vision" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Mission" class="col-md-2 col-form-label">Misyon</label>
+                <div class="col-md-8">
+                    <input type="text" required name="Mission" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="VideoPath" class="col-md-2 col-form-label">Video URL</label>
+                <div class="col-md-8">
+                    <input type="text" required name="VideoPath" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button style="width: 80%; margin-left: 269px;" type="submit" class="btn btn-success">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

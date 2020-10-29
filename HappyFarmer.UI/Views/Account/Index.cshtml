@@ -1,0 +1,85 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Emlak Otomasyonu Admin Paneli</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/nprogress.css" rel="stylesheet" />
+    <link href="~/css/animate.min.css" rel="stylesheet" />
+    <link href="~/css/custom.min.css" rel="stylesheet" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body class="login">
+    <br>
+
+    <div style="margin-top:8%">
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <p class="change_link">
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger">@ViewBag.Message</div>
+                        }
+                        @if (ViewBag.Captcha != null)
+                        {
+                            <div class="alert alert-warning">@ViewBag.Captcha</div>
+                        }
+                    </p>
+                    <form asp-controller="Account" asp-action="Index" method="POST">
+
+                        <h1>Yönetim Paneli </h1>
+
+                        <div>
+                            <input type="text" name="Email" class="form-control" value="veysel_mutlu42@hotmail.com" placeholder="Kullanıcı Adınız (Mail)" required="" />
+                        </div>
+                        <div>
+                            <input type="password" name="Password" class="form-control" value="123456" placeholder="Şifreniz" required="" />
+                        </div>
+
+                        <div align="center" class="g-recaptcha form-control" data-sitekey="6LdauNsZAAAAANaO3gJEOGC72rO8PqYAAD_o3Z_w"></div> <br />
+
+                        <div>
+                            <button style="width: 100%; background-color: #73879C; color:white;" type="submit" name="admingiris" class="btn btn-default"> Giriş Yap</button>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><i class="fa fa-user"></i> <br> Happy Farmer Yönetim Paneli</h1>
+                                <a href="http://veyselmutlu.online/" target="_blank">
+                                    <p>© 2020 Veysel MUTLU</p>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+

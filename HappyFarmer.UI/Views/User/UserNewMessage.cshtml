@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "UserNewMessage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var NowActiveUser = 0;
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Mesaj Gönderme Paneli</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>Mesaj Gönder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="customer_login">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="account_form">
+                    <h2>Mesaj Gönderme Ekranı</h2>
+                    <form asp-controller="User" asp-action="UserNewMessage" method="post">
+
+                        <p>
+                            <label>Kullanıcı Tipi <span>*</span></label>
+                            <select name="UserReceiverId" class="form-control">
+
+                                @foreach (var item in ViewBag.GetAllUser)
+                                {
+                                    if (ViewBag.NowActiveUser == item.Id.ToString())
+                                    {
+                                        //kullanıcı kendine mesaj atamasın
+                                    }
+                                    else
+                                    {
+                                        if (ViewBag.Answer != null)
+                                        {
+                                            if (ViewBag.Answer == item.Id.ToString())
+                                            {
+                                                <option value="@item.Id">@item.Name  @item.Surname</option>
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name  @item.Surname</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </p>
+
+                        <p>
+                            <label>Mesaj Konusu<span>*</span></label>
+                            <input name="Subject" type="text">
+                        </p>
+                        <p>
+                            <label>Mesajınız<span>*</span></label>
+                            <textarea name="MessageContent" class="form-control"></textarea>
+                        </p>
+                        <p>
+                            <label>Mesaj Gönderm Tarihi<span>*</span></label>
+                            <input name="MessageDate" readonly type="text" value="@DateTime.Now.ToShortDateString()">
+                        </p>
+                        <div class="login_submit">
+                            <button type="submit" class="btn btn-info">Gönder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

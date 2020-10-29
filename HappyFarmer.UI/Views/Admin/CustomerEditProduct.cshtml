@@ -1,0 +1,195 @@
+﻿@model List<ProductModel>
+@{
+    ViewData["Title"] = "CustomerEditProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    #region Global Constant
+
+    var userName = "";
+    var userSurname = "";
+    var userEmail = "";
+    var userPhone = "";
+    var userRecordData = "";
+    var userImageURL = "";
+    var Name = "";
+    var Description = "";
+    decimal? Price = 0;
+    var FarmerDeclareType = 0;
+    var customerPermission = false;
+    var Id = 0;
+
+    #endregion
+}
+
+@foreach (var item in Model)
+{
+    userName = item.UserName;
+    userSurname = item.UserSurname;
+    userEmail = item.UserEMail;
+    userPhone = item.UserPhoneNumber;
+    userRecordData = item.AnnouncementDate;
+    userImageURL = item.ImageURL;
+    Name = item.Name;
+    Description = item.Description;
+    Price = item.Price;
+    FarmerDeclareType = item.FarmerDeclareType;
+    customerPermission = item.PermissionToSell;
+    Id = item.Id;
+}
+
+<h1>Müşteri İlan Onay/Onaylama Sayfası</h1>
+<hr />
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+
+<form asp-controller="Admin" asp-action="CustomerEditProduct" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-10">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="@userImageURL" class="col-md-2 col-form-label">İlan Resmi</label>
+                <div class="col-md-10">
+                    <input disabled type="hidden" name="ImageUrl" value="@userImageURL" />
+                    <img height="100" src="~/img/ProductImages/@userImageURL" width="100" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@userName" class="col-md-2 col-form-label">İlan Veren Kişi Adı</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@userName" required="" value="@userName" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@userSurname" class="col-md-2 col-form-label">İlan Veren Kişi Soyadı</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@userSurname" required="" value="@userSurname" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@userEmail" class="col-md-2 col-form-label">İlan Veren Kişi Email Adresi</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@userEmail" required="" value="@userEmail" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@userPhone" class="col-md-2 col-form-label">İlan Veren Kişi Telefon No</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@userPhone" required="" value="@userPhone" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Name" class="col-md-2 col-form-label">İlan Adı</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@Name" required="" value="@Name" class="form-control" />
+                </div>
+            </div>
+
+            <input type="hidden" name="Id" value="@Id" class="form-control" />
+
+            <div class="form-group row">
+                <label asp-for="@Description" class="col-md-2 col-form-label">İlan Açıklaması</label>
+                <div class="col-md-10">
+                    <textarea disabled id="editor" asp-for="@Description" required="" value="@Description" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Price" class="col-md-2 col-form-label">İlandaki Ürünün Fiyatı</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@Price" required="" value="@Price" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@FarmerDeclareType" class="col-md-2 col-form-label">İlan Türü</label>
+                <div class="col-md-10">
+                    @switch (FarmerDeclareType)
+                    {
+                        case 10:
+                            <input disabled type="text" value="Büyük Baş Hayvan İlanı" class="form-control" />
+                            break;
+                        case 11:
+                            <input disabled type="text" value="Küçük Baş Hayvan İlanı" class="form-control" />
+                            break;
+                        case 12:
+                            <input disabled type="text" value="Kümes Hayvanı İlanı" class="form-control" />
+                            break;
+                        case 13:
+                            <input disabled type="text" value="Evcil Hayvan İlanı" class="form-control" />
+                            break;
+                        case 14:
+                            <input disabled type="text" value="Süt İlanı" class="form-control" />
+                            break;
+                        case 15:
+                            <input disabled type="text" value="Hayvansal Gıda İlanı" class="form-control" />
+                            break;
+                        case 20:
+                            <input disabled type="text" value="Traktör İlanı" class="form-control" />
+                            break;
+                        case 21:
+                            <input disabled type="text" value="Tarla İlanı" class="form-control" />
+                            break;
+                        case 22:
+                            <input disabled type="text" value="Traktör Ekipman İlanı" class="form-control" />
+                            break;
+                        case 23:
+                            <input disabled type="text" value="Sebze İlanı" class="form-control" />
+                            break;
+                        case 24:
+                            <input disabled type="text" value="Meyve İlanı" class="form-control" />
+                            break;
+                        case 25:
+                            <input disabled type="text" value="Tahıl İlanı" class="form-control" />
+                            break;
+                        case 26:
+                            <input disabled type="text" value="Yem & Otsu Bitki İlanı" class="form-control" />
+                            break;
+                    }
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@userRecordData" class="col-md-2 col-form-label">İlan Tarihi</label>
+                <div class="col-md-10">
+                    <input disabled asp-for="@userRecordData" required="" value="@userRecordData" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@customerPermission" class="col-md-2 col-form-label">İlanı Yayına Al</label>
+                <div class="col-md-10">
+                    <select name="PermissionToSell" class="form-control">
+                        @if (customerPermission == true)
+                        {
+                            <option value="false" selected>Yayından Kaldır</option>
+                            <option value="true">Yayınla</option>
+                        }
+                        else
+                        {
+                            <option value="true" selected>Yayınla</option>
+                            <option value="false">Yayından Kaldır</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button type="submit" class="btn btn-success">İlanı Yayına Al</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

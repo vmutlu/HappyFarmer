@@ -1,0 +1,105 @@
+﻿@model GeneralSettingsModel
+@{
+    ViewData["Title"] = "EditGeneralSetting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h1>Site Ayar Güncelleme Sayfası</h1>
+<hr />
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+<form asp-controller="Admin" asp-action="EditGeneralSetting" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-10">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <label asp-for="Title" class="col-md-2 col-form-label">Site Title</label>
+                <div class="col-md-10">
+                    <input asp-for="Title" required="" value="@Model.Title" class="form-control" />                   
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+
+            <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
+
+            <div class="form-group row">
+                <label asp-for="LogoUrl" class="col-md-2 col-form-label">Logo</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="LogoUrl" value="@Model.LogoUrl" />
+                    <img src="~/img/GeneralSettings/@Model.LogoUrl" width="100" />
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="LogoUrl"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Site Ayar Açıklaması</label>
+                <div class="col-md-10">
+                    <textarea id="editor" asp-for="Description" required="" value="@Model.Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PhoneNumber" class="col-md-2 col-form-label">Site Ayar Tel No</label>
+                <div class="col-md-10">
+                    <input asp-for="PhoneNumber" required="" value="@Model.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Email" class="col-md-2 col-form-label">Email Adresi</label>
+                <div class="col-md-10">
+                    <input asp-for="Email" required="" value="@Model.Email" class="form-control" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Address" class="col-md-2 col-form-label">Adres</label>
+                <div class="col-md-10">
+                    <input asp-for="Address" required="" value="@Model.Address" class="form-control" />
+                    <span asp-validation-for="Address"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Facebook" class="col-md-2 col-form-label">Facebook Adresi</label>
+                <div class="col-md-10">
+                    <input asp-for="Facebook" required="" value="@Model.Facebook" class="form-control" />
+                    <span asp-validation-for="Facebook"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Instagram" class="col-md-2 col-form-label">Instagram Adresi</label>
+                <div class="col-md-10">
+                    <input asp-for="Instagram" required="" value="@Model.Instagram" class="form-control" />
+                    <span asp-validation-for="Instagram"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Twitter" class="col-md-2 col-form-label">Twitter Adresi</label>
+                <div class="col-md-10">
+                    <input asp-for="Twitter" required="" value="@Model.Twitter" class="form-control" />
+                    <span asp-validation-for="Twitter"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10 offset-md-2">
+                    <button type="submit" style="width:100%; margin-left:222px;" class="btn btn-success">Ayar Güncelle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

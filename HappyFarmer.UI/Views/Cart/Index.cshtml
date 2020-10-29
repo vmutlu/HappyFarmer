@@ -1,0 +1,109 @@
+﻿@model CartModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Alışveriş Sepetim</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>Sepetim</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping_cart_area mt-70">
+    <div class="container">
+        <form asp-controller="Cart" asp-action="CheckOut">
+            <div class="row">
+                <div class="col-12">
+                    @if (Model.CartItems.Count() > 0)
+                    {
+                        <div class="table_desc">
+                            <div class="cart_page table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">Sepetten Çıkar</th>
+                                            <th class="product_thumb">Ürün Resmi</th>
+                                            <th class="product_name">Ürün Adı</th>
+                                            <th class="product-price">Fiyatı</th>
+                                            <th class="product_quantity">Miktarı</th>
+                                            <th class="product_total">Total Fiyat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.CartItems)
+                                        {
+                                            <tr>
+                                                <td class="product_remove"><a asp-controller="Cart" asp-action="DeleteFromCart" asp-route-productId="@item.ProductId"><i class="fa fa-trash-o"></i></a></td>
+                                                <td class="product_thumb"><a href="#"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a></td>
+                                                <td class="product_name"><a href="#">@item.Name</a></td>
+                                                <td class="product-price">₺@item.Price</td>
+                                                <td class="product_quantity"><label>Miktar</label> <input min="1" max="100" value="@item.Quantity" type="number"></td>
+                                                <td class="product_total">@((item.Quantity * item.Price).ToString("c"))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="cart_submit">
+                                <button type="submit">Sepet Güncelle</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            Sepette Ürününüz Bulunmamaktadır.
+                        </div>
+                    }
+                </div>
+            </div>
+            @if (Model.CartItems.Count() > 0)
+            {
+                <div class="coupon_area">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="coupon_code right">
+                                <h3>Sepet Tutarı</h3>
+                                <div class="coupon_inner">
+                                    <div class="cart_subtotal">
+                                        <p>Toplam</p>
+                                        <p class="cart_amount">@Model.TotalPrice().ToString("c")</p>
+                                    </div>
+                                    <div class="cart_subtotal ">
+                                        <p>Kargo Ücreti</p>
+                                        <p class="cart_amount">Ücretsiz Kargo</p>
+                                    </div>
+
+                                    <div class="cart_subtotal">
+                                        <p>Sepet Tuarı</p>
+                                        @{
+                                            var Total = (Model.TotalPrice()).ToString("c");
+                                        }
+                                        <p class="cart_amount">@Total</p>
+                                    </div>
+                                    <div class="checkout_btn">
+                                        <button type="submit">Ödeme Sayfası</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>

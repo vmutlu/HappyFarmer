@@ -1,0 +1,77 @@
+﻿@model BannerModel
+@{
+    ViewData["Title"] = "EditBanner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<h1>Banner Güncelleme Sayfası</h1>
+<hr />
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+<form asp-controller="Admin" asp-action="EditBanner" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="ImageURL" class="col-md-2 col-form-label">Banner Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImageUrl" value="@Model.ImageURL" />
+                    
+                    <img src="~/img/BannerImages/@Model.ImageURL" height="220" width="350" />
+                    <br />
+                    <br/>
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="ImageURL"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="QueueNumber" class="col-md-2 col-form-label">Banner Sıra No</label>
+                <div class="col-md-10">
+                    <input type="number" asp-for="QueueNumber" required="" value="@Model.QueueNumber" class="form-control" />
+                    <span asp-validation-for="QueueNumber"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Active" class="col-md-2 col-form-label">Banner Durumu</label>
+                <div class="col-md-10">
+                    <select name="Active" class="form-control">
+                        <option value="true">Aktif</option>
+                        <option value="false">Pasif</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="LowerUpper" class="col-md-2 col-form-label">Banner Alt/Üst</label>
+                <div class="col-md-10">
+                    <select name="LowerUpper" class="form-control">
+                        <option value="true">Üst Banner</option>
+                        <option value="false">Alt Banner</option>
+                    </select>
+                    <span asp-validation-for="LowerUpper"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button style="width: 100%; margin-left: 269px;" type="submit" class="btn btn-success">Banner Güncelle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+

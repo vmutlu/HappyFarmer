@@ -1,0 +1,32 @@
+﻿using HappyFarmer.Business.Abstract;
+using HappyFarmer.DataAccess.Abstract;
+using HappyFarmer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace HappyFarmer.Business.Concrate
+{
+    public class OrderService : IOrderService
+    {
+        private readonly IOrderRepository _orderRepository;
+        public OrderService(IOrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+        public void Create(FarmerOrder entity)
+        {
+            _orderRepository.Create(entity);
+        }
+
+        public List<FarmerOrder> GetOrders(string userId)
+        {
+            return _orderRepository.GetOrders(userId);
+        }
+
+        public int GetPopularProduct()
+        {
+            return _orderRepository.GetPopularProduct();
+        }
+    }
+}

@@ -1,0 +1,74 @@
+﻿@model List<FarmerMessage>
+@{
+    ViewData["Title"] = "UserOldMessage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Gönderilen Mesajlar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                @if (Model.Count() > 0)
+                {
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Alıcı Ad Soyad</th>
+                                <th>Alıcı Telefon No</th>
+                                <th>Mesaj Konusu</th>
+                                <th>Mesaj İçeriği</th>
+                                <th>Mesaj Gönderim Tarihi</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    @foreach (var activeUserNameSurname in ViewBag.GetByIdMessage)
+                                    {
+                                        if (item.UserReceiverId == activeUserNameSurname.Id)
+                                        {
+                                            <td>@activeUserNameSurname.Name @activeUserNameSurname.Surname</td>
+                                            <td>@activeUserNameSurname.PhoneNumber </td>
+                                        }
+                                    }
+
+                                    <td>@item.Subject</td>
+                                    <td>@item.MessageContent</td>
+                                    <td>@item.MessageDate</td>
+                                    <td>
+                                        <a asp-controller="User" asp-action="UserSendDeleteMessage" asp-route-Id="@item.Id"><button type="submit" class="btn btn-danger btn-sm">Sil</button></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+                else
+                {
+                    <div align="center" class="alert alert-danger">
+                        <center><span>Henüz Kimseye Mesaj Göndermediniz...</span></center>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

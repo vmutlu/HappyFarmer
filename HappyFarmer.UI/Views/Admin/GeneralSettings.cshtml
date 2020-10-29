@@ -1,0 +1,67 @@
+﻿@model List<HappyFarmer.Entities.FarmerGeneralSettings>
+@{
+    ViewData["Title"] = "GeneralSettings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="clearfix">
+    <div align="right">
+        <a href="/Admin/CreateGeneralSetting"><button class="btn btn-success" btn-xs>Yeni Site Ayarı Ekle</button></a>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p style="color:green;">Site Genel Ayarları</p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Logo</th>
+                                <th>Başlık</th>
+                                <th>Telefon Numarası</th>
+                                <th>Email</th>
+                                <th>İl</th>
+                                <th>İlçe</th>
+                                <th>Adres</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>
+                                        <img width="80" height="80" src="~/img/GeneralSettings/@item.LogoUrl" />
+                                    </td>
+                                    <td>@item.Title</td>
+                                    <td>@item.PhoneNumber</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.City</td>
+                                    <td>@item.District</td>
+                                    <td>@item.Address</td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="EditGeneralSetting" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                        <form asp-controller="Admin" asp-action="DeleteGeneralSetting" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

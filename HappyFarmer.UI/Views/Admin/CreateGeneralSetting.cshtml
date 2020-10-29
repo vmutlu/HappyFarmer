@@ -1,0 +1,113 @@
+﻿@model GeneralSettingsModel
+@{
+    ViewData["Title"] = "CreateGeneralSetting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2 style="color:green;">Yeni Site Ayar Bilgisi Ekleme Ekranı</h2>
+
+<div class="row">
+    <div class="col-md-10">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-controller="Admin" asp-action="CreateGeneralSetting" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="Title" class="col-md-2 col-form-label">Site Title</label>
+                <div class="col-md-10">
+                    <input name="Title" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="LogoUrl" class="col-md-2 col-form-label">Logo</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="LogoUrl" />
+                    <input type="file" name="file" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Site Ayar Açıklaması</label>
+                <div class="col-md-10">
+                    <textarea name="Description" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PhoneNumber" class="col-md-2 col-form-label">Telefon Numarası</label>
+                <div class="col-md-10">
+                    <input type="number" name="PhoneNumber" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Email" class="col-md-2 col-form-label">Email</label>
+                <div class="col-md-10">
+                    <input name="Email" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="City" class="col-md-2 col-form-label">İl</label>
+                <div class="col-md-10">
+                    <input name="City" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="District" class="col-md-2 col-form-label">İlçe</label>
+                <div class="col-md-10">
+                    <input name="District" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Email" class="col-md-2 col-form-label">Email</label>
+                <div class="col-md-10">
+                    <input name="Email" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Address" class="col-md-2 col-form-label">Adres</label>
+                <div class="col-md-10">
+                    <input name="Address" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Facebook" class="col-md-2 col-form-label">Facebook Adresi</label>
+                <div class="col-md-10">
+                    <input name="Facebook" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Instagram" class="col-md-2 col-form-label">Instagram Adresi</label>
+                <div class="col-md-10">
+                    <input name="Instagram" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Twitter" class="col-md-2 col-form-label">Twitter Adresi</label>
+                <div class="col-md-10">
+                    <input name="Twitter" required class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button type="submit" style="width:100%; margin-left:222px;" class="btn btn-success">Ayar Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

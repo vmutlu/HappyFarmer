@@ -1,0 +1,74 @@
+﻿@model List<HappyFarmer.Entities.FarmerMultipleProductImages>
+@{
+    ViewData["Title"] = "UserGetMultipleProductImages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Çoklu Ürün Resim Detay Sayfası</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Çoklu Ürün Resimleri</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--wishlist area start -->
+<div class="wishlist_area mt-70">
+    <div class="container">
+        <form action="#">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table_desc wishlist">
+                        <div class="cart_page table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product_remove">Sil</th>
+                                        <th class="product_thumb">Yüklü Resimler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="product_remove"><a asp-controller="User" asp-action="UserDeleteMultiImages" asp-route-id="@item.Id">X</a></td>
+                                            <td class="product_thumb"><a href="#"><img src="~/img/ProductMultipleImages/@item.ImageURL" alt=""></a></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="row">
+            <div class="col-12">
+                <div class="wishlist_share">
+                    <h4>Share on:</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                        <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

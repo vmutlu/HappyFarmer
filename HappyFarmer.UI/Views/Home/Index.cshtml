@@ -1,0 +1,604 @@
+﻿@inject HappyFarmer.Business.Abstract.IProductService _productService;
+@model List<HappyFarmer.Entities.FarmerSlider>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    const int page = 1;
+    var productID = 1;
+}
+
+@if (ViewBag.Success != null)
+{
+    <center>
+        <div class="alert alert-success alert-dismissible">
+            @ViewBag.Success
+            <center>
+                <button type="button" class="close" data-dismiss="alert">
+                    <center>
+                        <span aria-hidden="true">&times;</span>
+                    </center>
+                    <span class="sr-only">Kapat</span>
+                </button>
+            </center>
+        </div>
+    </center>
+}
+<br />
+<partial name="_slider" />
+<br />
+<div class="banner_area">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in ViewBag.Banner)
+            {
+                <div class="col-lg-6 col-md-6">
+                    <div class="single_banner">
+                        <div class="banner_thumb">
+                            <a href="shop.html">
+                                <img src="~/img/BannerImages/@item.ImageURL" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="home3_bg_area product_five">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="productbg_right_left">
+                    <div class="deals_prodict_three">
+                        <div class="deals_title">
+                            <h2>Günün En Çok Satan Ürünü</h2>
+                        </div>
+                        <div class="deals_prodict_inner3">
+                            <div class="product_carousel deals3_column1 owl-carousel">
+                                @foreach (var item in ViewBag.TodayProduct)
+                                {
+                                    <article class="single_product">
+                                        <figure>
+                                            <div class="product_thumb">
+                                                <a class="primary_img" href="product-details.html"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                                <a class="secondary_img" href="product-details.html"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                                <div class="label_product">
+                                                    <span class="label_sale">Yıldız Ürün</span>
+                                                </div>
+                                                <div class="action_links">
+                                                    <ul>
+                                                        <li class="add_to_cart">
+                                                            <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                                <input type="hidden" name="productId" value="@item.Id" />
+                                                                <input type="hidden" name="quantity" value="1" />
+                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            </form>
+                                                        </li>
+                                                        <li class="quick_button">
+                                                            <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <figcaption class="product_content">
+                                                <h4 class="product_name"><a href="product-details.html">@item.Name</a></h4>
+                                                <p><a href="#">Fruits</a></p>
+                                                <div class="price_box">
+                                                    @{
+                                                        var price = item.Price;
+                                                        var newPrice = (price + ((price * 10) / 100));
+                                                    }
+                                                    <span class="current_price">₺@item.Price</span>
+                                                    <span class="old_price">₺@newPrice</span>
+                                                </div>
+                                                <div class="product_timing">
+                                                    <div data-countdown="2021/12/15"></div>
+                                                </div>
+                                                <div class="addto_cart_btn">
+                                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                        <input type="hidden" name="productId" value="@item.Id" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                    </form>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </article>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.LowerBanner != null)
+                    {
+                        @foreach (var item in ViewBag.LowerBanner)
+                        {
+                            <div class="banner_thumb">
+                                <a href="shop.html"><img width="60" src="~/img/BannerImages/@item.ImageURL" alt=""></a>
+                            </div>
+                            break;
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="productbg_right_side">
+                    <div class="small_product_inner3">
+                        <div class="section_title">
+                            <h2>Haftanın Öne Çıkan Ürünleri</h2>
+                        </div>
+
+                        <div class="site-section site-section-sm bg-light">
+                            <div class="container">
+                                <div class="row mb-5">
+                                    @foreach (var item in ViewBag.PopularProducts)
+                                    {
+                                        <div class="col-md-6 col-lg-4 mb-4">
+                                            <div class="property-entry h-100">
+                                                <a href="property-details.html" class="property-thumbnail">
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt="Image" class="img-fluid"></a>
+                                                </a>
+
+                                                <div class="p-4 property-body">
+                                                    <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Title</a></h5></center>
+                                                    <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h5></center>
+                                                    <center>
+                                                        @{
+                                                            var oldPrice = (item.Price * 20) / 100;
+                                                            var newPrice = item.Price + oldPrice;
+                                                        }
+                                                        <span class="alert-info">@item.City - @item.Country</span> <br />
+                                                        <span class="current_price">₺ @item.Price</span>
+                                                        <span class="old_price"><s>₺ @newPrice</s></span>
+                                                    </center>
+                                                </div>
+
+                                                <div class="card-footer text-center">
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
+                                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                        <input type="hidden" name="productId" value="@item.Id" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="product_conatiner3">
+                        <div class="section_title">
+                            <h2>İlandaki Ürünler</h2>
+                        </div>
+
+                        <div class="site-section site-section-sm bg-light">
+                            <div class="container">
+                                <div class="row mb-5">
+                                    @foreach (var item in ViewBag.Products)
+                                    {
+                                        <div class="col-md-6 col-lg-4 mb-4">
+                                            <div class="property-entry h-100">
+                                                <a href="property-details.html" class="property-thumbnail">
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt="Image" class="img-fluid"></a>
+                                                </a>
+
+                                                <div class="p-4 property-body">
+                                                    <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Title</a></h5></center>
+                                                    <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h5></center>
+                                                    <center>
+                                                        @{
+                                                            var oldPrice = (item.Price * 20) / 100;
+                                                            var newPrice = item.Price + oldPrice;
+                                                        }
+                                                        <span class="alert-success">@item.City - @item.Country</span><br />
+                                                        <span class="current_price">₺ @item.Price</span>
+                                                        <span class="old_price"><s>₺ @newPrice</s></span>
+                                                    </center>
+                                                </div>
+                                                <div class="card-footer text-center">
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
+                                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                        <input type="hidden" name="productId" value="@item.Id" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        @{ int newpage = page;
+                            if (ViewBag.PageCount != null)
+                                newpage = ViewBag.PageCount;
+
+                            newpage++;
+                        }
+                        <div align="right">
+                            <form asp-controller="Home" asp-action="Index" asp-route-page="@newpage" method="post">
+                                <button type="submit" class="btn btn-success btn-sm ml-2">İleri</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product_area mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Hayvan İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 10 || item.FarmerDeclareType == 11 || item.FarmerDeclareType == 12 || item.FarmerDeclareType == 13 || item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Sale</span>
+                                                <span class="label_new">New</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                    <li class="compare"><a data-toggle="modal" data-target="#modal_box" title="İncele"><span class="lnr lnr-sync"></span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var oldPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + oldPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Buraya Bak ürüne tıklayınca popap açılsın-->
+<!-- modal area start-->
+<div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="icon-x"></i></span>
+            </button>
+            @{
+                //var products = _productService.GetById((int)productID);
+                //ViewBag.GetByIdDetailProducts = products;
+            }
+
+            @if (ViewBag.GetByIdDetailProducts != null)
+            {
+                @foreach (var item in ViewBag.GetByIdDetailProducts)
+                {
+                    <div class="modal_body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <div class="modal_tab">
+                                        <div class="tab-content product-details-large">
+                                            <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                                                <div class="modal_tab_img">
+                                                    <a href="#"><img src="assets\img\product\productbig1.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab2" role="tabpanel">
+                                                <div class="modal_tab_img">
+                                                    <a href="#"><img src="assets\img\product\productbig2.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab3" role="tabpanel">
+                                                <div class="modal_tab_img">
+                                                    <a href="#"><img src="assets\img\product\productbig3.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab4" role="tabpanel">
+                                                <div class="modal_tab_img">
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="@item.ImageUrl" alt=""></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal_tab_button">
+                                            <ul class="nav product_navactive owl-carousel" role="tablist">
+                                                <li>
+                                                    <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="assets\img\product\product1.jpg" alt=""></a>
+                                                </li>
+                                                <li>
+                                                    <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="assets\img\product\product6.jpg" alt=""></a>
+                                                </li>
+                                                <li>
+                                                    <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="assets\img\product\product2.jpg" alt=""></a>
+                                                </li>
+                                                <li>
+                                                    <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="assets\img\product\product7.jpg" alt=""></a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <div class="modal_right">
+                                        <div class="modal_title mb-10">
+                                            <h2>@item.Name</h2>
+                                        </div>
+                                        <div class="modal_price mb-10">
+                                            <span class="new_price">₺@item.Price</span>
+                                            @{
+                                                var Price = item.Price;
+                                                var oldPrice = (Price + ((Price * 20) / 100));
+                                            }
+                                            <span class="old_price">₺@oldPrice</span>
+                                        </div>
+                                        <div class="modal_description mb-15">
+                                            <p>@item.Description</p>
+                                        </div>
+                                        <div class="variants_selects">
+                                            <div class="variants_size">
+                                                <h2>size</h2>
+                                                <select class="select_option">
+                                                    <option selected="" value="1">s</option>
+                                                    <option value="1">m</option>
+                                                    <option value="1">l</option>
+                                                    <option value="1">xl</option>
+                                                    <option value="1">xxl</option>
+                                                </select>
+                                            </div>
+                                            <div class="variants_color">
+                                                <h2>color</h2>
+                                                <select class="select_option">
+                                                    <option selected="" value="1">purple</option>
+                                                    <option value="1">violet</option>
+                                                    <option value="1">black</option>
+                                                    <option value="1">pink</option>
+                                                    <option value="1">orange</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal_add_to_cart">
+                                                <form action="#">
+                                                    <input min="1" max="100" step="2" value="1" type="number">
+                                                    <button type="submit">Sepete Ekle</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal_social">
+                                            <h2>Share this product</h2>
+                                            <ul>
+                                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                                <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<!-- modal area end-->
+
+<section class="blog_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>Blog Yazılarımız</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blog_carousel blog_column3 owl-carousel">
+                @foreach (var item in ViewBag.Blogs)
+                {
+                    <div class="col-lg-3">
+                        <article class="single_blog">
+                            <figure>
+                                <div class="blog_thumb">
+                                    <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id"><img src="~/img/BlogImages/@item.ImagePath" alt=""></a>
+                                </div>
+                                <figcaption class="blog_content">
+                                    <div class="articles_date">
+                                        <p>
+                                            @item.CreatedDate | @foreach (var users in ViewBag.BlogsUsers)
+                                            {
+                                                if (item.UserId == users.Id)
+                                                {
+                                                    @users.Name @users.Surname
+                                                }
+
+                                            }
+                                        </p>
+                                    </div>
+                                    <h4 class="post_title"><a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id">@item.Title</a></h4>
+                                    <footer class="blog_footer">
+                                        <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id">Blogu Oku</a>
+                                    </footer>
+                                </figcaption>
+                            </figure>
+                        </article>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="product_area mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Tarım İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 20 || item.FarmerDeclareType == 21 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Sale</span>
+                                                <span class="label_new">New</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var oldPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + oldPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="custom_product_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Sebze - Meyve İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Sale</span>
+                                                <span class="label_new">New</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var oldPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + oldPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

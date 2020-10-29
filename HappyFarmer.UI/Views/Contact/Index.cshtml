@@ -1,0 +1,97 @@
+﻿@model List<HappyFarmer.Entities.FarmerGeneralSettings>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>İletişim</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>İletişim</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--contact map start-->
+<div class="contact_map mt-70">
+    <div class="map-area">
+       <center><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1xLOXTGHbgFmi0fntAEcIvTQvymf3TwE3" width="100%" height="600"></iframe></center>
+    </div>
+</div>
+<!--contact map end-->
+<!--contact area start-->
+<div class="contact_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="contact_message content">
+                    <h3>İletişim</h3>
+                    @foreach (var item in Model)
+                    {
+                        <p>@item.Description</p>
+                        <ul>
+                            <li><i class="fa fa-fax"></i>  Address : @item.Address</li>
+                            <li><i class="fa fa-phone"></i> <a href="#">@item.Email</a></li>
+                            <li><i class="fa fa-envelope-o"></i><a href="tel:@item.PhoneNumber">@item.PhoneNumber</a>  </li>
+
+                        </ul>
+                    }
+                </div>
+                <!-- BAŞLA: TRT Haber Sitene Ekle -->
+                <div style="font: normal 11px Arial; width: 298px; border: solid 1px #ccc; background: #fff; border-radius: 3px; box-shadow: 1px 1px 3px #ccc;">
+                    <h2 style="padding: 8px; margin: 0; height: 25px; border: 0; border-bottom: solid 1px #ccc;">
+                        <a href="https://www.trthaber.com/">
+                            <img src="https://www.trthaber.com/static/images/siteneEkle/logo_a_v3.png" alt="TRT Haber Haberler" style="border: none 0;">
+                        </a>
+                    </h2>
+                    <iframe frameborder="0" width="298" height="282" src="https://www.trthaber.com/sitene-ekle/mansetler-m/?haberSay=10&renk=a&baslik=1&resimler=1"></iframe>
+                    <div style="text-align: center;line-height: 23px;border-top: solid 1px #ccc; color: #666; margin-top: 5px;box-shadow: 0 -1px 3px #ccc;">
+                        <a style="text-decoration: none;color: #666; font: normal 11px Arial;" href="https://www.trthaber.com/">En Son Haberler</a> &nbsp;|&nbsp; <a style="text-decoration: none;color: #666; font: normal 11px Arial;" href="https://www.trthaber.com/tum-mansetler.html">Haber Manşetleri</a>
+                    </div>
+                </div>
+                <!-- BİTİŞ: TRT Haber Sitene Ekle -->
+
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="contact_message form">
+                    <h3>Site Yöneticisiyle İletişime Geçmek İçin Formu Eksiksiz Doldurunuz</h3>
+                    <form asp-controller="Contact" asp-action="AdminMessageSend" id="contact-form" method="POST">
+                        <p>
+                            <label> Adınız *</label>
+                            <input name="Name" required placeholder="Adınızı Giriniz. *" type="text">
+                        </p>
+                        <p>
+                            <label> Soyadınız *</label>
+                            <input name="Surname" required placeholder="Soyadınızı Giriniz. *" type="text">
+                        </p>
+                        <p>
+                            <label>Email Adresiniz *</label>
+                            <input name="Email" required placeholder="Email Adresinizi Giriniz. *" type="email">
+                        </p>
+                        <p>
+                            <label>Konu *</label>
+                            <input name="Subject" required placeholder="Mesaj Konunuzu Giriniz. *" type="text">
+                        </p>
+                        <div class="contact_textarea">
+                            <label>Mesaj *</label>
+                            <textarea placeholder="Mesajınızı Giriniz. *" required name="Message" class="form-control2"></textarea>
+                        </div>
+                        <button type="submit">Gönder</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--contact area end-->

@@ -1,0 +1,59 @@
+﻿@model List<FarmerSecurityInformation>
+@{
+    ViewData["Title"] = "GeneralInformation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="clearfix">
+    <div align="right">
+        <a href="/Admin/CreateInformation"><button class="btn btn-success" btn-xs>Yeni Site Bilgisi Ekle</button></a>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Site Hakkımızda Ekranı
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th width="200">İlan Verme Kuralları</th>
+                                <th width="200">Kullanım Koşulları</th>
+                                <th width="200">Gizlilik Politikası</th>
+                                <th width="200">SSS</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td><center><textarea rows="15" cols="40">@item.AdversitingRule</textarea></center></td>
+                                    <td><center><textarea rows="15" cols="40">@item.TermsOfUse</textarea></center></td>
+                                    <td><center><textarea rows="15" cols="40">@item.PrivacyPolicy</textarea></center></td>
+                                    <td><center><textarea rows="15" cols="40">@item.FAQ</textarea></center></td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="EditInformation" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                        <form asp-controller="Admin" asp-action="DeleteInformation" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

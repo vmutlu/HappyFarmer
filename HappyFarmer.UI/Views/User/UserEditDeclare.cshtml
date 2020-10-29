@@ -1,0 +1,255 @@
+﻿@model List<ProductModel>
+@{
+    ViewData["Title"] = "UserEditDeclare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    #region Global Constant
+
+    var Id = 0;
+    var userId = 0;
+    var UserName = "";
+    var Surname = "";
+    var Email = "";
+    var Phone = "";
+    var ImageURL = "";
+    var Title = "";
+    var Description = "";
+    decimal? Price = 0;
+    var FarmerDeclareType = 0;
+    var City = "";
+    var Country = "";
+    var Neignborhood = "";
+    var AnnouncementDate = "";
+    bool Guantee = true ;
+    var Sitution = "";
+    bool Swap=true;
+    var AnimalAge = 0;
+    bool Gender;
+    var StockQty = 0;
+    var Name = "";
+
+    #endregion
+}
+
+@foreach (var item in Model)
+{
+    Id = item.Id;
+    userId = item.UserId;
+    UserName = item.UserName;
+    Surname = item.UserSurname;
+    Email = item.UserEMail;
+    Phone = item.UserPhoneNumber;
+    ImageURL = item.ImageURL;
+    Title = item.Title;
+    Description = item.Description;
+    Price = item.Price;
+    FarmerDeclareType = item.FarmerDeclareType;
+    City = item.City;
+    Country = item.Country;
+    Neignborhood = item.Neighborhood;
+    AnnouncementDate = item.AnnouncementDate;
+    Guantee = item.Guarantee;
+    Sitution = item.Situation;
+    Swap = item.Swap;
+    AnimalAge = item.AnimalAge;
+    Gender = item.Gender;
+    StockQty = item.StockQty;
+    Name = item.Name;
+}
+
+<div align="center" class="alert-danger">
+    <h4>@ViewBag.Message</h4>
+</div>
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>İlan Güncelleme Sayfası</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>İlan Güncelleme</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- customer login start -->
+<div class="customer_login">
+    <div class="container">
+        <div class="row">
+            <!--login area start-->
+            <div class="col-lg-12 col-md-12">
+                <div class="account_form">
+                    <h2>Giriş Yap</h2>
+                    <form asp-controller="User" asp-action="UserEditDeclare" enctype="multipart/form-data" method="post">
+                        <p>
+                            <label>Yüklü İlanın Resmi<span>*</span></label>
+                            <img  height="100" width="100" src="~/img/ProductImages/@ImageURL" />
+                            <input type="file" name="file" />
+                            <input type="hidden" name="Id" value="@Id" />
+                        </p>
+                        <p>
+                            <label>Ad<span>*</span></label>
+                            <input name="UserName" type="text" value="@UserName">
+                        </p>
+                        <p>
+                            <label>Soyad<span>*</span></label>
+                            <input name="UserSurname" type="text" value="@Surname">
+                        </p>
+                        <p>
+                            <label>Email Adresi<span>*</span></label>
+                            <input name="UserEmail" type="text" value="@Email">
+                        </p>
+                        <p>
+                            <label>Telefon Numarası<span>*</span></label>
+                            <input name="UserPhoneNumber" type="number" value="@Phone">
+                        </p>
+                        <p>
+                            <label>İlan Adı<span>*</span></label>
+                            <input name="Name" type="text" value="@Name">
+                        </p>
+                        <p>
+                            <label>İlan Tipi<span>*</span></label>
+                            <select name="FarmerDeclareType" class="form-control">
+                                @switch (FarmerDeclareType)
+                                {
+                                    case 10:
+                                        <option value="10" selected>Büyükbaş Hayvan</option>
+                                        break;
+                                    case 11:
+                                        <option value="11" selected>Küçükbaş Hayvan</option>
+                                        break;
+                                    case 12:
+                                        <option value="12" selected>Kümes Hayvanı</option>
+                                        break;
+                                    case 13:
+                                        <option value="13" selected>Evcil Hayvan</option>
+                                        break;
+                                    case 14:
+                                        <option value="14" selected>Süt</option>
+                                        break;
+                                    case 15:
+                                        <option value="15" selected>Hayvansal Gıda</option>
+                                        break;
+                                    case 20:
+                                        <option value="20" selected>Traktör</option>
+                                        break;
+                                    case 21:
+                                        <option value="21" selected>Tarla</option>
+                                        break;
+                                    case 22:
+                                        <option value="22" selected>Traktör Ekipmanları</option>
+                                        break;
+                                    case 23:
+                                        <option value="23" selected>Sebze</option>
+                                        break;
+                                    case 24:
+                                        <option value="24" selected>Meyve</option>
+                                        break;
+                                    case 25:
+                                        <option value="25" selected>Tahıl Ürünleri</option>
+                                        break;
+                                    case 26:
+                                        <option value="26" selected>Yem & Otsu Bitkiler</option>
+                                        break;
+                                }
+                            </select>
+                        </p>
+                        <p>
+                            <label>İlan Başlığı<span>*</span></label>
+                            <input name="Title" type="text" value="@Title">
+                        </p>
+                        <p>
+                            <label>İlan Açıklaması<span>*</span></label>
+                            <input name="Description" type="text" value="@Description">
+                        </p>
+                        <p>
+                            <label>İl<span>*</span></label>
+                            <input name="City" type="text" value="@City">
+                        </p>
+                        <p>
+                            <label>İlçe<span>*</span></label>
+                            <input name="Country" type="text" value="@Country">
+                        </p>
+                        <p>
+                            <label>Mahalle<span>*</span></label>
+                            <input name="Neighborhood" type="text" value="@Neignborhood">
+                        </p>
+                        <p>
+                            <label>Fiyat<span>*</span></label>
+                            <input name="Price" type="text" value="@Price">
+                        </p>
+                        <p>
+                            <label>İlan Tarihi<span>*</span></label>
+                            <input name="AnnouncementDate" type="text" value="@AnnouncementDate">
+                        </p>
+                        <p>
+                            <label>Durumu<span>*</span></label>
+                            <select name="Situation" class="form-control">
+                                @if (Sitution == "İyi")
+                                {
+                                    <option value="iyi" selected>Az Kullanılmış</option>
+                                    <option value="orta">Kullanılabilir</option>
+                                }
+                                else
+                                {
+                                    <option value="orta" selected>Kullanılabilir</option>
+                                    <option value="iyi">Az Kullanılmış</option>
+                                }
+                            </select>
+                        </p>
+                        <p>
+                            <label>Takas<span>*</span></label>
+                            <select name="Swap" class="form-control">
+                                @if (Swap)
+                                {
+                                    <option value="true" selected>Var</option>
+                                    <option value="false">Yok</option>
+                                }
+                                else
+                                {
+                                    <option value="false" selected>Yok</option>
+                                    <option value="true" >Var</option>
+                                }
+                            </select>
+                        </p>
+                        <p>
+                            <label>Garanti Durumu<span>*</span></label>
+                            <select name="Guarantee" class="form-control">
+                                @if (Guantee)
+                                {
+                                    <option value="true" selected>Var</option>
+                                    <option value="false">Yok</option>
+                                }
+                                else
+                                {
+                                    <option value="false" selected>Yok</option>
+                                    <option value="true">Var</option>
+                                }
+                            </select>
+                        </p>
+                        <p>
+                            <label>İlan Ekleyen Kişi<span>*</span></label>
+                            <input name="UserId" type="number" readonly value="@userId">
+                        </p>
+                        <p>
+                            <label>Stok Miktarı<span>*</span></label>
+                            <input name="StockQty" type="number" value="@StockQty">
+                        </p>                        
+                        <div class="login_submit">
+                            <button type="submit">İlanı Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--login area start-->
+
+        </div>
+    </div>
+</div>
+<!-- customer login end -->

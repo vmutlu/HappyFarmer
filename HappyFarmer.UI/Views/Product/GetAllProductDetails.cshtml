@@ -1,0 +1,264 @@
+﻿@using Microsoft.AspNetCore.Http
+@model ProductModel
+@{
+    ViewData["Title"] = "GetAllProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Ürün Detayı</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product_details mt-70 mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product-details-tab">
+                    <div id="img-1" class="zoomWrapper single-zoom">
+                        <a href="#">
+                            <img id="zoom1" style="width:555px;height:450px;" src="~/img/ProductImages/@Model.ImageURL" data-zoom-image="~/img/ProductImages/@Model.ImageURL" alt="big-1">
+                        </a>
+                    </div>
+                    <div class="single-zoom-thumb">
+                        <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                            @foreach (var item in ViewBag.ProductsMultipleImages)
+                            {
+                                <li>
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="~/img/ProductMultipleImages/@item.ImageURL" data-zoom-image="~/img/ProductMultipleImages/@item.ImageURL">
+                                        <img src="~/img/ProductMultipleImages/@item.ImageURL" alt="zo-th-1">
+                                    </a>
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product_d_right">
+
+                    <h1><a href="#">@Model.Name</a></h1>
+                    <div class=" product_ratting">
+                        <ul>
+                            <li><a href="#"><i class="icon-star"> Ürün Yayınlayan Çiftçi Bilgilerini Ürün Özellikleri Bölümünde bakabilirsiniz...</i></a></li>
+                        </ul>
+
+                    </div>
+                    <div class="price_box">
+                        <span class="current_price">@Model.Price</span>@{ var oldPrice = Model.Price + ((Model.Price * 10) / 100);}
+                        <span class="old_price">@oldPrice</span>
+                    </div>
+                    <div class="product_desc">
+                        <p>@Model.Description</p>
+                    </div>
+                    <div class="product_variant quantity">
+                        <form asp-action="AddToCart" asp-controller="Cart" method="post" style="display:inline;">
+
+                            <input type="hidden" name="productId" value="@Model.Id" />
+
+                            <label>Miktar: </label>
+                            <input name="quantity" min="1" max="100" value="1" type="number">
+
+                            <button type="submit" class="button">Sepete Ekle</button>
+
+                        </form>
+                    </div>
+                    <div class="product_meta">
+                        <span>
+                            Ürünün İlişkili Olduğu Kategori(ler):
+                            @foreach (var item in ViewBag.CategoriesWith)
+                            {
+                                <a href="#">@item</a>
+                            }
+                        </span>
+                    </div>
+                    <div>
+                        <center>
+                            <span style="color:red;">
+                                Ürün Sipariş Ederken Dikkatlice Okuyunuz !
+                            </span>
+                        </center>
+                        @foreach (var item in ViewBag.Information)
+                        {
+                            <p>@item.AdversitingRule</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product_d_info mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_d_inner">
+                    <div class="product_info_button">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Ürün Açıklaması</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Özellikler</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Ürün Yorumları</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="product_info_content">
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sheet" role="tabpanel">
+                            <div class="product_d_table">
+                                <form action="#">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="first_child">Ürünü Sahibi Adı</td>
+                                                <td>@Model.UserName</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Ürünü Sahibi Soyadı</td>
+                                                <td>@Model.UserSurname</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Ürünü Sahibi Email</td>
+                                                <td>@Model.UserEMail</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Ürünü Sahibi Telefon No</td>
+                                                <td>@Model.UserPhoneNumber</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Garantisi</td>
+                                                <td>
+                                                    @if (Model.Guarantee == true)
+                                                    {
+                                                        <p>Var</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Yok</p>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Takas Durumu</td>
+                                                <td>
+                                                    @if (Model.Swap == true)
+                                                    {
+                                                        <p>Var</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Yok</p>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">İl</td>
+                                                <td>@Model.City</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">İlçe</td>
+                                                <td>@Model.Country</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Mahalle</td>
+                                                <td>@Model.Neighborhood</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" style="background-color:white;" id="reviews" role="tabpanel">
+                            <div class="reviews_wrapper">
+                                @if (Model.ProductComments != null)
+                                {
+                                    <h2>@Model.ProductComments.Count() Yorum</h2>
+                                    @foreach (var item in Model.ProductComments)
+                                    {
+                                        <div class="reviews_comment_box">
+                                            <div class="comment_thmb">
+                                                <img src="~/img/blog/comment2.jpg" alt="">
+                                            </div>
+                                            <div class="comment_text">
+                                                <div class="reviews_meta">
+                                                    <p><strong>@item.Name  @item.Surname</strong>- @item.CommentDate</p>
+                                                    <span>@item.Comment</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                                else
+                                {
+                                    <div class="reviews_comment_box">
+                                        <span class="warning">Ürüne ait yorum bulunmamaktadır. Yorum eklemek isterseniz alt kısımdan ürün hakkında yorumlarınızı belirtebilirsiniz...</span>
+                                    </div>
+                                }
+                                <div class="comment_title">
+                                    <h2>Yorum Ekle </h2>
+                                    <p>Ürün Hakkında Yorumlarınız Eklemek İstermisiniz ? </p>
+                                </div>
+                                @if (Context.Session.GetString("ActiveCustomer") != null)
+                                {
+                                    <div class="product_review_form">
+                                        <form asp-controller="Product" asp-action="CreateProductComment" method="post">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="review_comment">Yorumunuz</label>
+                                                    <textarea name="Comment" id="review_comment"></textarea>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="author">Ad</label>
+                                                    <input id="author" name="Name" type="text">
+
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="author">Soyad</label>
+                                                    <input id="author" name="Surname" type="text">
+
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <label for="email">Email </label>
+                                                    <input id="email" name="Email" type="text">
+                                                </div>
+                                                <input type="hidden" name="productId" value="@Model.Id" />
+                                            </div>
+                                            <button type="submit" width="100%" class="btn btn-success btn-sm">Gönder</button>
+                                        </form>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="product_review_form">
+                                        <span class="warning">Lütfen ürün hakkında yorum yapabilmek için üye olup giriş yapınız...</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

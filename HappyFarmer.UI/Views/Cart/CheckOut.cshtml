@@ -1,0 +1,184 @@
+﻿@model OrderModel
+@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert-danger">
+        <center><span>@ViewBag.Message</span></center>
+    </div>
+}
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Ödeme Ekranı</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Ödeme Ekranı</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--Checkout page section-->
+<div class="Checkout_section mt-70">
+    <div class="container">
+        <div class="checkout_form">
+
+            <form asp-controller="Cart" asp-action="CheckOut" method="post">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+
+                        <h3>Fatura Detayları</h3>
+                        <div class="row">
+
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.FirstName">Ad <span>*</span></label>
+                                <input asp-for="@Model.FirstName" type="text">
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.LastName">Soyad  <span>*</span></label>
+                                <input asp-for="@Model.LastName" type="text">
+                            </div>
+                            <div class="col-12 mb-20">
+                                <label asp-for="@Model.Address">Adres <span>*</span></label>
+                                <textarea asp-for="@Model.Address" class="form-control"></textarea>
+                            </div>
+                            <div class="col-12 mb-20">
+                                <label for="country">Ülke <span>*</span></label>
+                                <select class="select_option" name="cuntry" id="country">
+                                    <option value="0">Türkiye</option>
+
+                                </select>
+                            </div>
+                            <div class="col-12 mb-20">
+                                <label asp-for="@Model.City">Şehir <span>*</span></label>
+                                <input asp-for="@Model.City" type="text">
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.Phone">Telefon Numarası<span>*</span></label>
+                                <input asp-for="@Model.Phone" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.Email"> Email Adres   <span>*</span></label>
+                                <input asp-for="@Model.Email" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.CardName">Kart Adı<span>*</span></label>
+                                <input asp-for="@Model.CardName" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.CardNumber"> Kart Numarası <span>*</span></label>
+                                <input asp-for="@Model.CardNumber" value="5528790000000008" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.ExpirationMonth"> Ay <span>*</span></label>
+                                <input asp-for="@Model.ExpirationMonth" value="12" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.ExpirationYear"> Yıl <span>*</span></label>
+                                <input asp-for="@Model.ExpirationYear" value="2030" type="text">
+
+                            </div>
+                            <div class="col-lg-6 mb-20">
+                                <label asp-for="@Model.CVV"> CVV <span>*</span></label>
+                                <input asp-for="@Model.CVV" value="123" type="text">
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="order-notes">
+                                    <label asp-for="@Model.OrderNote" for="order_note">Sipariş Notu</label>
+                                    <textarea asp-for="@Model.OrderNote" id="order_note" placeholder="Siparişinize ait notunuzu burada belirtebilirsiniz.(Ör. Siparişimin acilen kargoya verilmesini istiyorum.)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+
+                        <h3>Siparişleriniz</h3>
+                        <div class="order_table table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ürün Resmi</th>
+                                        <th>Ürün</th>
+                                        <th>Fiyat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CartModel.CartItems)
+                                    {
+                                        <tr>
+                                            <td><img style="width:30px;height:30px;" src="~/img/ProductImages/@item.ImageUrl" /></td>
+                                            <td>@item.Name <strong> × @item.Quantity</strong></td>
+                                            <td> ₺@item.Price</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Toplam Fiyat</th>
+                                        <td>₺@Model.CartModel.TotalPrice()</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kargo Ücreti</th>
+                                        <td><strong>₺9.90 </strong></td>
+                                    </tr>
+                                    @{
+                                        var cargo = 9.90m;
+                                        var total = (Model.CartModel.TotalPrice() + cargo);
+                                    }
+                                    <tr class="order_total">
+                                        <th>Sipariş Toplamı</th>
+                                        <td><strong>₺@total</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment_method">
+                            <div class="panel-default">
+                                <input id="payment" name="check_method" type="radio" data-target="createp_account">
+                                <label for="payment" data-toggle="collapse" data-target="#method" aria-controls="method">Create an account?</label>
+
+                                <div id="method" class="collapse one" data-parent="#accordion">
+                                    <div class="card-body1">
+                                        <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-default">
+                                <input id="payment_defult" name="check_method" type="radio" data-target="createp_account">
+                                <label for="payment_defult" data-toggle="collapse" data-target="#collapsedefult" aria-controls="collapsedefult">PayPal <img src="assets\img\icon\papyel.png" alt=""></label>
+
+                                <div id="collapsedefult" class="collapse one" data-parent="#accordion">
+                                    <div class="card-body1">
+                                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order_button">
+                                <button type="submit">Ödemeyi Tamamla</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Checkout page section end-->

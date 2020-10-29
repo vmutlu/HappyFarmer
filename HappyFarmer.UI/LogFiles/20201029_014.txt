@@ -1,0 +1,1 @@
+2020-10-29 20:10:18.616 +03:00 [Information] {test}{ FirstName = Veysel, LastName = MUTLU, Message = Giriş Log Mesajıdır. }

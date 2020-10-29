@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IyzipayCore" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="NLog" Version="4.7.5" />
+    <PackageReference Include="NLog.Config" Version="4.7.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HappyFarmer.Business\HappyFarmer.Business.csproj" />
+    <ProjectReference Include="..\HappyFarmer.Configuration\HappyFarmer.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\CustomerImages\" />
+    <Folder Include="wwwroot\img\GeneralSettings\" />
+    <Folder Include="wwwroot\img\CustomerDeclareImages\" />
+    <Folder Include="wwwroot\img\BlogImages\" />
+    <Folder Include="wwwroot\img\BannerImages\" />
+    <Folder Include="wwwroot\img\ProductMultipleImages\" />
+    <Folder Include="wwwroot\img\SliderImages\" />
+  </ItemGroup>
+
+</Project>

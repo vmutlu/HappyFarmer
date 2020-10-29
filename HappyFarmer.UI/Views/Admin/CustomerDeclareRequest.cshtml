@@ -1,0 +1,132 @@
+﻿@model List<HappyFarmer.Entities.FarmerProduct>
+@{
+    ViewData["Title"] = "CustomerDeclareRequest";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p style="color:red;">Müşteri İlan İstekleri</p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th><center>#</center></th>
+                                <th><center>İlan Resmi</center></th>
+                                <th><center>Kullanıcı İsim</center></th>
+                                <th><center>Kullanıcı Soyisim</center></th>
+                                <th><center>Kullanıcı Email</center></th>
+                                <th><center>Kullanıcı Telefon No</center></th>
+                                <th><center>İlan Tipi</center></th>
+                                <th><center>İlan Durumu</center></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><center>@item.Id</center> </td>
+                                    <td><center><img height="50" width="50" src="~/img/ProductImages/@item.ImageUrl" /></center></td>
+                                    <td><center>@item.UserName</center></td>
+                                    <td><center>@item.UserSurname</center></td>
+                                    <td><center>@item.UserEMail</center></td>
+                                    <td><center>@item.UserPhoneNumber</center></td>
+                                    <td>
+                                        @switch (item.FarmerDeclareType)
+                                        {
+                                            case 10:
+                                                <center> <p>Büyük Baş Hayvan İlanı</p> </center>
+                                                break;
+                                            case 11:
+                                                <center>
+                                                    <p>Küçük Baş Hayvan İlanı</p>
+                                                </center>
+                                                break;
+                                            case 12:
+                                                <center>
+                                                    <p>Kümes Hayvanı İlanı</p>
+                                                </center>
+                                                break;
+                                            case 13:
+                                                <center>
+                                                    <p>Evcil Hayvan İlanı</p>
+                                                </center>
+                                                break;
+                                            case 14:
+                                                <center>
+                                                    <p>Süt İlanı</p>
+                                                </center>
+                                                break;
+                                            case 15:
+                                                <center>
+                                                    <p>Hayvansal Gıda İlanı</p>
+                                                </center>
+                                                break;
+                                            case 20:
+                                                <center>
+                                                    <p>Traktör İlanı</p>
+                                                </center>
+                                                break;
+                                            case 21:
+                                                <center>
+                                                    <p>Tarla İlanı</p>
+                                                </center>
+                                                break;
+                                            case 22:
+                                                <center>
+                                                    <p>Traktör Ekipman İlanı</p>
+                                                </center>
+                                                break;
+                                            case 23:
+                                                <center>
+                                                    <p>Sebze İlanı</p>
+                                                </center>
+                                                break;
+                                            case 24:
+                                                <center>
+                                                    <p>Meyve İlanı</p>
+                                                </center>
+                                                break;
+                                            case 25:
+                                                <center>
+                                                    <p>Tahıl İlanı</p>
+                                                </center>
+                                                break;
+                                            case 26:
+                                                <center>
+                                                    <p>Yem & Otsu Bitki İlanı</p>
+                                                </center>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.PermissionToSell)
+                                        {
+                                            <center>
+                                                <p style="color:green;">Yayında</p>
+                                            </center>
+                                        }
+                                        else
+                                        {
+                                            <center>
+                                                <p style="color:red;">Yayında Değil</p>
+                                            </center>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="CustomerEditProduct" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

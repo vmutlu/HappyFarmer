@@ -1,0 +1,177 @@
+﻿@model List<HappyFarmer.Entities.FarmerProduct>
+@{
+    ViewData["Title"] = "AdminProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="clearfix">
+    <div align="right">
+        <a href="/Admin/CreateProduct"><button class="btn btn-success" btn-xs>Yeni Ürün Ekle</button></a>
+    </div>
+</div>
+<hr />
+
+
+@section Scripts{
+    
+    <style>
+        .ck-editor__editable_inline {
+            max-height: 250px;
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p style="color:red;">Çiftçi Kategorileri</p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ürün Resmi</th>
+                                <th>Ürün Adı</th>
+                                <th>Ürün Açıklaması</th>
+                                <th>Ürün Kayıt Tarihi</th>
+                                <th>Ürün Türü</th>
+                                <th>Ürün Yayın Durumu</th>
+                                <th>Ürün Çoklu Resim</th>
+                                <th>Ürün Öne Çıkar</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td><img height="80" width="80" src="/img//ProductImages/@item.ImageUrl" /></td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <textarea id="editor" rows="6" cols="40" class="form-control"> @item.Description</textarea>
+                                    </td>
+                                    <td>@item.AnnouncementDate</td>
+                                    <td>
+                                        @switch (item.FarmerDeclareType)
+                                        {
+                                            case 10:
+                                                <p>Büyükbaş Hayvan</p>
+                                                break;
+                                            case 11:
+                                                <p>
+                                                    Küçükbaş Hayvan
+                                                </p>
+                                                break;
+                                            case 12:
+                                                <p>
+                                                    Kümes Hayvanı
+                                                </p>
+                                                break;
+                                            case 13:
+                                                <p>
+                                                    Evcil Hayvan
+                                                </p>
+                                                break;
+                                            case 14:
+                                                <p>
+                                                    Süt
+                                                </p>
+                                                break;
+                                            case 15:
+                                                <p>
+                                                    Hayvansal Gıda
+                                                </p>
+                                                break;
+                                            case 20:
+                                                <p>
+                                                    Traktör
+                                                </p>
+                                                break;
+                                            case 21:
+                                                <p>
+                                                    Tarla
+                                                </p>
+                                                break;
+                                            case 22:
+                                                <p>
+                                                    Traktör Ekipmanları
+                                                </p>
+                                                break;
+                                            case 23:
+                                                <p>
+                                                    Sebze
+                                                </p>
+                                                break;
+                                            case 24:
+                                                <p>
+                                                    Meyve
+                                                </p>
+                                                break;
+                                            case 25:
+                                                <p>
+                                                    Tahıl Ürünleri
+                                                </p>
+                                                break;
+                                            case 26:
+                                                <p>
+                                                    Yem & Otsu Bitkiler
+                                                </p>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.PermissionToSell == true)
+                                        {
+                                            <p style="color:green;">YAYINDA</p>
+                                        }
+
+                                        else
+                                        {
+                                            <p style="color:red;">YAYINDA DEĞİL</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        <form asp-controller="Admin" asp-action="AdminAddMultipleProducts" asp-route-id="@item.Id" method="POST" enctype="multipart/form-data">
+                                            <div class="fallback">
+                                                <input type="file" name="file" multiple class="form-control"> <br />
+
+                                                <input type="submit" class="btn btn-warning btn-sm mr-2" value="Ürüne Çoklu Resim Ekle" />
+                                                <a asp-controller="Admin" asp-action="AdminGetMultipleProductImages" asp-route-id="@item.Id"><input type="button" class="btn btn-info btn-sm ml-2" value="Yüklü Resimleri Gör" /></a>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        @if (item.Situation == "EVET")
+                                        {
+                                            <a asp-controller="Admin" asp-action="EditPopularUrun" asp-route-id="@item.Id" asp-route-active="no" asp-route-type="@ViewBag.Type" class="btn btn-success btn-sm">Aktif</a>
+                                        }
+
+                                        else
+                                        {
+                                            <a asp-controller="Admin" asp-action="EditPopularUrun" asp-route-id="@item.Id" asp-route-active="yes" asp-route-type="@ViewBag.Type" class="btn btn-danger btn-sm">Pasif</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" asp-route-type="@ViewBag.Type" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                        <form asp-controller="Admin" asp-action="DeleteProduct" asp-route-type="@ViewBag.Type" method="post" style="display:inline;">
+                                            <input type="hidden" name="productId" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

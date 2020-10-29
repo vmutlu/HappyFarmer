@@ -1,0 +1,79 @@
+﻿@model BannerModel
+@{
+    ViewData["Title"] = "CreateBanner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<center>
+    <h2 style="color:green;">Yeni Banner Ekleme Ekranı</h2>
+</center>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-controller="Admin" asp-action="CreateBanner" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="ImageURL" class="col-md-2 col-form-label">Banner Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImageURL" />
+                    <input type="file" name="file" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="QueueNumber" class="col-md-2 col-form-label">Banner Sıra No</label>
+                <div class="col-md-10">
+                    <input type="number" name="QueueNumber" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Active" class="col-md-2 col-form-label">Banner Durumu</label>
+                <div class="col-md-10">
+                    <select name="Active" class="form-control">
+                        <option value="true">Aktif</option>
+                        <option value="false">Pasif</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="LowerUpper" class="col-md-2 col-form-label">Banner Alt/Üst</label>
+                <div class="col-md-10">
+                    <select name="LowerUpper" class="form-control">
+                        <option value="true">Üst Banner</option>
+                        <option value="false">Alt Banner</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10 offset-md-2">
+                    <button style="width: 100%; margin-left: 269px;" type="submit" class="btn btn-success">Banner Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<center>
+    <div id="page-inner">
+        <div id="port-folio">
+            <div class="row ">
+
+                <div class="col-md-6 ">
+
+                    <a target="_blank" href="https://bookeder.com/weather/cihanbeyli-w274247"><img src="https://w.bookcdn.com/weather/picture/3_w274247_1_21_137AE9_430_ffffff_333333_08488D_1_ffffff_333333_0_6.png?scode=124&domid=765&anc_id=19347" alt="booked.net" /></a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</center>

@@ -1,0 +1,114 @@
+﻿@model LoginModel
+@{
+    ViewData["Title"] = "EditOnlyUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var authority = Model.UserState;
+}
+
+
+<h2 style="color:green;">Kullanıcı Aktif/Pasif Etme Ekranı</h2>
+
+<div class="row">
+    <div class="col-md-10">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-controller="Admin" asp-action="EditOnlyUser" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+            <div class="form-group row">
+                <label asp-for="ImageURL" class="col-md-2 col-form-label">Kullanıcı Resmi</label>
+                <div class="col-md-10">
+                    <img width="100" height="100" src="~/img/CustomerImages/@Model.ImageURL" />
+                    <input type="file" disabled name="file" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label">Adı</label>
+                <div class="col-md-10">
+                    <input type="text" value="@Model.Name" disabled name="Name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Surname" class="col-md-2 col-form-label">Soyadı</label>
+                <div class="col-md-10">
+                    <input type="text" value="@Model.Surname" disabled name="Surname" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Email" class="col-md-2 col-form-label">Email Adresi</label>
+                <div class="col-md-10">
+                    <input type="text" value="@Model.Email" name="Email" disabled class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PhoneNumber" class="col-md-2 col-form-label">Telefon Numarası</label>
+                <div class="col-md-10">
+                    <input type="number" value="@Model.PhoneNumber" disabled name="PhoneNumber" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Address" class="col-md-2 col-form-label">Adresi</label>
+                <div class="col-md-10">
+                    <textarea name="Address" disabled value="@Model.Address" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Password" class="col-md-2 col-form-label">Şifresi</label>
+                <div class="col-md-10">
+                    <input type="text" disabled name="Password" value="@Model.Password" class="form-control" />
+                </div>
+            </div>
+
+            <input type="hidden" name="UserType" class="form-control" value="@Model.UserType" />
+
+            <div class="form-group row">
+                <label asp-for="City" class="col-md-2 col-form-label">Şehir</label>
+                <div class="col-md-10">
+                    <input type="text" name="City" disabled value="@Model.City" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="RecordData" class="col-md-2 col-form-label">Kayıt Tarihi</label>
+                <div class="col-md-10">
+                    <input type="text" name="RecordData" disabled readonly value="@Model.RecordData" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="UserState" class="col-md-2 col-form-label">Kullanıcı Durumu</label>
+                <div class="col-md-10">
+                    <select name="UserState" class="form-control">
+                        @if (authority == true)
+                        {
+                            <option value="true" selected>Aktif</option>
+                            <option value="false">Pasif</option>
+                        }
+
+                        else
+                        {
+                            <option value="false" selected>Pasif</option>
+                            <option value="true">Aktif</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10 offset-md-2">
+                    <button style="width: 100%; margin-left: 222px;" type="submit" class="btn btn-success">Kullanıcı Güncelle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

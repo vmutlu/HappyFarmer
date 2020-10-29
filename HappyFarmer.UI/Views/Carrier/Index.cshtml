@@ -1,0 +1,51 @@
+﻿@model List<HappyFarmer.Entities.FarmerUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home3_bg_area product_five">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-7">
+                <div class="productbg_right_side">
+                    <div class="small_product_inner3">
+                        <div class="section_title">
+                            <center><h3>Çiftçi Anlaşmalı Nakliyeciler</h3></center>
+                        </div>
+
+                        <div class="site-section site-section-sm bg-light">
+                            <div class="container">
+                                <div class="row mb-5">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="col-md-6 col-lg-4 mb-4">
+                                            <div class="property-entry h-100">
+                                                <a href="property-details.html" class="property-thumbnail">
+                                                    <a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id"><img src="~/img/CustomerImages/@item.ImageURL" alt="Image" class="img-fluid"></a>
+                                                </a>
+
+                                                <div class="p-4 property-body">
+                                                    <center> <h5 class="property-title"><a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id">Nakliyeci Ad    :@item.Name</a></h5></center>
+                                                    <center> <h5 class="property-title"><a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id">Nakliyeci Soyad :@item.Surname</a></h5></center>
+                                                    <center> <h5 class="property-title"><a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id">Nakliyeci Email :@item.Email</a></h5></center>
+                                                    <center> <h5 class="property-title"><a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id">Nakliyeci Tel No:@item.PhoneNumber</a></h5></center>
+                                                    <center>
+                                                        <span class="alert-info">@item.City</span> <br />
+                                                    </center>
+                                                </div>
+
+                                                <div class="card-footer text-center">
+                                                    <a asp-controller="Carrier" asp-action="GetCarierByDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Nakliyeci Detay</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

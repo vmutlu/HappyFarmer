@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyFarmer.Entities", "HappyFarmer.Entities\HappyFarmer.Entities.csproj", "{3F7E8B12-A3BB-4B13-BCDF-9CFCBD7738D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyFarmer.Business", "HappyFarmer.Business\HappyFarmer.Business.csproj", "{3D1442B8-507C-495E-9F04-44320FF17530}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyFarmer.DataAccess", "HappyFarmer.DataAccess\HappyFarmer.DataAccess.csproj", "{C3039797-01AA-456A-B330-0CCB554FE80E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyFarmer.API", "HappyFarmer.API\HappyFarmer.API.csproj", "{F97DDAED-EF54-4970-887D-8D3618ABC9B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyFarmer.UI", "HappyFarmer.UI\HappyFarmer.UI.csproj", "{6147DF6B-A930-4754-A096-F77C039D773F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmer.Configuration", "HappyFarmer.Configuration\HappyFarmer.Configuration.csproj", "{3905E05D-F42E-42FE-BA7D-08FB895F46F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F7E8B12-A3BB-4B13-BCDF-9CFCBD7738D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F7E8B12-A3BB-4B13-BCDF-9CFCBD7738D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F7E8B12-A3BB-4B13-BCDF-9CFCBD7738D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F7E8B12-A3BB-4B13-BCDF-9CFCBD7738D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1442B8-507C-495E-9F04-44320FF17530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1442B8-507C-495E-9F04-44320FF17530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1442B8-507C-495E-9F04-44320FF17530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1442B8-507C-495E-9F04-44320FF17530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3039797-01AA-456A-B330-0CCB554FE80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3039797-01AA-456A-B330-0CCB554FE80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3039797-01AA-456A-B330-0CCB554FE80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3039797-01AA-456A-B330-0CCB554FE80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97DDAED-EF54-4970-887D-8D3618ABC9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97DDAED-EF54-4970-887D-8D3618ABC9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97DDAED-EF54-4970-887D-8D3618ABC9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97DDAED-EF54-4970-887D-8D3618ABC9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6147DF6B-A930-4754-A096-F77C039D773F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6147DF6B-A930-4754-A096-F77C039D773F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6147DF6B-A930-4754-A096-F77C039D773F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6147DF6B-A930-4754-A096-F77C039D773F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3905E05D-F42E-42FE-BA7D-08FB895F46F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3905E05D-F42E-42FE-BA7D-08FB895F46F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3905E05D-F42E-42FE-BA7D-08FB895F46F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3905E05D-F42E-42FE-BA7D-08FB895F46F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D05AF8E6-8D18-47DD-8B30-D336A0C148C0}
+	EndGlobalSection
+EndGlobal

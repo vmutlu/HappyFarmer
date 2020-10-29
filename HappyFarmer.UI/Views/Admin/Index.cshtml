@@ -1,0 +1,97 @@
+﻿@model List<FarmerSlider>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*<marquee behavior=alternate><img src="http://www.sitekodlari.com/img/ari.png"></marquee>*@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-head-line">Anasayfa</h1>
+        <h1 class="page-subhead-line">This is dummy text , you can replace it with your original text. </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="main-box mb-red">
+            <a href="#">
+                <i class="fa fa-bolt fa-5x"></i>
+                <h5>İlandaki Ürün Sayısı: @ViewBag.ProductsCount </h5>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="main-box mb-dull">
+            <a href="/admin/CustomerDeclareRequest">
+                <i class="fa fa-plug fa-5x"></i>
+                <h5>@ViewBag.CustomerDeclaresCount Bekleyen İlan İsteği</h5>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="main-box mb-pink">
+            <a href="#">
+                <i class="fa fa-dollar fa-5x"></i>
+                <h5>Site Üye Sayısı: @ViewBag.GetAllCustomer </h5>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="reviews" class="carousel slide" data-ride="carousel">
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+
+                            <div class="col-md-10 col-md-offset-1">
+
+                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <div class="user-img pull-right">
+                                    <img src="assets/img/user.gif" alt="" class="img-u image-responsive" />
+                                </div>
+                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-md-10 col-md-offset-1">
+
+                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <div class="user-img pull-right">
+                                    <img src="assets/img/user.png" alt="" class="img-u image-responsive" />
+                                </div>
+                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                            </div>
+
+                        </div>
+                        <div class="item">
+                            <div class="col-md-10 col-md-offset-1">
+
+                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing  Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <div class="user-img pull-right">
+                                    <img src="assets/img/user.gif" alt="" class="img-u image-responsive" />
+                                </div>
+                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#reviews" data-slide-to="0" class="active"></li>
+                        <li data-target="#reviews" data-slide-to="1"></li>
+                        <li data-target="#reviews" data-slide-to="2"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div class="col-12">
+            <iframe style="width: 100%; height: 600px;" id="ifr" src="../../"></iframe>
+        </div>
+        <iframe src="https://siteneekle.haber7.com/sondakika-manset.html" frameborder="0" width="472" height="290" framespacing="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+    </div>
+</div>

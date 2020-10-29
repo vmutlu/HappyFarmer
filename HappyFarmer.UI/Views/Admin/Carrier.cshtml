@@ -1,0 +1,73 @@
+﻿@model List<HappyFarmer.Entities.FarmerUser>
+@{
+    ViewData["Title"] = "Carrier";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="clearfix">
+    <div align="right">
+        <a href="/Admin/AddCarrier"><button class="btn btn-success" btn-xs>Yeni Nakliyeci Ekle</button></a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Mutlu Çiftçi Bünyesine Kayıtlı Nakliyeciler
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><center>#</center></th>
+                                <th><center>Nakliyeci Resmi</center></th>
+                                <th><center>Adı</center></th>
+                                <th><center>Soyadı</center></th>
+                                <th><center>Email</center></th>
+                                <th><center>Telefon Numarası</center></th>
+                                <th><center>Adresi</center></th>
+                                <th><center>Şehir</center></th>
+                                <th><center>Kayıt Tarihi</center></th>
+                                <th><center>Nakliyeci Durumu</center></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td><center>@item.Id</center></td>
+                                <td><center><img width="100" height="100" src="~/img/CustomerImages/@item.ImageURL" /></center></td>
+                                <td><center>@item.Name</center></td>
+                                <td><center>@item.Surname</center></td>
+                                <td><center>@item.Email</center></td>
+                                <td><center>@item.PhoneNumber</center></td>
+                                <td><center>@item.Address</center></td>
+                                <td><center>@item.City</center></td>
+                                <td><center>@item.RecordData</center></td>
+                                <td><center>
+                                        @if (item.UserState == true)
+                                        {
+                                            <p style="color:green;">AKTİF</p>
+                                        }
+
+                                        else
+                                        {
+                                            <p style="color:red;">PASİF</p>
+                                        }                                    
+                                </center></td>
+                                <td>
+                                    <center>
+                                        <a asp-controller="Admin" asp-action="EditCarrier" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Görüntüle</a>
+                                    </center>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

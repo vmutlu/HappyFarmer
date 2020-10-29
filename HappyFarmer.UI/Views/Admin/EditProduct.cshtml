@@ -1,0 +1,137 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "EditProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var counter = 0;
+    var permission = Model.PermissionToSell;
+}
+
+<h1>Ürün Güncelleme Sayfası</h1>
+<hr />
+
+@section Scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '800px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+<form asp-controller="Admin" asp-action="EditProduct" asp-route-type="@ViewBag.Type" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-10">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label">Ürün Adı</label>
+                <div class="col-md-10">
+                    <input asp-for="Name" required="" value="@Model.Name" class="form-control" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+            <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="ImageURL" class="col-md-2 col-form-label">Ürün Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImageUrl" value="@Model.ImageURL" />
+                    <img src="~/img/ProductImages/@Model.ImageURL" width="100" />
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="ImageURL"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Ürün Açıklaması</label>
+                <div class="col-md-10">
+                    <textarea id="editor" asp-for="Description" required="" class="form-control">@Model.Description</textarea>
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Price" class="col-md-2 col-form-label">Ürün Fiyatı</label>
+                <div class="col-md-10">
+                    <input asp-for="Price" required="" value="@Model.Price" class="form-control" />
+                    <span asp-validation-for="Price"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <input type="hidden" asp-for="FarmerDeclareType" value="@Model.FarmerDeclareType" class="form-control" />
+                    <span asp-validation-for="FarmerDeclareType"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PermissionToSell" class="col-md-2 col-form-label">Ürün Yayın Durumu</label>
+                <div class="col-md-10">
+                    <select name="PermissionToSell" class="form-control">
+                        @if (permission == true)
+                        {
+                            <option value="true" selected>YAYINDA</option>
+                            <option value="false">YAYINDAN KALDIR</option>
+                        }
+                        else
+                        {
+                            <option value="false" selected>YAYINDA DEĞİL</option>
+                            <option value="true">YAYINA AL</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <center><button style="width:100%; margin-left:222px;" type="submit" class="btn btn-success btn-sm">Ürün Güncelle</button> </center>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-2">
+            @foreach (var item in (List<HappyFarmer.Entities.FarmerCategory>)ViewBag.Categories)
+            {
+                var isCheck = "";
+                if (Model.SelectedCategory.Any(i => i.Id == item.Id))
+                {
+                    isCheck = "checked";
+
+                    <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name" />
+                    counter++;
+                }
+                else
+                    isCheck = "";
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           name="categoryIds"
+                           value="@item.Id" id="category@(item.Id)"
+                           @isCheck>
+                    <label class="form-check-label" for="@(item.Id)">
+                        @item.Name
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+</form>

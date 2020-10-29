@@ -1,0 +1,51 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "AdminAddMultipleProducts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Çoklu resim yükleme işlemleri</h2>
+
+                                    <div align="right" class="col-md-9">
+
+                                        <a class="btn btn-success" href="urun-galeri.php?id=<?php echo $_GET['id'];?>"><i class="fa fa-plus" aria-hidden="true"></i> Yüklenen Resimleri Gör</a>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="container">
+                                    <p>Yüklenecek resimlerin bulunduğu klasöre giderek tamamını tek seferde seçerek yükleyebilirsiniz.</p>
+
+
+                                    <form asp-controller="Admin" asp-action="AdminAddMultipleProducts" method="POST" enctype="multipart/form-data"  >
+                                        <div class="fallback">
+                                            <input type="hidden" name="id" value="@Model.Id">
+                                            <input type="file" name="file" multiple>
+
+                                            <input type="submit" value="Kaydet" />
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

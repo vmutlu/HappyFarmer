@@ -1,0 +1,891 @@
+﻿@using Microsoft.AspNetCore.Http
+@using HappyFarmer.Business.Abstract;
+@inject ICartService _cartService
+@inject IProductService _productService
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Happy Farmer - Graduation Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.bin">
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/css/slick.css" rel="stylesheet" />
+    <link href="~/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/css/font.awesome.css" rel="stylesheet" />
+    <link href="~/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/css/linearicons.css" rel="stylesheet" />
+    <link href="~/css/animate.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/slinky.menu.css" rel="stylesheet" />
+    <link href="~/css/plugins.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/js/vendor/modernizr-3.7.1.min.js"></script>
+    <link href="~/admin/css/custom.css" rel="stylesheet" />
+    <link href="~/admin/css/basic.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <style>
+        #slider {
+            positon: relative;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1140px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+            #slider img {
+                width: 100%;
+                max-width: 1140px;
+                height: 400px;
+            }
+
+            #slider li {
+                list-style: none;
+            }
+
+        .sliderbutton {
+            position: relative;
+            margin: 0 auto;
+            width: 120px;
+            margin-top: -25px;
+        }
+
+            .sliderbutton li {
+                list-style: none;
+                padding: 5px;
+                background: red;
+                float: left;
+                margin-right: 10px;
+                border-radius: 10px;
+            }
+
+        .sliderleft {
+            cursor: pointer;
+            background: rgba(0,0,0,0.2);
+            position: absolute;
+            width: 30px;
+            height: 400px;
+            line-height: 400px;
+        }
+
+        .sliderright {
+            margin-left: 1110px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.2);
+            position: absolute;
+            width: 30px;
+            height: 400px;
+            line-height: 400px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var slider = 0;
+            $('.sliderbutton li:first').css('background', 'yellow');
+            $.slider = function (toplam) {
+                $('#slider li').hide();
+                if (slider < toplam - 1) {
+                    slider++;
+                    $('.sliderbutton li').css('background', 'red');
+                    $('.sliderbutton li:eq(' + slider + ')').css('background', 'yellow');
+                    $('#slider li:eq(' + slider + ')').fadeIn("fast");
+
+                } else if (slider < 0) {
+
+                    slider = toplam - 1;
+                    $('.sliderbutton li').css('background', 'red');
+                    $('.sliderbutton li:eq(' + slider + ')').css('background', 'yellow');
+                    $('#slider li:eq(' + slider + ')').fadeIn("fast");
+                } else {
+
+                    $('#slider li:first').fadeIn("fast");
+                    slider = 0;
+                    $('.sliderbutton li').css('background', 'red');
+                    $('.sliderbutton li:eq(' + slider + ')').css('background', 'yellow');
+                }
+            }
+            var lenghtli = $('#slider li').length;
+            var interval = setInterval('$.slider(' + lenghtli + ')', 3000);
+            $('#slider').hover(function () {
+                interval = clearInterval(interval);
+            }, function () {
+                interval = setInterval('$.slider(' + lenghtli + ')', 3000);
+            })
+            $('.sliderbutton li').click(function () {
+                $('.sliderbutton li').css('background', 'red');
+                $(this).css('background', 'yellow');
+                interval = clearInterval(interval);
+                var indis = $(this).index();
+                $('#slider li').hide();
+                $('#slider li:eq(' + indis + ')').fadeIn("fast");
+                slider = indis;
+                interval = setInterval('$.slider(' + lenghtli + ')', 3000);
+
+            });
+            $('.sliderleft').click(function () {
+
+                slider--;
+                $('.sliderbutton li').css('background', 'red');
+                if (slider < 0) {
+                    $('.sliderbutton li:last').css('background', 'yellow');
+                    slider = lenghtli - 1;
+                } else {
+                    $('.sliderbutton li:eq(' + slider + ')').css('background', 'yellow');
+                }
+
+                $('#slider li').hide();
+                $('#slider li:eq(' + slider + ')').fadeIn("fast");
+
+
+            });
+            $('.sliderright').click(function () {
+
+                slider++;
+                $('.sliderbutton li').css('background', 'red');
+                if (slider > lenghtli - 1) {
+                    $('.sliderbutton li:first').css('background', 'yellow');
+                    slider = 0;
+                } else {
+                    $('.sliderbutton li:eq(' + slider + ')').css('background', 'yellow');
+                }
+
+                $('#slider li').hide();
+                $('#slider li:eq(' + slider + ')').fadeIn("fast");
+
+
+            });
+
+        });
+
+
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+
+
+@{
+    HappyFarmer.DataAccess.Concrete.FarmerContext farmer = new HappyFarmer.DataAccess.Concrete.FarmerContext();
+    var Address = "";
+    var Description = "";
+    var LogoURL = "";
+    var Phone = "";
+    var Email = "";
+    var City = "";
+    var Distinc = "";
+    var Facebook = "";
+    var Twitter = "";
+    var Instagram = "";
+
+    foreach (var item in farmer.GeneralSettings.ToList())
+    {
+        Address = item.Address;
+        Description = item.Description;
+        LogoURL = item.LogoUrl;
+        Phone = item.PhoneNumber;
+        Email = item.Email;
+        City = item.City;
+        Distinc = item.District;
+        Facebook = item.Facebook;
+        Twitter = item.Twitter;
+        Instagram = item.Instagram;
+    }
+
+
+}
+
+
+<body>
+    <div class="off_canvars_overlay">
+
+    </div>
+
+
+    <div class="offcanvas_menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="canvas_open">
+                        <a href="javascript:void(0)"><i class="icon-menu"></i></a>
+                    </div>
+                    <div class="offcanvas_menu_wrapper">
+
+                        <div align="center">
+                            @if (Context.Session.GetString("ActiveCustomer") != null)
+                            {
+                                <a asp-controller="User" class="btn btn-warning btn-sm" asp-action="UserAccount">Hesabım</a>
+                                <a asp-controller="User" class="btn btn-danger btn-sm" asp-action="UserLogout">Çıkış Yap</a>
+                            }
+                            else
+                            {
+                                <a asp-controller="User" class="btn btn-primary btn-sm" asp-action="UserRegister">Kayıt Ol</a>
+
+                                <a asp-controller="User" class="btn btn-success btn-sm" btn-sm asp-action="UserLogin">Giriş Yap</a>
+                            }
+                        </div>
+
+                        <div class="canvas_close">
+                            <a href="javascript:void(0)"><i class="icon-x"></i></a>
+                        </div>
+                        <div class="language_currency">
+
+                        </div>
+                        <div class="header_social text-right">
+                            <ul>
+                                <li><a href="@Twitter"><i class="ion-social-twitter"></i></a></li>
+                                <li><a href="@Facebook"><i class="ion-social-facebook"></i></a></li>
+                                <li><a href="@Instagram"><i class="ion-social-instagram-outline"></i></a></li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <div class="call-support">
+                            <p><a href="tel:@Phone">+90(554) 644 12 25</a> Müşteri Hizmetleri</p>
+                        </div>
+                        <div id="menu" class="text-left ">
+                            <ul class="offcanvas_main_menu">
+                                <li class="menu-item-has-children active">
+                                    <a asp-controller="Home" asp-action="Index"><i  class="fa fa-home"></i> Anasayfa</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="#"> <i class="fas fa-bookmark"></i> Kategoriler</a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.KucukBas">Küçük Baş Hayvanclık</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.BuyukBas">Büyük Baş Hayvancılık</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Kumes">Kümes Hayvanları</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Evcil">Evcil Hayvanlar</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Sut">Süt Ürünleri</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.YiyecekIcecek">Hayvansal Gıda</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Traktor">Traktörler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tarla">Tarla & Arazi</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Ekipman">Traktör Ekipmanları</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Sebze">Sebzeler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Meyve">Meyveler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tahıl">Tahıl Ürünleri</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.YemAndOtsuBitki">Yem ve Otsu Bitkiler</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a asp-controller="Home" asp-action="GetBlogArticle"><i  class="fa fa-blogger"></i>Blog</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a asp-controller="Carrier" asp-action="Index"><i  class="fa fa-truck"></i>Nakliyeciler</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a asp-controller="Home" asp-action="About"><i  class="fa fa-paw"></i>Hakkımızda</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a asp-controller="Contact" asp-action="Index"><i  class="fa fa-phone-square"></i>İletişim</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a asp-controller="Cart" asp-action="Index"><i  class="fa fa-shopping-cart"></i> Sepetim</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="#"><i class="fas fa-feather" >Site Hakkında</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/Home/GetInformation">İlan Verme Kuralları</a></li>
+                                        <li><a href="/Home/GetInformation">Gizlilik Politikası</a></li>
+                                        <li><a href="/Home/GetInformation">Kullanım Koşulları</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="offcanvas_footer">
+                            <span><a href="@Email"><i class="fa fa-envelope-o"></i> @Email</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--offcanvas menu area end-->
+
+    <header>
+        <div class="main_header">
+            <div class="header_top">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="language_currency">
+                                <ul>
+                                    @if (Context.Session.GetString("ActiveCustomer") != null)
+                                    {
+                                        <li float: left; display: inline; class="language">
+                                            <a href="#"> Hayvancılık Sohbetleri <i class="icon-right ion-ios-arrow-down"></i></a>
+                                            <ul class="dropdown_language">
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="10">Büyük Baş Hayvancılık</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="11">Küçük Baş Hayvancılık</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="12">Kümes Hayvancılıgı</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="13">Evcil Hayvancılıgı</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="14">Hayvan(İnek,Koyun) Sütü</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="15">Hayvansal Gıda Ürünleri</a></li>
+                                            </ul>
+                                        </li>
+                                        <li float: left; display: inline; class="currency">
+                                            <a href="#">Tarımsal Sohbetler<i class="icon-right ion-ios-arrow-down"></i></a>
+                                            <ul class="dropdown_currency">
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="20">Traktör Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="21">Tarla Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="22">Traktör Ekipman Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="23">Sebze Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="24">Meyve Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="25">Tarımsal Tahıl Sohbetleri</a></li>
+                                                <li><a asp-controller="User" asp-action="UserChat" asp-route-type="26">Yem & Otsu Bitki Sohbetleri</a></li>
+                                            </ul>
+                                        </li>
+                                        <li float: left; display: inline; class="currency">
+                                            <a asp-controller="User" asp-action="UserChat" asp-route-type="Nakliyeci">Nakliyeci Sohbetleri<i class="icon-right ion-ios-arrow-down"></i></a>
+                                        </li>
+                                        <li float: left; display: inline; class="currency">
+                                          <h6>“Türkiye’nin gerçek sahibi ve efendisi, gerçek üretici olan köylüdür” M. Kemal Atatürk</h6>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="header_social text-right">
+                                <ul>
+                                    <li><a target="_blank" href="@Twitter"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a target="_blank" href="@Facebook"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a target="_blank" href="@Instagram"><i class="ion-social-instagram-outline"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header_middle header_middle5">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <div class="logo">
+                                <a asp-controller="Home" asp-action="Index">
+                                    <img src="~/img/GeneralSettings/@LogoURL" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col_search5">
+                            <div class="search_container">
+                                <form asp-controller="Category" asp-action="FindForProductsByCategoryType" method="post">
+                                    <div class="hover_category">
+                                        <select class="select_option" name="type" id="categori2">
+                                            <option selected="">Kategori Seçiniz</option>
+                                            <option value="10">Büyük Baş Hayvanlar</option>
+                                            <option value="11">Küçük Baş Hayvanlar</option>
+                                            <option value="12">Kümes Hayvanları</option>
+                                            <option value="13">Evcil Hayvanlar</option>
+                                            <option value="14">Süt Ürünleri</option>
+                                            <option value="15">Hayvansal Gıdalar</option>
+                                            <option value="20">Traktörler</option>
+                                            <option value="21">Tarla & Arazi</option>
+                                            <option value="22">Traktör Ekipmanları</option>
+                                            <option value="23">Sebzeler</option>
+                                            <option value="24">Meyveler</option>
+                                            <option value="25">Tahıl Ürünleri</option>
+                                            <option value="26">Yem ve Otsu Bitkiler</option>
+                                        </select>
+                                    </div>
+                                    <div class="search_box">
+                                        <input name="searchText" placeholder="Ürün Ara..." type="text">
+                                        <button type="submit"><span class="lnr lnr-magnifier"></span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-7 col-8">
+                            <div class="header_account_area">
+                                <div class="header_account_list register">
+                                    <ul>
+                                        @if (Context.Session.GetString("ActiveCustomer") != null)
+                                        {
+                                            <li><a asp-controller="User" asp-action="UserLogout">Çıkış Yap</a></li>
+                                            <li><span>/</span></li>
+
+                                            <li><a asp-controller="User" asp-action="UserAccount">Hesabım</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a asp-controller="User" asp-action="UserRegister">Kayıt Ol</a></li>
+
+                                            <li><span>/</span></li>
+
+                                            <li><a asp-controller="User" asp-action="UserLogin">Giriş Yap</a></li>
+                                        }
+
+                                    </ul>
+
+                                </div>
+                                @{
+                                    HappyFarmer.DataAccess.Concrete.FarmerContext farmerContext = new HappyFarmer.DataAccess.Concrete.FarmerContext();
+                                    var list = farmerContext.Messages.ToList();
+                                    var activeUserMessages = Context.Session.GetInt32("GirisMessages");
+                                }
+
+                                @if (Context.Session.GetString("ActiveCustomer") != null)
+                                {
+                                    <div class="header_account_list header_wishlist">
+                                        <a asp-controller="User" asp-action="UserAccount"><span class="lnr lnr-envelope"></span> <span class="item_count">@activeUserMessages</span> </a>
+                                    </div>
+
+                                    var request = _cartService.GetCartByUserId(Context.Session.GetString("ActiveCustomerId"));
+                                    List<FarmerCart> carts = new List<FarmerCart>() { request };
+                                    List<FarmerProduct> products = new List<FarmerProduct>();
+                                    decimal totalPrice = 0;
+
+                                    <div class="header_account_list  mini_cart_wrapper">
+                                        <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span class="item_count">@request.CartItems.Count()</span></a>
+
+                                        <div class="mini_cart">
+                                            <div class="cart_gallery">
+                                                <div class="cart_close">
+                                                    <div class="cart_text">
+                                                        <h3>Sepetim</h3>
+                                                    </div>
+                                                    <div class="mini_cart_close">
+                                                        <a href="javascript:void(0)"><i class="icon-x"></i></a>
+                                                    </div>
+                                                </div>
+                                                @foreach (var item in request.CartItems)
+                                                {
+                                                    var response = _productService.GetById(item.ProductId);
+                                                    products.Add(response);
+
+                                                    foreach (var product in products)
+                                                    {
+                                                        totalPrice += ((decimal)product.Price * item.Quantity);
+                                                        <div class="cart_item">
+                                                            <div class="cart_img">
+                                                                <a href="#"><img src="~/img/ProductImages/@product.ImageUrl" alt=""></a>
+                                                            </div>
+                                                            <div class="cart_info">
+                                                                <a href="#">@product.Name</a>
+                                                                <p>@item.Quantity x <span> ₺@product.Price </span></p>
+                                                            </div>
+                                                            <div class="cart_remove">
+                                                                <a asp-controller="Cart" asp-action="DeleteFromCart" asp-route-productId="@item.ProductId"><i class="icon-x"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        products.Remove(response);
+                                                        break;
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="mini_cart_table">
+                                                <div class="cart_table_border">
+                                                    <div class="cart_total">
+                                                        <span>Sepet Toplamı:</span>
+                                                        <span class="price">₺@totalPrice</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mini_cart_footer">
+                                                <div class="cart_button">
+                                                    <a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Sepete Git</a>
+                                                </div>
+                                                <div class="cart_button">
+                                                    <a asp-controller="Cart" asp-action="CheckOut"><i class="fa fa-sign-in"></i> Ödeme Sayfası</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!--mini cart end-->
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header_bottom sticky-header">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <div class="categories_menu">
+                                <div class="categories_title">
+                                    <h2 class="categori_toggle">Kategoriler</h2>
+                                </div>
+                                <div class="categories_menu_toggle">
+                                    <ul>
+                                        <li class="menu_item_children">
+                                            @{
+                                                HappyFarmer.DataAccess.Concrete.FarmerContext context = new HappyFarmer.DataAccess.Concrete.FarmerContext();
+                                            }
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.KucukBas">Küçük Baş Hayvanclık</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.BuyukBas">Büyük Baş Hayvancılık</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Kumes">Kümes Hayvanları</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Evcil">Evcil Hayvanlar</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Sut">Süt Ürünleri</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.YiyecekIcecek">Hayvansal Gıda</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Traktor">Traktörler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tarla">Tarla & Arazi</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Ekipman">Traktör Ekipmanları</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Sebze">Sebzeler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Meyve">Meyveler</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tahıl">Tahıl Ürünleri</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.YemAndOtsuBitki">Yem ve Otsu Bitkiler</a>
+                                        </li>
+
+                                        @*<ul class="categories_mega_menu">
+                                                <li class="menu_item_children">
+                                                    <a href="#">Dresses</a>
+                                                    <ul class="categorie_sub_menu">
+                                                        <li><a href="">Sweater</a></li>
+                                                        <li><a href="">Evening</a></li>
+                                                        <li><a href="">Day</a></li>
+                                                        <li><a href="">Sports</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="menu_item_children">
+                                                    <a href="#">Handbags</a>
+                                                    <ul class="categorie_sub_menu">
+                                                        <li><a href="">Shoulder</a></li>
+                                                        <li><a href="">Satchels</a></li>
+                                                        <li><a href="">kids</a></li>
+                                                        <li><a href="">coats</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="menu_item_children">
+                                                    <a href="#">shoes</a>
+                                                    <ul class="categorie_sub_menu">
+                                                        <li><a href="">Ankle Boots</a></li>
+                                                        <li><a href="">Clog sandals </a></li>
+                                                        <li><a href="">run</a></li>
+                                                        <li><a href="">Books</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="menu_item_children">
+                                                    <a href="#">Clothing</a>
+                                                    <ul class="categorie_sub_menu">
+                                                        <li><a href="">Coats  Jackets </a></li>
+                                                        <li><a href="">Raincoats</a></li>
+                                                        <li><a href="">Jackets</a></li>
+                                                        <li><a href="">T-shirts</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>*@
+                                        </li>
+                                        @*<li class="menu_item_children">
+                                                <a href="#">Fruits  <i class="fa fa-angle-right"></i></a>
+                                                <ul class="categories_mega_menu column_3">
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Chair</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Dining room</a></li>
+                                                            <li><a href="">bedroom</a></li>
+                                                            <li><a href=""> Home & Office</a></li>
+                                                            <li><a href="">living room</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Lighting</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Ceiling Lighting</a></li>
+                                                            <li><a href="">Wall Lighting</a></li>
+                                                            <li><a href="">Outdoor Lighting</a></li>
+                                                            <li><a href="">Smart Lighting</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Sofa</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Fabric Sofas</a></li>
+                                                            <li><a href="">Leather Sofas</a></li>
+                                                            <li><a href="">Corner Sofas</a></li>
+                                                            <li><a href="">Sofa Beds</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="menu_item_children">
+                                                <a href="#"> Salads<i class="fa fa-angle-right"></i></a>
+                                                <ul class="categories_mega_menu column_2">
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Brake Tools</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Driveshafts</a></li>
+                                                            <li><a href="">Spools</a></li>
+                                                            <li><a href="">Diesel </a></li>
+                                                            <li><a href="">Gasoline</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Emergency Brake</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Dolls for Girls</a></li>
+                                                            <li><a href="">Girls' Learning Toys</a></li>
+                                                            <li><a href="">Arts and Crafts for Girls</a></li>
+                                                            <li><a href="">Video Games for Girls</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="menu_item_children">
+                                                <a href="#"> Fish & Seafood <i class="fa fa-angle-right"></i></a>
+                                                <ul class="categories_mega_menu column_2">
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Check Trousers</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Building</a></li>
+                                                            <li><a href="">Electronics</a></li>
+                                                            <li><a href="">action figures </a></li>
+                                                            <li><a href="">specialty & boutique toy</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="menu_item_children">
+                                                        <a href="#">Calculators</a>
+                                                        <ul class="categorie_sub_menu">
+                                                            <li><a href="">Dolls for Girls</a></li>
+                                                            <li><a href="">Girls' Learning Toys</a></li>
+                                                            <li><a href="">Arts and Crafts for Girls</a></li>
+                                                            <li><a href="">Video Games for Girls</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#"> Fresh Meat</a></li>
+                                            <li><a href="#"> Butter & Eggs</a></li>
+                                            <li><a href="#">Milk</a></li>
+                                            <li><a href="#">Oil & Vinegars</a></li>
+                                            <li><a href="#"> Bread</a></li>
+                                            <li><a href="#"> Jam & Honey</a></li>
+                                            <li><a href="#"> Frozen Food</a></li>
+                                            <li class="hidden"><a href="shop.html">New Sofas</a></li>
+                                            <li class="hidden"><a href="shop.html">Sleight Sofas</a></li>
+                                            <li><a href="#" id="more-btn"><i class="fa fa-plus" aria-hidden="true"></i> More Categories</a></li>*@
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--main menu start-->
+                            <div class="main_menu menu_position">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a class="active" href="index.html">Anasayfa<i class="fa fa-angle-down"></i></a>
+                                            <ul class="sub_menu">
+                                                <li><a href="index.html">Home shop 1</a></li>
+                                                <li><a href="index-2.html">Home shop 2</a></li>
+                                                <li><a href="index-3.html">Home shop 3</a></li>
+                                                <li><a href="index-4.html">Home shop 4</a></li>
+                                                <li><a href="index-5.html">Home shop 5</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a asp-controller="Home" asp-action="GetBlogArticle">Blog</a></li>
+
+                                        @*<li>
+                                                <a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
+                                                <ul class="sub_menu pages">
+                                                    <li><a href="blog-details.html">blog details</a></li>
+                                                    <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
+                                                    <li><a href="blog-sidebar.html">blog sidebar</a></li>
+                                                </ul>
+                                            </li>*@
+                                        <li><a asp-controller="Home" asp-action="About">Hakkımızda</a></li>
+                                        <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
+                                        <li><a asp-controller="Carrier" asp-action="Index">Nakliyeciler</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!--main menu end-->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="call-support">
+                                <p><a href="tel:@Phone">@Phone</a> Müşteri Hizmetleri</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--header area end-->
+    @RenderBody()
+    <!--footer area start-->
+    <br />
+    <footer class="footer_widgets">
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-7">
+                        <div class="widgets_container contact_us">
+                            <div class="footer_logo">
+                                <a href="/Home/Index"><img src="~/img/GeneralSettings/@LogoURL" alt=""></a>
+                            </div>
+                            <p class="footer_desc">@Description</p>
+                            <p><span>Address:</span> @Address</p>
+                            <p><span>Email:</span> <a href="#">@Email</a></p>
+                            <p><span>Call us:</span> <a href="tel:" @Phone ">@Phone</a> </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-5">
+                        <div class="widgets_container widget_menu">
+                            <h3>Information</h3>
+                            <div class="footer_menu">
+
+                                <ul>
+                                    <li><a href="/Home/About">Hakkımızda</a></li>
+                                    <li><a href="/Home/GetInformation">İlan Verme Kuralları</a></li>
+                                    <li><a href="/Home/GetInformation">Gizlilik Politikası</a></li>
+                                    <li><a href="/Home/GetInformation">Kullanım Koşulları</a></li>
+                                    <li><a href="/Contact/Index">İletişim</a></li>
+                                    <li><a href="/Home/GetBlogArticle">Blog Yazıları</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4">
+                        <div class="widgets_container widget_menu">
+                            <h3>Extras</h3>
+                            <div class="footer_menu">
+                                <ul>
+                                    <li><a href="#">Brands</a></li>
+                                    <li><a href="#"> Gift Certificates</a></li>
+                                    <li><a href="#">Affiliate</a></li>
+                                    <li><a href="#">Specials</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#"> Order History</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-8">
+                        <div class="widgets_container widget_newsletter">
+                            <h3>Sign up newsletter</h3>
+                            <p class="footer_desc">Get updates by subscribe our weekly newsletter</p>
+                            <div class="subscribe_form">
+                                <form id="mc-form" class="mc-form footer-newsletter">
+                                    <input id="mc-email" type="email" autocomplete="off" placeholder="Enter you email">
+                                    <button id="mc-submit">Subscribe</button>
+                                </form>
+                                <!-- mailchimp-alerts Start -->
+                                <div class="mailchimp-alerts text-centre">
+                                    <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                                    <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                                    <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                                </div><!-- mailchimp-alerts end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer_bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="copyright_area">
+                            <p>Copyright  © 2020  <a href="#">Happy Farmer</a>  . All Rights Reserved.Design by  <a href="#">Veysel MUTLU</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="footer_payment">
+                            <ul>
+                                <li><a href="#"><img src="~/img/icon/paypal1.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="~/img/icon/paypal2.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="~/img/icon/paypal3.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="~/img/icon/paypal4.jpg" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--footer area end-->
+    <!--jquery min js-->
+    <script src="~/js/vendor/jquery-3.4.1.min.js"></script>
+    <!--popper min js-->
+    <script src="~/js/popper.js"></script>
+    <!--bootstrap min js-->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!--owl carousel min js-->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <!--slick min js-->
+    <script src="~/js/slick.min.js"></script>
+    <!--magnific popup min js-->
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <!--counterup min js-->
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <!--jquery countdown min js-->
+    <script src="~/js/jquery.countdown.js"></script>
+    <!--jquery ui min js-->
+    <script src="~/js/jquery.ui.js"></script>
+    <!--jquery elevatezoom min js-->
+    <script src="~/js/jquery.elevatezoom.js"></script>
+    <!--isotope packaged min js-->
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <!--slinky menu js-->
+    <script src="~/js/slinky.menu.js"></script>
+    <!--instagramfeed menu js-->
+    <script src="~/js/jquery.instagramFeed.min.js"></script>
+    <!-- Plugins JS -->
+    <script src="~/js/plugins.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <!-- Main JS -->
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

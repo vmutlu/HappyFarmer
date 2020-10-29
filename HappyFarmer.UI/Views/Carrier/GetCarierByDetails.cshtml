@@ -1,0 +1,280 @@
+﻿@model UserModel
+@{
+    ViewData["Title"] = "GetCarierByDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <br />
+    <div class="alert alert-success">
+        <center><span>@ViewBag.Message </span></center>
+    </div>
+    <br />
+}
+@section Scripts{
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#edit'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '200px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 200px;
+        }
+    </style>
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Nakliyeci Detay</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product_details mt-70 mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product-details-tab">
+                    <div id="img-1" class="zoomWrapper single-zoom">
+                        <a href="#">
+                            <img id="zoom1" src="~/img/CustomerImages/@Model.ImageURL" data-zoom-image="~/img/CustomerImages/@Model.ImageURL" alt="big-1">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product_d_right">
+                    <form action="#">
+
+                        <h1><a href="#">@Model.Name @Model.Surname</a></h1>
+                        <div class="product_nav">
+                            <ul>
+                                <li class="prev"><a href="product-details.html"><i class="fa fa-angle-left"></i></a></li>
+                                <li class="next"><a href="variable-product.html"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class=" product_ratting">
+                            <ul>
+                                <li><a href="#"><i class="icon-star"></i></a></li>
+                                <li><a href="#"><i class="icon-star"></i></a></li>
+                                <li><a href="#"><i class="icon-star"></i></a></li>
+                                <li><a href="#"><i class="icon-star"></i></a></li>
+                                <li><a href="#"><i class="icon-star"></i></a></li>
+                                <li class="review"><a href="#"> Nakliyeci Memnuniyeti </a></li>
+                            </ul>
+
+                        </div>
+                        <div class="price_box">
+                            <span class="current_price">@Model.PhoneNumber</span>
+
+                        </div>
+                        <div class="product_desc">
+                            <p>@Model.Email</p>
+                        </div>
+                    </form>
+                        @if (ViewBag.ActiveCustomerId != null)
+                        {
+                            <div class="table-responsive">
+                                <form asp-controller="Carrier" asp-action="CarierMessageRecevied" asp-route-carierId="@Model.Id" method="post">
+                                    <div>
+                                        <label>Mesaj Konusu</label>
+                                        <input type="text" name="Subject" placeholder="Mesaj Konusu Giriniz..." class="form-control">
+                                    </div>
+                                    <input type="hidden" name="UserReceiverId" value="@Model.Id">
+                                    <div>
+                                        <label>Mesajınız</label>
+                                        <textarea id="edit" name="MessageContent" class="form-control"></textarea>
+                                    </div>
+                                    <br />
+                                    <div class="save_button primary_btn default_button" align="right">
+                                        <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div class="alert-error">
+                                <span>Sitemize Üye olup giriş yaptıktan sonra nakliyeciye soru sorabilirsiniz. Üye Olmak için <a href="">buraya</a>.Giriş yapmak için <a href="">buraya</a> tıklayınız.</span>
+                            </div>
+
+                        }
+
+
+                        @*<div class="product_meta">
+                                <span>
+                                    Ürünün İlişkili Olduğu Kategori(ler):
+                                    @foreach (var item in ViewBag.CategoriesWith)
+                                    {
+                                        <a href="#">@item</a>
+                                    }
+                                </span>
+                            </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product_d_info mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_d_inner">
+                    <div class="product_info_button">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Nakliyeci Açıklama</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Nakliyeci Bilgileri</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="product_info_content">
+                                <p>
+                                    Sensiz ben yokum
+                                    Hayat vurdu bizi yollara
+                                    Yükü olan bize gelir
+                                    happyfarmer.com herşeyim
+                                    İsterim ki bir soluk al
+                                    Yollar yordu bizi gülüm
+                                    Sen gel yalnız kalma
+                                    Zaten happyfarmer.com yalnız
+                                    Gel gülüm gel!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sheet" role="tabpanel">
+                            <div class="product_d_table">
+                                <form action="#">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Adı</td>
+                                                <td>@Model.Name</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Soyadı</td>
+                                                <td>@Model.Surname</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Email</td>
+                                                <td>@Model.Email</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Telefon No</td>
+                                                <td>@Model.PhoneNumber</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Adresi</td>
+                                                <td>
+                                                    @Model.Address
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Kayıt Tarihi</td>
+                                                <td>
+                                                    @Model.RecordData
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Nakliyeci Bulunduğu İl</td>
+                                                <td>@Model.City</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            <div class="reviews_wrapper">
+                                <h2>1 review for Donec eu furniture</h2>
+                                <div class="reviews_comment_box">
+                                    <div class="comment_thmb">
+                                        <img src="assets\img\blog\comment2.jpg" alt="">
+                                    </div>
+                                    <div class="comment_text">
+                                        <div class="reviews_meta">
+                                            <div class="star_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <p><strong>admin </strong>- September 12, 2018</p>
+                                            <span>roadthemes</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="comment_title">
+                                    <h2>Add a review </h2>
+                                    <p>Your email address will not be published.  Required fields are marked </p>
+                                </div>
+                                <div class="product_ratting mb-10">
+                                    <h3>Your rating</h3>
+                                    <ul>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product_review_form">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="review_comment">Your review </label>
+                                                <textarea name="comment" id="review_comment"></textarea>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="author">Name</label>
+                                                <input id="author" type="text">
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="email">Email </label>
+                                                <input id="email" type="text">
+                                            </div>
+                                        </div>
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

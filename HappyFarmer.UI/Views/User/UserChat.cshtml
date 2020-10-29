@@ -1,0 +1,382 @@
+﻿@inject HappyFarmer.Business.Abstract.ICityService _cityService
+@model List<HappyFarmer.Entities.FarmerGlobalMessage>
+@{
+    ViewData["Title"] = "UserChat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    <script type="text/javascript">
+        function fonk1() {
+            window.alert('Mesajınız Başarıyla Gönderilmiştir');
+        }
+    </script>
+}
+
+
+@section Scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#edit'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '100px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 150px;
+            min-width: 1150px;
+        }
+    </style>
+}
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Çiftçi Sohbetleri</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Sohbet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="about_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <figure>
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <center> <h2> !!! Çiftçi Sohbet Ortamına Hoş Geldiniz !!!</h2></center>
+                            </div> <br />
+                            <div>
+                                <div class="form-group row">
+                                    <form asp-controller="User" asp-action="UserChat" method="get" style="display:inline;">
+                                        <br />
+                                        <label class="col-md-12 col-form-label">Şehir Seçiniz</label>
+                                        <div class="col-md-12">    
+                                            <select name="CityId" class="form-control">
+                                                <option value="1">Adana</option>
+                                                <option value="2">Adıyaman</option>
+                                                <option value="3">Afyonkarahisar</option>
+                                                <option value="4">Ağrı</option>
+                                                <option value="5">Amasya</option>
+                                                <option value="6">Ankara</option>
+                                                <option value="7">Antalya</option>
+                                                <option value="8">Artvin</option>
+                                                <option value="9">Aydın</option>
+                                                <option value="10">Balıkesir</option>
+                                                <option value="11">Bilecik</option>
+                                                <option value="12">Bingöl</option>
+                                                <option value="13">Bitlis</option>
+                                                <option value="14">Bolu</option>
+                                                <option value="15">Burdur</option>
+                                                <option value="16">Bursa</option>
+                                                <option value="17">Çanakkale</option>
+                                                <option value="18">Çankırı</option>
+                                                <option value="19">Çorum</option>
+                                                <option value="20">Denizli</option>
+                                                <option value="21">Diyarbakır</option>
+                                                <option value="22">Edirne</option>
+                                                <option value="23">Elazığ</option>
+                                                <option value="24">Erzincan</option>
+                                                <option value="25">Erzurum</option>
+                                                <option value="26">Eskişehir</option>
+                                                <option value="27">Gaziantep</option>
+                                                <option value="28">Giresun</option>
+                                                <option value="29">Gümüşhane</option>
+                                                <option value="30">Hakkâri</option>
+                                                <option value="31">Hatay</option>
+                                                <option value="32">Isparta</option>
+                                                <option value="33">Mersin</option>
+                                                <option value="34">İstanbul</option>
+                                                <option value="35">İzmir</option>
+                                                <option value="36">Kars</option>
+                                                <option value="37">Kastamonu</option>
+                                                <option value="38">Kayseri</option>
+                                                <option value="39">Kırklareli</option>
+                                                <option value="40">Kırşehir</option>
+                                                <option value="41">Kocaeli</option>
+                                                <option value="42">Konya</option>
+                                                <option value="43">Kütahya</option>
+                                                <option value="44">Malatya</option>
+                                                <option value="45">Manisa</option>
+                                                <option value="46">Kahramanmaraş</option>
+                                                <option value="47">Mardin</option>
+                                                <option value="48">Muğla</option>
+                                                <option value="49">Muş</option>
+                                                <option value="50">Nevşehir</option>
+                                                <option value="51">Niğde</option>
+                                                <option value="52">Ordu</option>
+                                                <option value="53">Rize</option>
+                                                <option value="54">Sakarya</option>
+                                                <option value="55">Samsun</option>
+                                                <option value="56">Siirt</option>
+                                                <option value="57">Sinop</option>
+                                                <option value="58">Sivas</option>
+                                                <option value="59">Tekirdağ</option>
+                                                <option value="60">Tokat</option>
+                                                <option value="61">Trabzon</option>
+                                                <option value="62">Tunceli</option>
+                                                <option value="63">Şanlıurfa</option>
+                                                <option value="64">Uşak</option>
+                                                <option value="65">Van</option>
+                                                <option value="66">Yozgat</option>
+                                                <option value="67">Zonguldak</option>
+                                                <option value="68">Aksaray</option>
+                                                <option value="69">Bayburt</option>
+                                                <option value="70">Karaman</option>
+                                                <option value="71">Kırıkkale</option>
+                                                <option value="72">Batman</option>
+                                                <option value="73">Şırnak</option>
+                                                <option value="74">Bartın</option>
+                                                <option value="75">Ardahan</option>
+                                                <option value="76">Iğdır</option>
+                                                <option value="77">Yalova</option>
+                                                <option value="78">Karabük</option>
+                                                <option value="79">Kilis</option>
+                                                <option value="80">Osmaniye</option>
+                                                <option value="81">Düzce</option>
+                                            </select>   
+                                            <br />
+                                        </div>
+                                        
+                                            <input name="type" type="hidden" value="@ViewBag.Type" />
+                                            <button style="width:100%;" type="submit" class="btn btn-warning">Sohbet Yükle</button>
+                                       
+                                        <br />
+                                    </form>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="panel-body" style="padding: 0px;">
+                                <div class="chat-widget-main">
+                                    @foreach (var item in Model)
+                                    {
+                                        @if (item.SenderId % 2 == 0)
+                                        {
+                                            <div class="chat-widget-left">
+                                                @item.MessageContent <div style="float:right;">
+                                                    @{
+                                                        var cityName = _cityService.GetById(item.CityId);
+                                                    }
+                                                    @if (cityName != null)
+                                                        @cityName.Cities
+                                                </div>
+                                            </div>
+                                            <div class="chat-widget-name-left">
+                                                <h4>
+                                                    @foreach (var users in ViewBag.UsersNameSurname)
+                                                    {
+                                                        if (item.SenderId == users.Id)
+                                                        {
+                                                            <p>@users.Name  @users.Surname</p>
+                                                        }
+                                                    }
+                                                </h4>
+                                            </div>
+                                        }
+
+                                        @if (item.SenderId % 2 == 1)
+                                        {<div class="chat-widget-right">
+                                                @item.MessageContent <div style="float:right;">
+                                                    @{
+                                                        var cityName = _cityService.GetById(item.CityId);
+                                                    }
+                                                    @cityName.Cities
+                                                </div>
+                                            </div>
+                                            <div class="chat-widget-name-right">
+                                                <h4>
+                                                    @foreach (var users in ViewBag.UsersNameSurname)
+                                                    {
+                                                        if (item.SenderId == users.Id)
+                                                        {
+                                                            <p>@users.Name  @users.Surname</p>
+                                                        }
+                                                    }
+                                                </h4>
+                                            </div>
+
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <form asp-controller="User" asp-action="UserChat" method="post">
+                                <div class="panel-footer">
+                                    <div class="input-group">
+                                        <div class="form-group row">
+                                            <br />
+                                            <label class="col-md-12 col-form-label">Mesaj Konusu Seçiniz</label>
+                                            <div class="col-md-12">
+                                                <select name="messageSubject" id="FarmerDeclareType" class="form-control">
+                                                    <option value="10">Büyükbaş Hayvan</option>
+                                                    <option value="11">Küçükbaş Hayvan</option>
+                                                    <option value="12">Kümes Hayvan</option>
+                                                    <option value="13">Evcil Hayvan</option>
+
+
+                                                    <option value="14">
+                                                        Süt
+                                                    </option>
+
+                                                    <option value="15">
+                                                        Hayvansal Gıda
+                                                    </option>
+
+
+                                                    <option value="20">
+                                                        Traktör
+                                                    </option>
+
+                                                    <option value="21">
+                                                        Tarla
+                                                    </option>
+
+                                                    <option value="22">
+                                                        Traktör Ekipmanları
+                                                    </option>
+
+                                                    <option value="23">
+                                                        Sebze
+                                                    </option>
+
+                                                    <option value="24">
+                                                        Meyve
+                                                    </option>
+
+                                                    <option value="25">
+                                                        Tahıl Ürünleri
+                                                    </option>
+
+                                                    <option value="26">
+                                                        Yem & Otsu Bitkiler
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <br />
+                                            <label style="margin-left:-10px;" class="col-md-12 col-form-label">Şehir Seçiniz</label>
+                                            <div class="col-md-12">
+                                                <select style="margin-left:-10px;" name="City" class="form-control">,
+                                                    <option value="1">Adana</option>
+                                                    <option value="2">Adıyaman</option>
+                                                    <option value="3">Afyonkarahisar</option>
+                                                    <option value="4">Ağrı</option>
+                                                    <option value="5">Amasya</option>
+                                                    <option value="6">Ankara</option>
+                                                    <option value="7">Antalya</option>
+                                                    <option value="8">Artvin</option>
+                                                    <option value="9">Aydın</option>
+                                                    <option value="10">Balıkesir</option>
+                                                    <option value="11">Bilecik</option>
+                                                    <option value="12">Bingöl</option>
+                                                    <option value="13">Bitlis</option>
+                                                    <option value="14">Bolu</option>
+                                                    <option value="15">Burdur</option>
+                                                    <option value="16">Bursa</option>
+                                                    <option value="17">Çanakkale</option>
+                                                    <option value="18">Çankırı</option>
+                                                    <option value="19">Çorum</option>
+                                                    <option value="20">Denizli</option>
+                                                    <option value="21">Diyarbakır</option>
+                                                    <option value="22">Edirne</option>
+                                                    <option value="23">Elazığ</option>
+                                                    <option value="24">Erzincan</option>
+                                                    <option value="25">Erzurum</option>
+                                                    <option value="26">Eskişehir</option>
+                                                    <option value="27">Gaziantep</option>
+                                                    <option value="28">Giresun</option>
+                                                    <option value="29">Gümüşhane</option>
+                                                    <option value="30">Hakkâri</option>
+                                                    <option value="31">Hatay</option>
+                                                    <option value="32">Isparta</option>
+                                                    <option value="33">Mersin</option>
+                                                    <option value="34">İstanbul</option>
+                                                    <option value="35">İzmir</option>
+                                                    <option value="36">Kars</option>
+                                                    <option value="37">Kastamonu</option>
+                                                    <option value="38">Kayseri</option>
+                                                    <option value="39">Kırklareli</option>
+                                                    <option value="40">Kırşehir</option>
+                                                    <option value="41">Kocaeli</option>
+                                                    <option value="42">Konya</option>
+                                                    <option value="43">Kütahya</option>
+                                                    <option value="44">Malatya</option>
+                                                    <option value="45">Manisa</option>
+                                                    <option value="46">Kahramanmaraş</option>
+                                                    <option value="47">Mardin</option>
+                                                    <option value="48">Muğla</option>
+                                                    <option value="49">Muş</option>
+                                                    <option value="50">Nevşehir</option>
+                                                    <option value="51">Niğde</option>
+                                                    <option value="52">Ordu</option>
+                                                    <option value="53">Rize</option>
+                                                    <option value="54">Sakarya</option>
+                                                    <option value="55">Samsun</option>
+                                                    <option value="56">Siirt</option>
+                                                    <option value="57">Sinop</option>
+                                                    <option value="58">Sivas</option>
+                                                    <option value="59">Tekirdağ</option>
+                                                    <option value="60">Tokat</option>
+                                                    <option value="61">Trabzon</option>
+                                                    <option value="62">Tunceli</option>
+                                                    <option value="63">Şanlıurfa</option>
+                                                    <option value="64">Uşak</option>
+                                                    <option value="65">Van</option>
+                                                    <option value="66">Yozgat</option>
+                                                    <option value="67">Zonguldak</option>
+                                                    <option value="68">Aksaray</option>
+                                                    <option value="69">Bayburt</option>
+                                                    <option value="70">Karaman</option>
+                                                    <option value="71">Kırıkkale</option>
+                                                    <option value="72">Batman</option>
+                                                    <option value="73">Şırnak</option>
+                                                    <option value="74">Bartın</option>
+                                                    <option value="75">Ardahan</option>
+                                                    <option value="76">Iğdır</option>
+                                                    <option value="77">Yalova</option>
+                                                    <option value="78">Karabük</option>
+                                                    <option value="79">Kilis</option>
+                                                    <option value="80">Osmaniye</option>
+                                                    <option value="81">Düzce</option>
+                                                </select>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group row ck-editor__editable_inline">
+                                            <br />
+                                            <textarea id="edit" style="min-height: 40%; width:900px;" name="MessageContent" placeholder="Mesajınızı Giriniz..." class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 mt-3">
+                                                <center><button style="width:100%;" type="submit" class="btn btn-success btn-sm" onclick="fonk1()">Mesajı Gönder</button> </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+

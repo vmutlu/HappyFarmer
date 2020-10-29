@@ -1,0 +1,178 @@
+﻿@model List<DeclareModel>
+@{
+    ViewData["Title"] = "UserCreateDeclare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Id = 0;
+    var userId = 0;
+    var Name = "";
+    var Surname = "";
+    var Email = "";
+    var Phone = "";
+    var ImageURL = "";
+    var userType = 0;
+}
+@foreach (var item in Model)
+{
+    Id = item.Id;
+    userId = item.UserId;
+    Name = item.Name;
+    Surname = item.Surname;
+    Email = item.EMail;
+    Phone = item.PhoneNumber;
+}
+<div align="center" class="alert-danger">
+    <h4>@ViewBag.Message</h4>
+</div>
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>İlan Detay Sayfası</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>İlan Detay</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- customer login start -->
+<div class="customer_login">
+    <div class="container">
+        <div class="row">
+            <!--login area start-->
+            <div class="col-lg-12 col-md-12">
+                <div class="account_form">
+                    <h2>Giriş Yap</h2>
+                    <form asp-controller="User" asp-action="UserCreateDeclare" enctype="multipart/form-data" method="post">
+                        <p>
+                            <label>Yüklü İlanın Resmi<span>*</span></label>
+                            <img src="~/img/CustomerDeclareImages/@ImageURL" />
+                            <input type="file" name="file" />
+                        </p>
+                        <p>
+                            <label>Ad<span>*</span></label>
+                            <input name="UserName" type="text" value="@Name">
+                        </p>
+                        <p>
+                            <label>Soyad<span>*</span></label>
+                            <input name="UserSurname" type="text" value="@Surname">
+                        </p>
+                        <p>
+                            <label>Email Adresi<span>*</span></label>
+                            <input name="UserEmail" type="text" value="@Email">
+                        </p>
+                        <p>
+                            <label>Telefon Numarası<span>*</span></label>
+                            <input name="User   PhoneNumber" type="number" value="@Phone">
+                        </p>
+                        <p>
+                            <label>İlan Adı<span>*</span></label>
+                            <input name="Name" type="text">
+                        </p>
+                        <p>
+                            <label>İlan Tipi<span>*</span></label>
+                            <select name="FarmerDeclareType" class="form-control">
+                                <option value="10">Büyükbaş Hayvan</option>
+                                <option value="11">Küçükbaş Hayvan</option>
+                                <option value="12">Kümes Hayvanı</option>
+                                <option value="13">Evcil Hayvan</option>
+                                <option value="14">Süt</option>
+                                <option value="15">Hayvansal Gıda</option>
+                                <option value="20">Traktör</option>
+                                <option value="21">Tarla</option>
+                                <option value="22">Traktör Ekipmanları</option>
+                                <option value="23">Sebxz</option>
+                                <option value="24">Meyve</option>
+                                <option value="25">Tahıl Ürünleri</option>
+                                <option value="26">Yem & Otsu Bitkiler</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label>İlan Başlığı<span>*</span></label>
+                            <input name="Title" type="text">
+                        </p>
+                        <p>
+                            <label>İlan Açıklaması<span>*</span></label>
+                            <input name="Description" type="text">
+                        </p>
+                        <p>
+                            <label>İl<span>*</span></label>
+                            <input name="City" type="text">
+                        </p>
+                        <p>
+                            <label>İlçe<span>*</span></label>
+                            <input name="Country" type="text">
+                        </p>
+                        <p>
+                            <label>Mahalle<span>*</span></label>
+                            <input name="Neighborhood" type="text">
+                        </p>
+                        <p>
+                            <label>Fiyat<span>*</span></label>
+                            <input name="Price" type="text">
+                        </p>
+                        <p>
+                            <label>İlan Tarihi<span>*</span></label>
+                            <input name="AnnouncementDate" type="text" value="@DateTime.Now.ToShortDateString()">
+                        </p>
+                        <p>
+                            <label>Durumu<span>*</span></label>
+                            <select name="Situation" class="form-control">
+                                <option value="iyi">Az Kullanılmış</option>
+                                <option value="orta">Kullanılabilir</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label>Takas<span>*</span></label>
+                            <select name="Swap" class="form-control">
+                                <option value="true">Var</option>
+                                <option value="false">Yok</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label>Garanti Durumu<span>*</span></label>
+                            <select name="Guarantee" class="form-control">
+                                <option value="true">Var</option>
+                                <option value="false">Yok</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label>İlan Ekleyen Kişi<span>*</span></label>
+                            <input name="UserId" type="number" readonly value="@userId">
+                        </p>
+                        <p>
+                            <label>Stok Miktarı<span>*</span></label>
+                            <input name="StockQty" type="number">
+                        </p>
+                        <p>
+                            <label>İlan Ekleyen Kişi Yetkisi <span>*</span></label>
+                            <select disabled name="UserType" class="form-control">
+                                @if (userType == 0)
+                                {
+                                    <option value="0" selected>Normal Müşteri</option>
+                                }
+
+                                else if (userType == 1)
+                                {
+                                    <option value="2" selected>Nakliyeci</option>
+                                }
+                            </select>
+                        </p>
+                        <div class="login_submit">
+                            <button type="submit">İlan Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--login area start-->
+
+        </div>
+    </div>
+</div>
+<!-- customer login end -->

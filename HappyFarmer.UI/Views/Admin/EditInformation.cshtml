@@ -1,0 +1,121 @@
+﻿@model SecurityInformationModel
+@{
+    ViewData["Title"] = "EditInformation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Site Ön Bilgi Güncelleme Sayfası</h1>
+<hr />
+
+@section Scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '180px';
+        };
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor2'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '180px';
+        };
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor3'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '180px';
+        };
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor4'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '180px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 180px;
+        }
+    </style>
+}
+
+<form asp-controller="Admin" asp-action="EditInformation" method="post">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="AdversitingRule" class="col-md-2 col-form-label">İlan Verme Kuralları</label>
+                <div class="col-md-8">
+                    <textarea id="editor" asp-for="AdversitingRule" rows="40" class="form-control">@Model.AdversitingRule</textarea>
+                    <span asp-validation-for="AdversitingRule"></span>
+                </div>
+            </div>
+            <input type="hidden" asp-for="Id" value="@Model.Id" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="TermsOfUse" class="col-md-2 col-form-label">Kullanım Koşulları</label>
+                <div class="col-md-8">
+                    <textarea id="editor2"asp-for="TermsOfUse" rows="40" class="form-control">@Model.TermsOfUse</textarea>
+                    <span asp-validation-for="TermsOfUse"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PrivacyPolicy" class="col-md-2 col-form-label">Gizlilik Politikası</label>
+                <div class="col-md-8">
+                    <textarea id="editor3" asp-for="PrivacyPolicy" rows="40" class="form-control">@Model.PrivacyPolicy</textarea>
+                    <span asp-validation-for="PrivacyPolicy"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="FAQ" class="col-md-2 col-form-label">SSS</label>
+                <div class="col-md-8">
+                    <textarea id="editor4"asp-for="FAQ" rows="40" class="form-control">@Model.FAQ</textarea>
+                    <span asp-validation-for="FAQ"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button style="width:80%; margin-left:269px;" type="submit" class="btn btn-success">Güncelle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,102 @@
+﻿@model BlogModel
+@{
+    ViewData["Title"] = "EditBlogArticle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Blog Güncelleme Sayfası</h1>
+<hr />
+
+@section Scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        CKEDITOR.edit = function (config) {
+            config.height = '800px';
+        };
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<form action="/Admin/EditBlogArticle" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group row">
+                <label asp-for="Title" class="col-md-2 col-form-label">Ürün Adı</label>
+                <div class="col-md-10">
+                    <input asp-for="Title" required="" value="@Model.Title" class="form-control" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="ImagePath" class="col-md-2 col-form-label">Blog Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImageUrl" value="@Model.ImagePath" />
+                    <img src="~/img/BlogImages/@Model.ImagePath" width="100" />
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="ImagePath"></span>
+                </div>
+            </div>
+
+            <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
+
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Blog Açıklaması</label>
+                <div class="col-md-10">
+                    <textarea id="editor" asp-for="Description" required="" class="form-control">@Model.Description</textarea>
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="QueueNumber" class="col-md-2 col-form-label">Blog Sıra Numarası</label>
+                <div class="col-md-10">
+                    <input name="QueueNumber" type="number" value="@Model.QueueNumber" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="CreatedDate" class="col-md-2 col-form-label">Blog Ekleme Tarihi</label>
+                <div class="col-md-10">
+                    <input name="CreatedDate" readonly type="text" value="@DateTime.Now.ToShortDateString()" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="UserId" class="col-md-2 col-form-label">Blog Ekleyen Kullanıcı</label>
+                <div class="col-md-10">
+                    <select name="UserId" id="UserId" class="form-control">
+                        <option value="@ViewBag.UserId">@ViewBag.UserDetails</option>
+                    </select>
+                    <span asp-validation-for="UserId"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-md-10 offset-md-2">
+                    <button style="width:100%; margin-left:269px;" type="submit" class="btn btn-success">Güncelle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+

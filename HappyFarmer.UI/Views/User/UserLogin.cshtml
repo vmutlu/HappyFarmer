@@ -1,0 +1,78 @@
+﻿@model LoginModel
+@{
+    ViewData["Title"] = "UserLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div align="center" class="alert-danger">
+    <h4>@ViewBag.Message</h4>
+</div>
+
+@if (ViewBag.Captcha != null)
+{
+    <div align="center" class="alert-warning">
+        @ViewBag.Captcha
+    </div>
+}
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Giriş Paneli</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>Giriş</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- customer login start -->
+<div class="customer_login">
+    <div class="container">
+        <div class="row">
+            <!--login area start-->
+            <div class="col-lg-12 col-md-12">
+                <div class="account_form">
+                    <h2>Giriş Yap</h2>
+                    <form asp-controller="User" asp-action="UserLogin" method="post">
+                        <p>
+                            <label>Email Adresi<span>*</span></label>
+                            <input name="Email" type="text" value="veysel_mutlu42@gmail.com">
+                        </p>
+                        <p>
+                            <label>Şifre <span>*</span></label>
+                            <input name="Password" type="password" value="123456">
+                        </p>
+                        <p>
+                            <label>Kullanıcı Tipi <span>*</span></label>
+                            <select name="userType" class="form-control">
+                                <option value="0">Normal Müşteri Girişi</option>
+                                <option value="2">Nakliyeci Girişi</option>
+                            </select>
+                        </p>
+                        <p>
+                            <div class="g-recaptcha" data-sitekey="6LdauNsZAAAAANaO3gJEOGC72rO8PqYAAD_o3Z_w"></div>
+                        </p>
+                        <div class="login_submit">
+                            <a href="#">Şifremi Unuttum ?</a>
+                            <label for="remember">
+                                <input id="remember" type="checkbox">
+                                Beni Hatırla
+                            </label>
+                            <button type="submit">Giriş Yap</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--login area start-->
+
+        </div>
+    </div>
+</div>
+<!-- customer login end -->

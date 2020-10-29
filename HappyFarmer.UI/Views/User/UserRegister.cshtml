@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "UserRegister";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Müşteri Kayıt Paneli</h3>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li>Kayıt Ol</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- customer login start -->
+<div class="customer_login">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+                <div class="account_form register">
+                    <h2>Kayıt Ol</h2>
+                    <form asp-controller="User" asp-action="UserRegister" method="post" enctype="multipart/form-data">
+                                                <p>
+                            <label>Profil Resminiz <span>*</span></label>
+                            <input type="file" name="file" class="form-control" />
+                        </p>
+                        <p>
+                            <label>Ad <span>*</span></label>
+                            <input name="Name" type="text">
+                        </p>
+                        <p>
+                            <label>Soyad <span>*</span></label>
+                            <input name="Surname" type="text">
+                        </p>
+                        <p>
+                            <label>Email Adresi  <span>*</span></label>
+                            <input name="Email" type="email">
+                        </p>
+                        <p>
+                            <label>Adres  <span>*</span></label>
+                            <textarea name="Address" type="text" class="form-control"></textarea>
+                        </p>
+                        <p>
+                            <label>Telefon Numarası  <span>*</span></label>
+                            <input name="PhoneNumber" type="number">
+                        </p>
+                        <p>
+                            <label>Şifreniz <span>*</span></label>
+                            <input name="Password" type="password">
+                        </p>
+                        <p>
+                            <label>Kullanıcı Tipi <span>*</span></label>
+                            <select name="UserType" class="form-control">
+                                <option value="0">Normal Müşteri Kaydı</option>
+                                <option value="2">Nakliyeci Kaydı</option>
+                            </select>
+                        </p>
+                        <div class="login_submit">
+                            <button type="submit">Kayıt Ol</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--register area end-->
+        </div>
+    </div>
+</div>

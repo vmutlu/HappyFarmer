@@ -1,0 +1,45 @@
+﻿@*<section class="slider_section slider_s_five mb-70">
+        <div class="slider_area owl-carousel">
+            @foreach (var item in Model)
+            {
+                <div class="single_slider d-flex align-items-center" data-bgimg="~/img/SliderImages/@item.ImagePath">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="slider_content">
+                                    <img style="width:1150px; height:400px;" class="d-block img-fluid" src="~/img/SliderImages/@item.ImagePath" alt="First slide">
+                                    <a href="shop.html">Read more </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>*@
+@*<marquee behavior=alternate><img src="http://www.sitekodlari.com/img/ari.png"></marquee>*@
+
+<center>
+    <div id="slider">
+
+        <div class="sliderleft"></div>
+        <div class="sliderright"></div>
+        @foreach (var item in Model)
+        {
+            <li>
+                <img class="img-responsive" src="~/img/SliderImages/@item.ImagePath" alt="">
+            </li>
+        }
+
+
+    </div>
+</center>
+<div class="sliderbutton">
+    @foreach (var item in Model)
+    {
+        <li></li>
+    }
+</div>
+<br />

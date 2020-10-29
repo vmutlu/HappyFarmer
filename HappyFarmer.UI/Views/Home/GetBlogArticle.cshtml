@@ -1,0 +1,161 @@
+﻿@model List<FarmerBlog>
+@{
+    ViewData["Title"] = "GetBlogArticle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    const int page = 1;
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Blog</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="blog_page_section blog_fullwidth mt-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+                <div class="blog_wrapper">
+                    @foreach (var item in Model)
+                    {
+                        <article class="single_blog">
+                            <figure>
+                                <div class="blog_thumb">
+                                    <a href="blog-details.html"><img src="~/img/BlogImages/@item.ImagePath" alt=""></a>
+                                </div>
+                                <figcaption class="blog_content">
+                                    <h4 class="post_title"><a href="blog-details.html">@item.Title</a></h4>
+                                    <div class="articles_date">
+                                        <p>@item.CreatedDate | @ViewBag.BlogUsers</p>
+                                    </div>
+                                    @{
+                                        var metin = item.Description;
+                                        var skip = metin.Substring(0, 90);
+                                    }
+                                    <p class="post_desc">@skip ...</p>
+                                    <footer class="btn_more">
+                                        <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id">Devamını Oku</a>
+                                    </footer>
+                                </figcaption>
+                            </figure>
+                        </article>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-12">
+                <div class="blog_sidebar_widget">
+                    <div class="widget_list widget_post">
+                        <div class="widget_title">
+                            <h3>Diğer Blog Yazılarımız</h3>
+                        </div>
+                        @foreach (var item in Model)
+                        {
+                            <div class="post_wrapper">
+                                <div class="post_thumb">
+                                    <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id"><img src="~/img/BlogImages/@item.ImagePath" alt=""></a>
+                                </div>
+                                <div class="post_info">
+                                    <h4><a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id">@item.Title</a></h4>
+                                    <span>@item.CreatedDate</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="widget_list widget_categories">
+                        <div class="widget_title">
+                            <h3>Kategoriler</h3>
+                        </div>
+                        <ul>
+                            @{
+                                HappyFarmer.DataAccess.Concrete.FarmerContext context = new HappyFarmer.DataAccess.Concrete.FarmerContext();
+                            }
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.KucukBas">Küçük Baş Hayvanclık</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.BuyukBas">Büyük Baş Hayvancılık</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Kumes">Kümes Hayvanları</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Evcil">Evcil Hayvanlar</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.Sut">Süt Ürünleri</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAnimalEnum.YiyecekIcecek">Hayvansal Gıda</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Traktor">Traktörler</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tarla">Tarla & Arazi</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Ekipman">Traktör Ekipmanları</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Sebze">Sebzeler</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Meyve">Meyveler</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.Tahıl">Tahıl Ürünleri</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="CategoryWithProduct" asp-route-type="@HappyFarmer.DataAccess.Enums.ProductAgricultureEnum.YemAndOtsuBitki">Yem ve Otsu Bitkiler</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="widget_list widget_tag">
+                        <div class="widget_title">
+                            <h3>Gündemden Haberler</h3>
+                        </div>
+                        <div class="tag_widget">
+                            <iframe src="https://siteneekle.haber7.com/manset-250-250.html" frameborder="0" width="250" height="250" framespacing="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="blog_pagination pagination_full">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="pagination">
+                    <ul>
+                        @{ int newpage = page;
+                            if (ViewBag.PageCount != null)
+                                newpage = ViewBag.PageCount;
+
+                            newpage++;
+                        }
+
+                        <div align="right">
+                            <form asp-controller="Home" asp-action="GetBlogArticle" asp-route-page="@newpage" method="post">
+                                <button type="submit" class="btn btn-success btn-sm ml-2">İleri</button>
+                            </form>
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
