@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
+using HappyFarmer.UI.Logging;
 using HappyFarmer.UI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -324,6 +325,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserLogin(LoginModel loginModel, int userType)
         {
+
+            #region Log Records
+
+            var message = new { FirstName = "Veysel", LastName = "MUTLU", Message = "Giriş Log Mesajıdır." };
+            LoggerFactory.FileLogManager().Information("{test}" + message);
+
+            #endregion
+
             var captchaImage = HttpContext.Request.Form["g-recaptcha-response"];
             if (string.IsNullOrEmpty(captchaImage))
             {

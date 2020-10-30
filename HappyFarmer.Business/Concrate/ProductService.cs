@@ -135,9 +135,9 @@ namespace HappyFarmer.Business.Concrate
             return _productRepository.GetCustomerDeclares(type);
         }
 
-        public List<FarmerProduct> GetPopularProduct()
+        public List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0)
         {
-            return _productRepository.GetPopularProduct();
+            return _productRepository.GetPopularProduct(pageStandOut,pageSize);
         }
 
         public List<FarmerProduct> GetProductByCategory(string category, int page, int pageSize)

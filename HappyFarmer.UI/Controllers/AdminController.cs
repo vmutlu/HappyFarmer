@@ -1100,6 +1100,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             #endregion
+
             ViewBag.Type = type;
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
             if (!string.IsNullOrEmpty(type))
@@ -1267,6 +1268,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             #endregion
+
             if (ModelState.IsValid)
             {
                 var entity = _productService.GetById(model.Id);
@@ -2071,7 +2073,7 @@ namespace HappyFarmer.UI.Controllers
 
         List<string> list = new List<string>();
         [HttpPost]
-        public async Task<IActionResult> AdminAddMultipleProducts(int id, IFormFile[] file)
+        public async Task<IActionResult> AdminAddMultipleProducts(int id, IFormFile[] file, string type)
         {
             #region Admin Login Kontrolü
 
@@ -2088,6 +2090,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             #endregion
+
             foreach (var item in file)
             {
                 Random rastgele = new Random();
@@ -2108,7 +2111,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             _multipleProductImagesService.Create(id, list);
-            return Redirect("/Admin");
+            return Redirect("/Admin/AdminProduct/?type=" + type);
         }
 
         [HttpGet]
@@ -2213,7 +2216,7 @@ namespace HappyFarmer.UI.Controllers
         #endregion
 
         #region Admin Global Message Methods
-        
+
 
         [HttpGet]
         public async Task<IActionResult> AdminGetCarrierGlobalMessages()

@@ -15,7 +15,7 @@ namespace HappyFarmer.DataAccess.Abstract
         List<FarmerProduct> GetProductByType(string type, int userId);
         List<FarmerProduct> FindForProductsByCategoryType(string type, string searchText);
         List<FarmerProduct> GetCustomerDeclares(List<int> type);
-        List<FarmerProduct> GetPopularProduct();
+        List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0);
         List<FarmerProduct> FilterByPrice(int lowPrice,int topPrice,string type);
         List<FarmerProduct> FilterByRegion(string type,string? City, string? Country, string? Neighborhood);
     }

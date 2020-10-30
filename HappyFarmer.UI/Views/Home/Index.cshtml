@@ -167,13 +167,30 @@
                                 </div>
                             </div>
                         </div>
+                        @{ int newStandpage = page;
+                            if (ViewBag.PageStandOutCount != null)
+                                newStandpage = ViewBag.PageStandOutCount;
+
+                            newStandpage++;
+                        }
+                        <div align="right">
+                            <form asp-controller="Home" asp-action="Index" asp-route-pageStandOut="@newStandpage" method="post">
+                                <input type="hidden" name="page" value="1" />
+                                <button type="submit" class="btn btn-success btn-sm ml-2">>>> İleri</button>
+                            </form>
+                        </div>
 
                     </div>
                     <div class="product_conatiner3">
                         <div class="section_title">
                             <h2>İlandaki Ürünler</h2>
                         </div>
+                        @{ int newpage = page;
+                            if (ViewBag.PageCount != null)
+                                newpage = ViewBag.PageCount;
 
+                            newpage++;
+                        }
                         <div class="site-section site-section-sm bg-light">
                             <div class="container">
                                 <div class="row mb-5">
@@ -209,18 +226,31 @@
                                             </div>
                                         </div>
                                     }
+
+                                    @if (ViewBag.Products.Count == 0)
+                                    {
+                                        <div class="col-md-12 col-lg-12 mb-12">
+                                            @{
+                                                var oldpage = --newpage;
+                                                oldpage--;
+                                            }
+                                            <div class="property-entry h-100">
+                                                <center>Listelecek Ürün Bulunumadı Lütfen Geri gitmek için tıklayınız.</center>
+                                                    <form asp-controller="Home" asp-action="Index" asp-route-page="@oldpage" method="post">
+                                                        <input type="hidden" name="pageStandOut" value="1" />
+                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Geri<button>
+                                                    </form>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                        @{ int newpage = page;
-                            if (ViewBag.PageCount != null)
-                                newpage = ViewBag.PageCount;
 
-                            newpage++;
-                        }
                         <div align="right">
                             <form asp-controller="Home" asp-action="Index" asp-route-page="@newpage" method="post">
-                                <button type="submit" class="btn btn-success btn-sm ml-2">İleri</button>
+                                <input type="hidden" name="pageStandOut" value="1" />
+                                <button type="submit" class="btn btn-success btn-sm ml-2">İleri >>></button>
                             </form>
                         </div>
                     </div>

@@ -139,6 +139,7 @@
                                         <form asp-controller="Admin" asp-action="AdminAddMultipleProducts" asp-route-id="@item.Id" method="POST" enctype="multipart/form-data">
                                             <div class="fallback">
                                                 <input type="file" name="file" multiple class="form-control"> <br />
+                                                <input type="hidden" name="type" class="form-control" value="@ViewBag.Type"> <br />
 
                                                 <input type="submit" class="btn btn-warning btn-sm mr-2" value="Ürüne Çoklu Resim Ekle" />
                                                 <a asp-controller="Admin" asp-action="AdminGetMultipleProductImages" asp-route-id="@item.Id"><input type="button" class="btn btn-info btn-sm ml-2" value="Yüklü Resimleri Gör" /></a>

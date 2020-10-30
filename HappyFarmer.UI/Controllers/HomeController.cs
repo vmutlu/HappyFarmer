@@ -36,26 +36,20 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            #region Log Records
-
-            var message = new { FirstName = "Veysel", LastName = "MUTLU", Message = "Giriş Log Mesajıdır." };
-            LoggerFactory.FileLogManager().Information("{test}" + message);
-
-            #endregion
-
             #region Alt Banner
 
             ViewBag.LowerBanner = _bannerService.GetLowerAll();
 
             #endregion
 
-            const int pageSize = 9;
+            const int pageSize = 6;
             const int page = 1;
+            const int pageStandOut = 1; //öne çıkan ürünler
             var slider = _sliderService.GetAll();
 
             ViewBag.Success = TempData["Success"];
             ViewBag.Products = _productService.GetAll(page, pageSize);
-            ViewBag.PopularProducts = _productService.GetPopularProduct();
+            ViewBag.PopularProducts = _productService.GetPopularProduct(pageStandOut, pageSize);
             ViewBag.Blogs = _blogService.GetAll();
             ViewBag.BlogsUsers = _userService.GetAll();
 
@@ -78,7 +72,7 @@ namespace HappyFarmer.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(int page, int? productId = 0)
+        public IActionResult Index(int page, int pageStandOut, int? productId = 0)
         {
             #region Alt Banner
 
@@ -86,12 +80,14 @@ namespace HappyFarmer.UI.Controllers
 
             #endregion
 
-            const int pageSize = 9;
+            const int pageSize = 6;
             var slider = _sliderService.GetAll();
 
             ViewBag.Products = _productService.GetAll(page, pageSize);
+
             ViewBag.PageCount = page;
-            ViewBag.PopularProducts = _productService.GetPopularProduct();
+            ViewBag.PageStandOutCount = pageStandOut;
+            ViewBag.PopularProducts = _productService.GetPopularProduct(pageStandOut, pageSize);
 
             ViewBag.Blogs = _blogService.GetAll();
             ViewBag.BlogsUsers = _userService.GetAll();

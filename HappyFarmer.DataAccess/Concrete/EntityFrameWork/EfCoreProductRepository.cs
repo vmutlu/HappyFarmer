@@ -192,14 +192,15 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
-        public List<FarmerProduct> GetPopularProduct()
-        {
+        //haftanın ürünleri
+        public List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0)
+        {            
             using (var context = new FarmerContext())
             {
-                var response = context.Products.AsNoTracking()
-                     .Where(i => i.Situation == "EVET").ToList();
+                var products = context.Products
+                        .Where(i=> i.Situation == "EVET").AsQueryable();
 
-                return response;
+                return products.Skip((int)((pageStandOut - 1) * pageSize)).Take((int)pageSize).ToList();
             }
         }
 

@@ -19,67 +19,75 @@
         </div>
     </div>
 </div>
-
-<div class="wishlist_area mt-70">
-    <div class="container">
-        <form action="#">
+@if (Model.Count() != 0)
+{
+    <div class="wishlist_area mt-70">
+        <div class="container">
+            <form action="#">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cart_page table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product_remove">Sipariş Id</th>
+                                        <th class="product_remove">Ürün Resmi</th>
+                                        <th class="product_remove">Ürün Adı</th>
+                                        <th class="product_thumb">Fiyatı</th>
+                                        <th class="product_name">Miktarı</th>
+                                        <th class="product-price">Müşteri Adı</th>
+                                        <th class="product_quantity">Tel No</th>
+                                        <th class="product_total">Email</th>
+                                        <th class="product_total">Ödeme Türü</th>
+                                        <th class="product_total">Sipariş Türü</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        @foreach (var orders in item.OrderItemModels)
+                                        {
+                                            <tr>
+                                                <td class="product_name"><a href="#">@orders.OrderItemId</a></td>
+                                                <td class="product_thumb"><a href="#"><img src="~/img/ProductImages/@orders.ImageURL" alt=""></a></td>
+                                                <td class="product_name"><a href="#">@orders.Name</a></td>
+                                                <td class="product-price">₺@orders.Price</td>
+                                                <td class="product_quantity">@orders.Quantity</td>
+                                                <td class="product_quantity">@item.FirstName @item.LastName</td>
+                                                <td class="product_quantity">@item.Phone</td>
+                                                <td class="product_quantity">@item.Email</td>
+                                                <td class="product_quantity">@item.PaymentTypes</td>
+                                                <td class="product_quantity">@item.OrderState</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="row">
                 <div class="col-12">
-                        <div class="cart_page table-responsive">                           
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th class="product_remove">Sipariş Id</th>
-                                            <th class="product_remove">Ürün Resmi</th>
-                                            <th class="product_remove">Ürün Adı</th>
-                                            <th class="product_thumb">Fiyatı</th>
-                                            <th class="product_name">Miktarı</th>
-                                            <th class="product-price">Müşteri Adı</th>
-                                            <th class="product_quantity">Tel No</th>
-                                            <th class="product_total">Email</th>
-                                            <th class="product_total">Ödeme Türü</th>
-                                            <th class="product_total">Sipariş Türü</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            @foreach (var orders in item.OrderItemModels)
-                                            {
-                                                <tr>
-                                                    <td class="product_name"><a href="#">@orders.OrderItemId</a></td>
-                                                    <td class="product_thumb"><a href="#"><img src="~/img/ProductImages/@orders.ImageURL" alt=""></a></td>
-                                                    <td class="product_name"><a href="#">@orders.Name</a></td>
-                                                    <td class="product-price">₺@orders.Price</td>
-                                                    <td class="product_quantity">@orders.Quantity</td>
-                                                    <td class="product_quantity">@item.FirstName @item.LastName</td>
-                                                    <td class="product_quantity">@item.Phone</td>
-                                                    <td class="product_quantity">@item.Email</td>
-                                                    <td class="product_quantity">@item.PaymentTypes</td>
-                                                    <td class="product_quantity">@item.OrderState</td>
-                                                </tr>
-                                            }
-                                        }
-                                        </tbody>
-                                </table>
-                        </div>
+                    <div class="wishlist_share">
+                        <h4>Share on:</h4>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </form>
-        <div class="row">
-            <div class="col-12">
-                <div class="wishlist_share">
-                    <h4>Share on:</h4>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
-                        <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <center>Sistem üzerinde kayıtlı bir sipariş bulunamadı.</center>
+    </div>
+}

@@ -7,7 +7,7 @@ namespace HappyFarmer.Business.Abstract
     {
         FarmerProduct GetById(int id);
         FarmerProduct GetProductDetails(int id);
-        List<FarmerProduct> GetAll(int? page = 0,int? pageSize = 0);
+        List<FarmerProduct> GetAll(int? page = 0, int? pageSize = 0);
         List<FarmerProduct> GetProductByCategory(string category, int page, int pageSize);
         void Create(FarmerProduct entity);
         void Delete(FarmerProduct entity);
@@ -19,9 +19,9 @@ namespace HappyFarmer.Business.Abstract
         List<FarmerProduct> GetByIdUser(int userId);
         List<FarmerProduct> GetCustomerDeclares(List<int> type);
         void Update(FarmerProduct entity);
-        List<FarmerProduct> GetPopularProduct();
+        List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0);
         List<FarmerProduct> FilterByPrice(int lowPrice, int topPrice, string type);
         void CreateComment(ProductComment productComment);
-        List<FarmerProduct> FilterByRegion(string type,string? City, string? Country, string? Neighborhood);
+        List<FarmerProduct> FilterByRegion(string type, string? City, string? Country, string? Neighborhood);
     }
 }
