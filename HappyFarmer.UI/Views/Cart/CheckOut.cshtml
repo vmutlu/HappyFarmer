@@ -42,60 +42,59 @@
 
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.FirstName">Ad <span>*</span></label>
-                                <input asp-for="@Model.FirstName" type="text">
+                                <input asp-for="@Model.FirstName" required type="text">
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.LastName">Soyad  <span>*</span></label>
-                                <input asp-for="@Model.LastName" type="text">
+                                <input asp-for="@Model.LastName" required type="text">
                             </div>
                             <div class="col-12 mb-20">
                                 <label asp-for="@Model.Address">Adres <span>*</span></label>
-                                <textarea asp-for="@Model.Address" class="form-control"></textarea>
+                                <textarea asp-for="@Model.Address" required class="form-control"></textarea>
                             </div>
                             <div class="col-12 mb-20">
                                 <label for="country">Ülke <span>*</span></label>
                                 <select class="select_option" name="cuntry" id="country">
                                     <option value="0">Türkiye</option>
-
                                 </select>
                             </div>
                             <div class="col-12 mb-20">
                                 <label asp-for="@Model.City">Şehir <span>*</span></label>
-                                <input asp-for="@Model.City" type="text">
+                                <input asp-for="@Model.City" required type="text">
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.Phone">Telefon Numarası<span>*</span></label>
-                                <input asp-for="@Model.Phone" type="text">
+                                <input asp-for="@Model.Phone" required type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.Email"> Email Adres   <span>*</span></label>
-                                <input asp-for="@Model.Email" type="text">
+                                <input asp-for="@Model.Email" required type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.CardName">Kart Adı<span>*</span></label>
-                                <input asp-for="@Model.CardName" type="text">
+                                <input asp-for="@Model.CardName" required type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.CardNumber"> Kart Numarası <span>*</span></label>
-                                <input asp-for="@Model.CardNumber" value="5528790000000008" type="text">
+                                <input asp-for="@Model.CardNumber" required value="5528790000000008" type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.ExpirationMonth"> Ay <span>*</span></label>
-                                <input asp-for="@Model.ExpirationMonth" value="12" type="text">
+                                <input asp-for="@Model.ExpirationMonth" required value="12" type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.ExpirationYear"> Yıl <span>*</span></label>
-                                <input asp-for="@Model.ExpirationYear" value="2030" type="text">
+                                <input asp-for="@Model.ExpirationYear" required value="2030" type="text">
 
                             </div>
                             <div class="col-lg-6 mb-20">
                                 <label asp-for="@Model.CVV"> CVV <span>*</span></label>
-                                <input asp-for="@Model.CVV" value="123" type="text">
+                                <input asp-for="@Model.CVV" value="123" required type="text">
 
                             </div>
 
@@ -136,37 +135,23 @@
                                     </tr>
                                     <tr>
                                         <th>Kargo Ücreti</th>
-                                        <td><strong>₺9.90 </strong></td>
+                                        <td><strong>Ücretsiz </strong></td>
                                     </tr>
-                                    @{
-                                        var cargo = 9.90m;
-                                        var total = (Model.CartModel.TotalPrice() + cargo);
-                                    }
                                     <tr class="order_total">
                                         <th>Sipariş Toplamı</th>
-                                        <td><strong>₺@total</strong></td>
+                                        <td><strong>₺@Model.CartModel.TotalPrice()</strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                         <div class="payment_method">
                             <div class="panel-default">
-                                <input id="payment" name="check_method" type="radio" data-target="createp_account">
-                                <label for="payment" data-toggle="collapse" data-target="#method" aria-controls="method">Create an account?</label>
-
-                                <div id="method" class="collapse one" data-parent="#accordion">
-                                    <div class="card-body1">
-                                        <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-default">
                                 <input id="payment_defult" name="check_method" type="radio" data-target="createp_account">
-                                <label for="payment_defult" data-toggle="collapse" data-target="#collapsedefult" aria-controls="collapsedefult">PayPal <img src="assets\img\icon\papyel.png" alt=""></label>
+                                <label for="payment_defult" data-toggle="collapse" data-target="#collapsedefult" aria-controls="collapsedefult">PayPal <img src="~/img/icon/paypal1.jpg" alt=""></label>
 
                                 <div id="collapsedefult" class="collapse one" data-parent="#accordion">
                                     <div class="card-body1">
-                                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                        <p>PayPal hesabınız yoksa kredi kartınızla ödeme yapabilirsiniz.</p>
                                     </div>
                                 </div>
                             </div>
