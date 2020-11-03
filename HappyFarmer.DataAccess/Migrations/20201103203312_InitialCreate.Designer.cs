@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HappyFarmer.DataAccess.Migrations
 {
     [DbContext(typeof(FarmerContext))]
-    [Migration("20201027114120_InitialCreate")]
+    [Migration("20201103203312_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

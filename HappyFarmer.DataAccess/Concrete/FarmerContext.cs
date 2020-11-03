@@ -6,7 +6,14 @@ namespace HappyFarmer.DataAccess.Concrete
 {
     public class FarmerContext : DbContext//IdentityDbContext<FarmerApplicationUser>
     {
-
+        private static string ConnectionString { get; set; }
+        public static void SetConnectionString(string connectionString)
+        {
+            if (ConnectionString == null)
+            {
+                ConnectionString = connectionString;
+            }
+        }
         public FarmerContext(DbContextOptions<FarmerContext> options) : base(options) { }
 
 
@@ -17,7 +24,8 @@ namespace HappyFarmer.DataAccess.Concrete
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;port=3306;database=HappyFarmerDB;uid=root;password=;CharSet=utf8;Convert Zero Datetime=true; Allow Zero Datetime=true");
+            //"server=localhost;port=3306;database=HappyFarmerDB;uid=root;password=;CharSet=utf8;Convert Zero Datetime=true; Allow Zero Datetime=true"
+            optionsBuilder.UseMySQL(ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

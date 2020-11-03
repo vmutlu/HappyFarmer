@@ -30,7 +30,9 @@ namespace HappyFarmer.API
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<FarmerContext>(options => options.UseMySQL(Configuration.GetConnectionString("HappyFarmerContext")));
+            string connectionString = Configuration.GetConnectionString("HappyFarmerContext");
+            FarmerContext.SetConnectionString(connectionString);
+            services.AddDbContext<FarmerContext>(opts => opts.UseMySQL(connectionString, i => i.MigrationsAssembly("HappyFarmer.DataAccess")));
 
             services.AddControllers();
 

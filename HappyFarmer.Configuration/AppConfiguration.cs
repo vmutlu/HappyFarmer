@@ -1,9 +1,10 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Business.Concrate;
-using HappyFarmer.DataAccess;
 using HappyFarmer.DataAccess.Abstract;
+using HappyFarmer.DataAccess.Concrete;
 using HappyFarmer.DataAccess.Concrete.EntityFrameWork;
 using HappyFarmer.DataAccess.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +15,10 @@ namespace HappyFarmer.Configuration
     {
         public static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
         {
+            string connectionString = configuration.GetConnectionString("HappyFarmerContext");
+            FarmerContext.SetConnectionString(connectionString);
+            services.AddDbContext<FarmerContext>(opts => opts.UseMySQL(connectionString, i => i.MigrationsAssembly("HappyFarmer.DataAccess")));
+
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
             services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
             services.AddScoped<IUserRepository, EfCoreUserRepository>();

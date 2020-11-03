@@ -1,4 +1,5 @@
 using HappyFarmer.Configuration;
+using HappyFarmer.DataAccess;
 using HappyFarmer.UI.Extensions;
 using HappyFarmer.UI.Logging.ErrorLogRecord;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace HappyFarmer.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedDatabase.Seed();
             }
             else
             {

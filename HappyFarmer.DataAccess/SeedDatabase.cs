@@ -11,6 +11,9 @@ namespace HappyFarmer.DataAccess
         public static void Seed()
         {
             var context = new FarmerContext();
+            if (context.Database.GetPendingMigrations().Count() > 0)
+                context.Database.Migrate();
+
             if (context.Database.GetPendingMigrations().Count() == 0)
             {
                 if (context.FarmerCategory.Count() == 0)
