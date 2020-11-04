@@ -11,6 +11,6 @@ namespace HappyFarmer.DataAccess.Abstract
         FarmerGlobalMessage GetNameById(int id);
         Task<List<FarmerGlobalMessage>> GetCarrierGlobalMessages(bool? authority = false);
         List<FarmerGlobalMessage> GetTypeGlobalMessages(string type);
-        List<FarmerGlobalMessage> GetCityWithMessages(int cityId);
+        List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type);
     }
 }

@@ -38,13 +38,14 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
-        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId)
+        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type)
         {
             using (var context = new FarmerContext())
             {
                 var response = context.GlobalMessages
                     .Where(i => i.CityId == cityId)
                     .Where(i => i.CheckStatus == true)
+                    .Where(i => i.Subject == type)
                     .AsNoTracking()
                     .ToList();
 

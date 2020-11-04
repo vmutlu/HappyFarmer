@@ -73,9 +73,9 @@ namespace HappyFarmer.Business.Concrate
             return await _globalMessageRepository.GetCarrierGlobalMessages(authority);
         }
 
-        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId)
+        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type)
         {
-            return _globalMessageRepository.GetCityWithMessages(cityId);
+            return _globalMessageRepository.GetCityWithMessages(cityId, type);
         }
 
         public FarmerGlobalMessage GetNameById(int id)

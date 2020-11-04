@@ -16,6 +16,6 @@ namespace HappyFarmer.Business.Abstract
         void Delete(FarmerGlobalMessage entity);
         void Update(FarmerGlobalMessage entity);
         List<FarmerGlobalMessage> GetTypeGlobalMessages(string type);
-        List<FarmerGlobalMessage> GetCityWithMessages(int cityId);
+        List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type);
     }
 }
