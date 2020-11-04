@@ -137,6 +137,9 @@
                         <div class="tab-pane fade show " id="dashboard">
                             <h3>İlan Bilgilerim </h3>
                             <div align="right">
+                            </div>
+                            <div align="right">
+                                <a href="/User/UserCreateDeclare" style="margin-right:3px;" class="btn btn-warning">Satılan Ürünlerim</a>
                                 <a href="/User/UserCreateDeclare" class="btn btn-info">Yeni İlan Ekle</a>
                             </div>
                             <br />
@@ -335,7 +338,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ 
+                                    @{
                                         var id = 0;
                                     }
                                     @foreach (var item in ViewBag.SendGetMessage)

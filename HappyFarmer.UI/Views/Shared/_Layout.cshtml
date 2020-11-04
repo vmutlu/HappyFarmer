@@ -251,7 +251,7 @@
                         <div id="menu" class="text-left ">
                             <ul class="offcanvas_main_menu">
                                 <li class="menu-item-has-children active">
-                                    <a asp-controller="Home" asp-action="Index"><i  class="fa fa-home"></i> Anasayfa</a>
+                                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Anasayfa</a>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#"> <i class="fas fa-bookmark"></i> Kategoriler</a>
@@ -298,22 +298,22 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a asp-controller="Home" asp-action="GetBlogArticle"><i  class="fa fa-blogger"></i>Blog</a>
+                                    <a asp-controller="Home" asp-action="GetBlogArticle"><i class="fa fa-blogger"></i>Blog</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a asp-controller="Carrier" asp-action="Index"><i  class="fa fa-truck"></i>Nakliyeciler</a>
+                                    <a asp-controller="Carrier" asp-action="Index"><i class="fa fa-truck"></i>Nakliyeciler</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a asp-controller="Home" asp-action="About"><i  class="fa fa-paw"></i>Hakkımızda</a>
+                                    <a asp-controller="Home" asp-action="About"><i class="fa fa-paw"></i>Hakkımızda</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a asp-controller="Contact" asp-action="Index"><i  class="fa fa-phone-square"></i>İletişim</a>
+                                    <a asp-controller="Contact" asp-action="Index"><i class="fa fa-phone-square"></i>İletişim</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a asp-controller="Cart" asp-action="Index"><i  class="fa fa-shopping-cart"></i> Sepetim</a>
+                                    <a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Sepetim</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#"><i class="fas fa-feather" >Site Hakkında</a>
+                                    <a href="#"><i class="fas fa-feather">Site Hakkında</a>
                                     <ul class="sub-menu">
                                         <li><a href="/Home/GetInformation">İlan Verme Kuralları</a></li>
                                         <li><a href="/Home/GetInformation">Gizlilik Politikası</a></li>
@@ -337,12 +337,12 @@
             <div class="header_top">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-10 col-md-10">
                             <div class="language_currency">
                                 <ul>
                                     @if (Context.Session.GetString("ActiveCustomer") != null)
                                     {
-                                        <li float: left; display: inline; class="language">
+                                        <li class="language">
                                             <a href="#"> Hayvancılık Sohbetleri <i class="icon-right ion-ios-arrow-down"></i></a>
                                             <ul class="dropdown_language">
                                                 <li><a asp-controller="User" asp-action="UserChat" asp-route-type="10">Büyük Baş Hayvancılık</a></li>
@@ -353,7 +353,7 @@
                                                 <li><a asp-controller="User" asp-action="UserChat" asp-route-type="15">Hayvansal Gıda Ürünleri</a></li>
                                             </ul>
                                         </li>
-                                        <li float: left; display: inline; class="currency">
+                                        <li class="currency">
                                             <a href="#">Tarımsal Sohbetler<i class="icon-right ion-ios-arrow-down"></i></a>
                                             <ul class="dropdown_currency">
                                                 <li><a asp-controller="User" asp-action="UserChat" asp-route-type="20">Traktör Sohbetleri</a></li>
@@ -365,17 +365,18 @@
                                                 <li><a asp-controller="User" asp-action="UserChat" asp-route-type="26">Yem & Otsu Bitki Sohbetleri</a></li>
                                             </ul>
                                         </li>
-                                        <li float: left; display: inline; class="currency">
+                                        <li class="currency">
                                             <a asp-controller="User" asp-action="UserChat" asp-route-type="Nakliyeci">Nakliyeci Sohbetleri<i class="icon-right ion-ios-arrow-down"></i></a>
                                         </li>
-                                        <li float: left; display: inline; class="currency">
-                                          <h6>“Türkiye’nin gerçek sahibi ve efendisi, gerçek üretici olan köylüdür” M. Kemal Atatürk</h6>
+                                        <li style="margin-left:-15px;">
+                                            <h6>“Türkiye’nin gerçek sahibi ve efendisi, gerçek üretici olan köylüdür” M. Kemal Atatürk
+                                            </h6>
                                         </li>
                                     }
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-2">
                             <div class="header_social text-right">
                                 <ul>
                                     <li><a target="_blank" href="@Twitter"><i class="ion-social-twitter"></i></a></li>
