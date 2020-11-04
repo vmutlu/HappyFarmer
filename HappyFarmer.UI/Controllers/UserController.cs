@@ -692,7 +692,7 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> UserChat(string type, int? CityId)
         {
-            if (type == null)
+            if (type == null && CityId <= 0)
                 return NotFound();
 
 
@@ -704,7 +704,7 @@ namespace HappyFarmer.UI.Controllers
                 var entity = await _globalMessageService.GetCarrierGlobalMessages(false).ConfigureAwait(false);
                 if (CityId > 0)
                 {
-                    entity = _globalMessageService.GetCityWithMessages((int)CityId);
+                    entity = _globalMessageService.GetCityWithMessages((int)CityId, type);
                 }
                 return View(entity);
             }
@@ -715,14 +715,14 @@ namespace HappyFarmer.UI.Controllers
 
                 if (CityId > 0)
                 {
-                    entity = _globalMessageService.GetCityWithMessages((int)CityId);
+                    entity = _globalMessageService.GetCityWithMessages((int)CityId, type);
                 }
                 return View(entity);
             }
         }
 
         [HttpPost]
-        public IActionResult UserChat(int messageSubject, string messageContent, int City)
+        public IActionResult UserChat(int messageSubject, string messageContent, int City,string type)
         {
             if (messageContent != null && messageSubject != 0)
             {
@@ -736,8 +736,13 @@ namespace HappyFarmer.UI.Controllers
                     CheckStatus = false,
                     MessageDate = DateTime.Now.ToShortDateString(),
                     SenderId = Convert.ToInt32(activeUserId),
-                    CityId = City
+                    CityId = City                    
                 };
+                if (type == "Nakliyeci")
+                    message.FarmerOrCarrier = false;
+                else
+                    message.FarmerOrCarrier = true;
+
                 _globalMessageService.Create(message);
                 ViewBag.SuccessMessage = "Mesajınız Başarılıyla Gönderildi.";
             }

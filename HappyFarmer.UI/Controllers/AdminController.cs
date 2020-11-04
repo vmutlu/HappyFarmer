@@ -2260,6 +2260,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             #endregion
+
             var result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
             ViewBag.Users = _userService.GetAll();
             return View(result);
@@ -2283,6 +2284,7 @@ namespace HappyFarmer.UI.Controllers
             }
 
             #endregion
+
             var entity = _globalMessageService.GetById(id);
             if (entity == null)
             {

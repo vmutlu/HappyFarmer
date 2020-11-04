@@ -1,4 +1,5 @@
 ﻿@inject HappyFarmer.Business.Abstract.ICityService _cityService
+@inject HappyFarmer.Business.Abstract.IUserService _userService
 @model List<HappyFarmer.Entities.FarmerGlobalMessage>
 @{
     ViewData["Title"] = "UserChat";
@@ -67,7 +68,7 @@
                                     <form asp-controller="User" asp-action="UserChat" method="get" style="display:inline;">
                                         <br />
                                         <label class="col-md-12 col-form-label">Şehir Seçiniz</label>
-                                        <div class="col-md-12">    
+                                        <div class="col-md-12">
                                             <select name="CityId" class="form-control">
                                                 <option value="1">Adana</option>
                                                 <option value="2">Adıyaman</option>
@@ -150,13 +151,13 @@
                                                 <option value="79">Kilis</option>
                                                 <option value="80">Osmaniye</option>
                                                 <option value="81">Düzce</option>
-                                            </select>   
+                                            </select>
                                             <br />
                                         </div>
-                                        
-                                            <input name="type" type="hidden" value="@ViewBag.Type" />
-                                            <button style="width:100%;" type="submit" class="btn btn-warning">Sohbet Yükle</button>
-                                       
+
+                                        <input name="type" type="hidden" value="@ViewBag.Type" />
+                                        <button style="width:100%;" type="submit" class="btn btn-warning">Sohbet Yükle</button>
+
                                         <br />
                                     </form>
                                 </div>
@@ -191,12 +192,15 @@
                                         }
 
                                         @if (item.SenderId % 2 == 1)
-                                        {<div class="chat-widget-right">
+                                        {
+                                            <div class="chat-widget-right">
                                                 @item.MessageContent <div style="float:right;">
                                                     @{
                                                         var cityName = _cityService.GetById(item.CityId);
                                                     }
-                                                    @cityName.Cities
+
+                                                    @if (cityName != null)
+                                                        @cityName.Cities
                                                 </div>
                                             </div>
                                             <div class="chat-widget-name-right">
@@ -205,12 +209,14 @@
                                                     {
                                                         if (item.SenderId == users.Id)
                                                         {
-                                                            <p>@users.Name  @users.Surname</p>
+                                                            if (_userService.GetById(item.SenderId).UserType == 2)
+                                                            {
+                                                                <p><b style="color:red;">Nakliyeci</b> - @users.Name  @users.Surname</p>
+                                                            }
                                                         }
                                                     }
                                                 </h4>
                                             </div>
-
                                         }
                                     }
                                 </div>
@@ -223,49 +229,91 @@
                                             <label class="col-md-12 col-form-label">Mesaj Konusu Seçiniz</label>
                                             <div class="col-md-12">
                                                 <select name="messageSubject" id="FarmerDeclareType" class="form-control">
-                                                    <option value="10">Büyükbaş Hayvan</option>
-                                                    <option value="11">Küçükbaş Hayvan</option>
-                                                    <option value="12">Kümes Hayvan</option>
-                                                    <option value="13">Evcil Hayvan</option>
+                                                    @switch (ViewBag.Type)
+                                                    {
+                                                        case "10":
+                                                            <option selected value="10">Büyükbaş Hayvan</option>
+                                                            break;
 
+                                                        case "11":
+                                                            <option selected value="11">Küçükbaş Hayvan</option>
+                                                            break;
 
-                                                    <option value="14">
-                                                        Süt
-                                                    </option>
+                                                        case "12":
+                                                            <option selected value="12">Kümes Hayvan</option>
+                                                            break;
+                                                        case "13":
+                                                            <option selected value="13">Evcil Hayvan</option>
+                                                            break;
 
-                                                    <option value="15">
-                                                        Hayvansal Gıda
-                                                    </option>
+                                                        case "14":
+                                                            <option selected value="14">Süt</option>
+                                                            break;
 
+                                                        case "15":
+                                                            <option selected value="15">
+                                                                Hayvansal Gıda
+                                                            </option>
+                                                            break;
 
-                                                    <option value="20">
-                                                        Traktör
-                                                    </option>
+                                                        case "20":
+                                                            <option selected value="20">
+                                                                Traktör
+                                                            </option>
+                                                            break;
 
-                                                    <option value="21">
-                                                        Tarla
-                                                    </option>
+                                                        case "21":
+                                                            <option selected value="21">
+                                                                Tarla
+                                                            </option>
+                                                            break;
 
-                                                    <option value="22">
-                                                        Traktör Ekipmanları
-                                                    </option>
+                                                        case "22":
+                                                            <option selected value="22">
+                                                                Traktör Ekipmanları
+                                                            </option>
+                                                            break;
 
-                                                    <option value="23">
-                                                        Sebze
-                                                    </option>
+                                                        case "23":
+                                                            <option selected value="23">
+                                                                Sebze
+                                                            </option>
+                                                            break;
 
-                                                    <option value="24">
-                                                        Meyve
-                                                    </option>
+                                                        case "24":
+                                                            <option selected value="24">
+                                                                Meyve
+                                                            </option>
+                                                            break;
 
-                                                    <option value="25">
-                                                        Tahıl Ürünleri
-                                                    </option>
+                                                        case "25":
+                                                            <option selected value="25">
+                                                                Tahıl Ürünleri
+                                                            </option>
+                                                            break;
 
-                                                    <option value="26">
-                                                        Yem & Otsu Bitkiler
-                                                    </option>
+                                                        case "26":
+                                                            <option selected value="26">
+                                                                Yem & Otsu Bitkiler
+                                                            </option>
+                                                            break;
 
+                                                        default:
+                                                            <option value="10">Büyükbaş Hayvan</option>
+                                                            <option value="11">Küçükbaş Hayvan</option>
+                                                            <option value="12">Kümes Hayvan</option>
+                                                            <option value="13">Evcil Hayvan</option>
+                                                            <option value="14">Süt</option>
+                                                            <option value="15">Hayvansal Gıda </option>
+                                                            <option value="20">Traktör </option>
+                                                            <option value="21">Tarla</option>
+                                                            <option value="22">Traktör Ekipmanları</option>
+                                                            <option value="23">Sebze</option>
+                                                            <option value="24">Meyve</option>
+                                                            <option value="25">Tahıl Ürünleri</option>
+                                                            <option value="26">Yem & Otsu Bitkiler</option>
+                                                            break;
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -273,7 +321,7 @@
                                             <br />
                                             <label style="margin-left:-10px;" class="col-md-12 col-form-label">Şehir Seçiniz</label>
                                             <div class="col-md-12">
-                                                <select style="margin-left:-10px;" name="City" class="form-control">,
+                                                <select style="margin-left:-10px;" name="City" class="form-control">                                                    
                                                     <option value="1">Adana</option>
                                                     <option value="2">Adıyaman</option>
                                                     <option value="3">Afyonkarahisar</option>
@@ -359,6 +407,7 @@
                                                 <br />
                                             </div>
                                         </div>
+                                        <input type="hidden" name="type" value="@ViewBag.Type" />
                                         <br />
                                         <div class="form-group row ck-editor__editable_inline">
                                             <br />
