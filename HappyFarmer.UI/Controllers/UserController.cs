@@ -243,10 +243,10 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult UserSoldProducts()
         {
             var activeUserId = HttpContext.Session.GetString("ActiveCustomerId");
-            
+
             List<OrderModel> orderListModels = new List<OrderModel>();
 
-            if(activeUserId != null)
+            if (activeUserId != null)
             {
                 var userSoldProducts = _userService.GetUserSoldProduct(Convert.ToInt32(activeUserId));
                 foreach (var orderDetails in userSoldProducts)
@@ -337,6 +337,7 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult UserLogin()
         {
+            ViewBag.SendMessage = TempData["SendMessage"];
             return View();
         }
 
@@ -761,7 +762,7 @@ namespace HappyFarmer.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserChat(int messageSubject, string messageContent, int City,string type)
+        public IActionResult UserChat(int messageSubject, string messageContent, int City, string type)
         {
             if (messageContent != null && messageSubject != 0)
             {
@@ -775,7 +776,7 @@ namespace HappyFarmer.UI.Controllers
                     CheckStatus = false,
                     MessageDate = DateTime.Now.ToShortDateString(),
                     SenderId = Convert.ToInt32(activeUserId),
-                    CityId = City                    
+                    CityId = City
                 };
                 if (type == "Nakliyeci")
                     message.FarmerOrCarrier = false;
@@ -793,6 +794,82 @@ namespace HappyFarmer.UI.Controllers
         public static string RemoveHtml(string text)
         {
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
+        }
+
+        #endregion
+
+        #region User Forgot My Password
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(string email)
+        {
+            if (email != null)
+            {
+                var user = _userService.FindByEmail(email);
+                if (user != null)
+                {
+                    
+                    var messageBody = $"<a target=\"_blank\" href=\"https://localhost:44393{Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id) })}\">Yeni şifre talebi için tıklayınız</a>";
+                    MailSender.SendMail(messageBody, email);
+                    ViewBag.SendMessage = "Mesajınız Gönderildi Lütfen E-Mail Adresinize Gelen Baglantıya Tıklayarak Devam Ediniz.";
+                }
+
+                else
+                {
+                    ViewBag.SendMessage = "Bu Mail Adresiyle Kayıtlı Bir Hesap Bulunamadı !";
+                }
+            }
+
+            else
+            {
+                ViewBag.SendMessage = "Lütfen Email Alanını Boş Bırakmayınız !";
+            }
+
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult UpdatePassword(int userId)
+        {
+            if (userId <= 0)
+                return NotFound();
+
+            var user = _userService.GetById(userId);
+            var list = new List<FarmerUser>() { user };
+            return View(list);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePassword(int userId, string password, string rePassword)
+        {
+            if (userId <= 0 && password == null && rePassword == null)
+                return NotFound();
+
+            if (password.ToLower() != rePassword.ToLower())
+            {
+                var users = _userService.GetById(userId);
+                var list = new List<FarmerUser>() { users };
+                ViewBag.Message = "Şifreler Uyuşmuyor Lütfen Kontrol Ederek Tekrar Deneyiniz !";
+                return View(list);
+            }
+
+            var user = _userService.GetById(userId);
+            if (user != null)
+            {
+                user.Password = password;
+                user.RePassword = password;
+            }
+
+            _userService.Update(user);
+            TempData["SendMessage"] = "Şifre Sıfırlama İşlemi Başarılı";
+                return RedirectToAction("UserLogin","User");
         }
 
         #endregion
