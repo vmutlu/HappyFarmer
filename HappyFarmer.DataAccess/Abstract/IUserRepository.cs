@@ -12,5 +12,6 @@ namespace HappyFarmer.DataAccess.Abstract
         List<FarmerUser> GetAllCustomer();
         List<FarmerUser> GetAllCarrier();
         List<FarmerUser> GetAllOnlyCustomer();
+        List<FarmerOrderItem> GetUserSoldProduct(int userId);
     }
 }

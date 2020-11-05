@@ -54,6 +54,11 @@ namespace HappyFarmer.Business.Concrate
             return _userRepository.GetById(id);
         }
 
+        public List<FarmerOrderItem> GetUserSoldProduct(int userId)
+        {
+            return _userRepository.GetUserSoldProduct(userId);
+        }
+
         public bool PasswordSignIn(string userEmail, string userPassword, int userType)
         {
             return _userRepository.PasswordSignIn(userEmail, userPassword,userType);

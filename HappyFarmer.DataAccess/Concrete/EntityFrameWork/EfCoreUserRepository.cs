@@ -1,5 +1,6 @@
 ﻿using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -57,11 +58,25 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
+        public List<FarmerOrderItem> GetUserSoldProduct(int userId)
+        {
+            using (var context = new FarmerContext())
+            {
+                var userProductDeclares = context.Products
+                    .SingleOrDefault(i => i.UserId == userId);
+
+                var userOrderItems = context.OrderItems
+                    .Where(i => i.ProductId == userProductDeclares.Id);
+
+                return userOrderItems.ToList();
+            }
+        }
+
         public bool PasswordSignIn(string userEmail, string userPassword, int userType)
         {
             bool userState = true; //aktif olanlar
 
-            using(var context = new FarmerContext())
+            using (var context = new FarmerContext())
             {
                 var userLogin = context.FarmerUser
                     .Where(i => i.Email.ToLower() == userEmail.ToLower())

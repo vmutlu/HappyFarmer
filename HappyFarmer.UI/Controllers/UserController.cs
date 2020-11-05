@@ -24,7 +24,8 @@ namespace HappyFarmer.UI.Controllers
         private readonly IGlobalMessageService _globalMessageService;
         private readonly IMultipleProductImagesService _multipleProductImagesService;
         private readonly ICartService _cartService;
-        public UserController(IUserService userService, IProductService productService, IMessageService messageService, IMultipleProductImagesService multipleProductImagesService, IGlobalMessageService globalMessageService, ICartService cartService)
+        private readonly IOrderService _orderService;
+        public UserController(IUserService userService, IProductService productService, IMessageService messageService, IMultipleProductImagesService multipleProductImagesService, IGlobalMessageService globalMessageService, ICartService cartService, IOrderService orderService)
         {
             _userService = userService;
             _productService = productService;
@@ -32,6 +33,7 @@ namespace HappyFarmer.UI.Controllers
             _multipleProductImagesService = multipleProductImagesService;
             _globalMessageService = globalMessageService;
             _cartService = cartService;
+            _orderService = orderService;
         }
         public IActionResult Index()
         {
@@ -235,6 +237,43 @@ namespace HappyFarmer.UI.Controllers
             var response = _messageService.GetBySenderId(Convert.ToInt32(activeUserId));
             ViewBag.GetByIdMessage = _userService.GetAllCustomer();
             return View(response);
+        }
+
+        [HttpGet]
+        public IActionResult UserSoldProducts()
+        {
+            var activeUserId = HttpContext.Session.GetString("ActiveCustomerId");
+            
+            List<OrderModel> orderListModels = new List<OrderModel>();
+
+            if(activeUserId != null)
+            {
+                var userSoldProducts = _userService.GetUserSoldProduct(Convert.ToInt32(activeUserId));
+                foreach (var orderDetails in userSoldProducts)
+                {
+                    var Id = orderDetails.Id.ToString();
+                    var list = _orderService.GetById(Id);
+                    var products = _productService.GetById(orderDetails.ProductId);
+
+                    orderListModels = new List<OrderModel>()
+                    {
+                        new OrderModel()
+                        {
+                            Quantity = orderDetails.Quantity,
+                            ImageURL = products.ImageUrl,
+                            ProductName = products.Name,
+                            City = list.City,
+                            FirstName = list.FirstName,
+                            LastName = list.LastName,
+                            OrderDate = list.OrderDate,
+                            Phone = list.Phone,
+                            Email = list.Email,
+                        }
+                    };
+                }
+                return View(orderListModels);
+            }
+            return View();
         }
 
         #endregion

@@ -19,6 +19,11 @@ namespace HappyFarmer.Business.Concrate
             _orderRepository.Create(entity);
         }
 
+        public FarmerOrder GetById(string orderId)
+        {
+            return _orderRepository.GetById(orderId);
+        }
+
         public List<FarmerOrder> GetOrders(string userId)
         {
             return _orderRepository.GetOrders(userId);

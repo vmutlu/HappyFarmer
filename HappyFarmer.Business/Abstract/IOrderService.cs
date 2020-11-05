@@ -10,5 +10,6 @@ namespace HappyFarmer.Business.Abstract
         void Create(FarmerOrder entity);
         List<FarmerOrder> GetOrders(string userId);
         int GetPopularProduct();
+        FarmerOrder GetById(string orderId);
     }
 }

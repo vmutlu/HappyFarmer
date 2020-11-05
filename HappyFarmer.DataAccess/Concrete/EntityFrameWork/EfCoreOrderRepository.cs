@@ -10,6 +10,17 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
 {
     public class EfCoreOrderRepository : EfCoreGenericRepository<FarmerOrder, FarmerContext>, IOrderRepository
     {
+        public FarmerOrder GetById(string orderId)
+        {
+            using (var context = new FarmerContext())
+            {
+                var response = context.Orders
+                    .FirstOrDefault(i => i.Id == Convert.ToInt32(orderId));
+
+                return response;
+            }
+        }
+
         public List<FarmerOrder> GetOrders(string userId)
         {
             using (var context = new FarmerContext())

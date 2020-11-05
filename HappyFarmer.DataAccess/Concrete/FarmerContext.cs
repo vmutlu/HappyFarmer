@@ -26,6 +26,7 @@ namespace HappyFarmer.DataAccess.Concrete
         {
             //"server=localhost;port=3306;database=HappyFarmerDB;uid=root;password=;CharSet=utf8;Convert Zero Datetime=true; Allow Zero Datetime=true"
             optionsBuilder.UseMySQL(ConnectionString);
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

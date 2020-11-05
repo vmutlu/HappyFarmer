@@ -1,0 +1,86 @@
+﻿@model List<OrderModel>
+@{
+    ViewData["Title"] = "UserSoldProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h3>Satılan Ürünlerim</h3>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li>Satılan Ürünlerim</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Count() != 0)
+{
+    <div class="wishlist_area mt-70">
+        <div class="container">
+            <form action="#">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cart_page table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product_remove">Ürün Resmi</th>
+                                        <th class="product_remove">Ürün Adı</th>
+                                        <th class="product_thumb">Sipariş Edilen Ürün Adeti</th>
+                                        <th class="product_name">Alıcı Adı</th>
+                                        <th class="product-price">Alıcı Soyadı</th>
+                                        <th class="product_quantity">Alıcı Tel No</th>
+                                        <th class="product_total">Alıcı Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                            <tr>
+                                                <td class="product_quantity"><img style="width:150px; height:150px;" src="~/img/ProductImages/@item.ImageURL" /></td>
+                                                <td class="product_quantity">@item.ProductName</td>
+                                                <td class="product_quantity">@item.Quantity</td>
+                                                <td class="product_quantity">@item.FirstName</td>
+                                                <td class="product_quantity">@item.LastName</td>
+                                                <td class="product_quantity">@item.Phone</td>
+                                                <td class="product_quantity">@item.Email</td>
+                                            </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-12">
+                    <div class="wishlist_share">
+                        <h4>Share on:</h4>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+}
+else
+{
+    <div class="alert alert-danger">
+        <center>Henüz Satılmış Bir Ürününüz Bulunmamaktadır. Ürününüzü öne çıkarmak için lütfen yüklemiş oldugunuz resimlere dikkat ediniz.</center>
+    </div>
+    <br />
+}
