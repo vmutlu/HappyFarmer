@@ -162,13 +162,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
+           // HttpContext.Session.Clear();
             HttpContext.Session.Remove("ActiveUser");
+            HttpContext.Session.Remove("ActiveUserId");
 
-            foreach (var cookie in Request.Cookies.Keys)
-            {
-                Response.Cookies.Delete(cookie);
-            }
+            //foreach (var cookie in Request.Cookies.Keys)
+            //{
+            //    Response.Cookies.Delete(cookie);
+            //}
 
             return RedirectToAction("Index");
         }

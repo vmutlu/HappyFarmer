@@ -439,14 +439,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult UserLogout()
         {
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
             HttpContext.Session.Remove("ActiveCustomer");
             HttpContext.Session.Remove("ActiveCustomerId");
 
-            foreach (var cookie in Request.Cookies.Keys)
-            {
-                Response.Cookies.Delete(cookie);
-            }
+            //foreach (var cookie in Request.Cookies.Keys)
+            //{
+            //    Response.Cookies.Delete(cookie);
+            //}
 
             return Redirect("/User/UserLogin");
         }
