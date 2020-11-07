@@ -27,19 +27,18 @@
                 <aside class="sidebar_widget">
                     <div class="widget_inner">
                         <div class="widget_list widget_categories">
-                            <h3>Women</h3>
+                            <h3>Şehre Göre Filtrele</h3>
                             <ul>
                                 <li class="widget_sub_categories sub_categories1">
-                                    <a href="javascript:void(0)">Shoes</a>
+                                    <a href="javascript:void(0)">İl Seçiniz</a>
                                     <ul class="widget_dropdown_categories dropdown_categories1">
-                                        <li><a href="#">Document</a></li>
-                                        <li><a href="#">Dropcap</a></li>
-                                        <li><a href="#">Dummy Image</a></li>
-                                        <li><a href="#">Dummy Text</a></li>
-                                        <li><a href="#">Fancy Text</a></li>
+                                        @foreach (var item in ViewBag.CityWithFilter)
+                                        {
+                                            <li><a asp-action="CategoryWithProduct" asp-route-type="@ViewBag.Type" asp-route-City="@item.Cities">@item.Cities </a></li>
+                                        }
                                     </ul>
                                 </li>
-                                <li class="widget_sub_categories sub_categories2">
+                                @*<li class="widget_sub_categories sub_categories2">
                                     <a href="javascript:void(0)">Bags</a>
                                     <ul class="widget_dropdown_categories dropdown_categories2">
                                         <li><a href="#">Flickr</a></li>
@@ -58,7 +57,7 @@
                                         <li><a href="#">Sleigh Beds</a></li>
                                         <li><a href="#">Laundry</a></li>
                                     </ul>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                         <div class="widget_filter">

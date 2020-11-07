@@ -14,11 +14,13 @@ namespace HappyFarmer.UI.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IBannerService _bannerService;
-        public CategoryController(ICategoryService categoryService, IProductService productService, IBannerService bannerService)
+        private readonly ICityService _cityService;
+        public CategoryController(ICategoryService categoryService, IProductService productService, IBannerService bannerService, ICityService cityService)
         {
             _categoryService = categoryService;
             _productService = productService;
             _bannerService = bannerService;
+            _cityService = cityService;
         }
         public IActionResult Index()
         {
@@ -31,6 +33,7 @@ namespace HappyFarmer.UI.Controllers
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
 
             ViewBag.LowerBanner = _bannerService.GetLowerAll();
+            ViewBag.CityWithFilter = _cityService.GetAll();
 
             if (lowPrice > -1 && topPrice > -1)
             {
@@ -46,7 +49,7 @@ namespace HappyFarmer.UI.Controllers
             if (City != null && Country != null)
                 return View(_productService.FilterByRegion(type, City, Country, null));
             if (City != null && Country == null && Neighborhood == null)
-                return View(_productService.FilterByRegion(type,City, null, null));
+                return View(_productService.FilterByRegion(type, City, null, null));
 
             #endregion
 
@@ -71,7 +74,7 @@ namespace HappyFarmer.UI.Controllers
                 return View(_productService.GetAll());
 
             else
-                ViewBag.Error = "Listelenecek Ürün Bulunamadı !!!";
+                        ViewBag.Error = "Listelenecek Ürün Bulunamadı !!!";
             return View();
         }
 
