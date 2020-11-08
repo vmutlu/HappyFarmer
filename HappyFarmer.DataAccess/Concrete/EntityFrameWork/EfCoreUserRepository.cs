@@ -58,6 +58,11 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
+        /// <summary>
+        /// Siteye Kayıtlı kullanıcının verdiği ilanı satıldıgında kullanıcıya order detayları döner
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<FarmerOrderItem> GetUserSoldProduct(int userId)
         {
             using (var context = new FarmerContext())

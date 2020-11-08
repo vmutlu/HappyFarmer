@@ -17,10 +17,14 @@ namespace HappyFarmer.UI.Controllers
     {
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
-        public CartController(ICartService cartService, IOrderService orderService)
+        private readonly IProductService _productService;
+        private readonly IUserService _userService;
+        public CartController(ICartService cartService, IOrderService orderService, IProductService productService, IUserService userService)
         {
             _cartService = cartService;
             _orderService = orderService;
+            _productService = productService;
+            _userService = userService;
         }
 
         #region Cart Methods
@@ -99,45 +103,69 @@ namespace HappyFarmer.UI.Controllers
                     ImageUrl = i.Product.ImageUrl,
                     Quantity = i.Quantity
                 }).ToList()
-            }; 
-            return View(orderModel); 
+            };
+            return View(orderModel);
         }
 
         [HttpPost]
         public IActionResult CheckOut(OrderModel orderModel)
         {
-            if(orderModel == null)
+            var soldProductId = 0;
+            FarmerCartItem cartItem = new FarmerCartItem();
+
+            if (orderModel == null)
             {
                 ViewBag.Message = "Lütfen Zorunlu Alanları Doldurmadan Geçmeyiniz";
                 return View();
             }
-                var userId = HttpContext.Session.GetString("ActiveCustomerId");
-                var cart = _cartService.GetCartByUserId(userId);
+            var userId = HttpContext.Session.GetString("ActiveCustomerId");
+            var cart = _cartService.GetCartByUserId(userId);
 
-                orderModel.CartModel = new CartModel()
+            orderModel.CartModel = new CartModel()
+            {
+                CartId = cart.Id,
+                CartItems = cart.CartItems.Select(i => new CartItemModel()
                 {
-                    CartId = cart.Id,
-                    CartItems = cart.CartItems.Select(i => new CartItemModel()
-                    {
-                        CartItemId = i.Id,
-                        ProductId = i.Product.Id,
-                        Name = i.Product.Name,
-                        Price = (decimal)i.Product.Price,
-                        ImageUrl = i.Product.ImageUrl,
-                        Quantity = i.Quantity
-                    }).ToList()
-                };
+                    CartItemId = i.Id,
+                    ProductId = i.Product.Id,
+                    Name = i.Product.Name,
+                    Price = (decimal)i.Product.Price,
+                    ImageUrl = i.Product.ImageUrl,
+                    Quantity = i.Quantity
+                }).ToList()
+            };
 
-                //odeme işlemim
-                var payment = PaymentProcess(orderModel);
+            //odeme işlemim
+            var payment = PaymentProcess(orderModel);
 
-                if (payment.Status == "success")
+            if (payment.Status == "success")
+            {
+                SaveOrder(orderModel, payment, userId);
+                ClearCart(cart.Id.ToString());
+                TempData["Success"] = "Ödeme İşlemi Başarı bir şekilde tamamlandı.Siparişleriniz Siparişlerim kısmından kontrol edebilirsiniz...";
+
+
+                #region Kullanıcının ürünümü satıldı
+
+                foreach (var item in cart.CartItems)
                 {
-                    SaveOrder(orderModel, payment, userId);
-                    ClearCart(cart.Id.ToString());
-                    TempData["Success"] = "Ödeme İşlemi Başarı bir şekilde tamamlandı.Siparişleriniz Siparişlerim kısmından kontrol edebilirsiniz...";
-                    return RedirectToAction("Index","Home");
+                    soldProductId = item.ProductId;
+                    cartItem = item;
                 }
+
+                var userProduct = _productService.GetById(soldProductId);
+                if (userProduct != null)
+                {
+                    var userMail = _userService.GetById(userProduct.UserId);
+
+                    var messageBody = "Tebrikler '" + userProduct.Name.ToUpper() + "' Ürününüz Satıldı. Detay İçin sitemizi ziyaret edip bakabilirsiniz. \nUYARI: Lütfen ürün kargolama işlemlerini uzatıp müşterileri kızdırmayınız. \n \n Happy Farmer İyi Günler Diler :)";
+                    MailSender.SendMail(messageBody, userMail.Email, whereFrom: true); 
+
+                }
+                #endregion
+
+                return RedirectToAction("Index", "Home");
+            }
 
             //sipariş
             return View(orderModel);
