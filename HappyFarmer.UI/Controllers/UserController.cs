@@ -814,8 +814,8 @@ namespace HappyFarmer.UI.Controllers
                 var user = _userService.FindByEmail(email);
                 if (user != null)
                 {
-                    
-                    var messageBody = $"<a target=\"_blank\" href=\"https://localhost:44393{Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id) })}\">Yeni şifre talebi için tıklayınız</a>";
+                    var callbackUrl = "https://localhost:44393" + Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id)});
+                    var messageBody = "Sitemiz üzerinden bir şifre sıfırlama baglantı talebi gönderildi. Şifre sıfırlama işlemine devam etmek için Lütfen <a href=\"" + callbackUrl + "\">buraya</a> tıklayınız.\nBu işlemi siz taleb etmediyseniz lütfen bu mail adresi üzerinden bizimle iletişime geçiniz.";
                     MailSender.SendMail(messageBody, email);
                     ViewBag.SendMessage = "Mesajınız Gönderildi Lütfen E-Mail Adresinize Gelen Baglantıya Tıklayarak Devam Ediniz.";
                 }
@@ -825,6 +825,8 @@ namespace HappyFarmer.UI.Controllers
                     ViewBag.SendMessage = "Bu Mail Adresiyle Kayıtlı Bir Hesap Bulunamadı !";
                 }
             }
+
+            // href=\"https://localhost:44393{Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id) })}
 
             else
             {
