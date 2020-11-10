@@ -111,6 +111,12 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult UserAccount()
         {
+            if(HttpContext.Session.GetString("ActiveCustomer") == null)
+            {
+                TempData["SendMessage"] = "Hesabım Sayfasına Erişebilmek İçin Lütfen Öncelikle Sitemize Üye Olup Giriş Yapmış Oldugunuzdan Emin Olunuz !!!";
+                return RedirectToAction("UserLogin", "User");
+            }
+
             ViewBag.ActiveCustomer = HttpContext.Session.GetString("ActiveCustomer"); //aktif giriş yapan müşteri
             var activeUserId = HttpContext.Session.GetString("ActiveCustomerId"); //idsi
 

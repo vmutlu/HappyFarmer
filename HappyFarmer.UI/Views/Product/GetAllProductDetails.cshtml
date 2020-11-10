@@ -63,16 +63,25 @@
                         <p>@Model.Description</p>
                     </div>
                     <div class="product_variant quantity">
-                        <form asp-action="AddToCart" asp-controller="Cart" method="post" style="display:inline;">
+                        @if (Model.FarmerDeclareType == 14 || Model.FarmerDeclareType == 15 || Model.FarmerDeclareType == 22 || Model.FarmerDeclareType == 23 || Model.FarmerDeclareType == 24 || Model.FarmerDeclareType == 25 || Model.FarmerDeclareType == 26)
+                        {
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post" style="display:inline;">
 
-                            <input type="hidden" name="productId" value="@Model.Id" />
+                                <input type="hidden" name="productId" value="@Model.Id" /> 
 
-                            <label>Miktar: </label>
-                            <input name="quantity" min="1" max="100" value="1" type="number">
+                                <label>Miktar: </label>
+                                <input name="quantity" min="1" max="100" value="1" type="number">
 
-                            <button type="submit" class="button">Sepete Ekle</button>
+                                <button type="submit" class="button">Sepete Ekle</button>
 
-                        </form>
+                            </form>
+                        }
+
+                        else
+                        {
+                            var phoneNumber = @Model.UserPhoneNumber;
+                            <a href="https://wa.me/905546441225" class="button">Whatsaapta İletişim'e Geçin</a>
+                        }
                     </div>
                     <div class="product_meta">
                         <span>

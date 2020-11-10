@@ -45,10 +45,9 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             using (var context = new FarmerContext())
             {
                 var response = context.OrderItems
-                    .OrderByDescending(i => i.Quantity).AsNoTracking()
-                    .Select(i => i.ProductId).FirstOrDefault();
+                    .OrderByDescending(i => i.Quantity).FirstOrDefault();
 
-                return response;
+                return response.ProductId;
             }
         }
     }

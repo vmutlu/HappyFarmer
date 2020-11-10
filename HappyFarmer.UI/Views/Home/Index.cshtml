@@ -1,4 +1,5 @@
 ﻿@inject HappyFarmer.Business.Abstract.IProductService _productService;
+@using HappyFarmer.DataAccess.Enums
 @model List<HappyFarmer.Entities.FarmerSlider>
 @{
     ViewData["Title"] = "Index";
@@ -72,7 +73,10 @@
                                                             <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                                 <input type="hidden" name="productId" value="@item.Id" />
                                                                 <input type="hidden" name="quantity" value="1" />
-                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                                @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                                {
+                                                                    <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                                }
                                                             </form>
                                                         </li>
                                                         <li class="quick_button">
@@ -99,7 +103,14 @@
                                                     <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                         <input type="hidden" name="productId" value="@item.Id" />
                                                         <input type="hidden" name="quantity" value="1" />
-                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                        {
+                                                            <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-primary btn-sm ml-2">İncele</a>
+                                                        }
                                                     </form>
                                                 </div>
                                             </figcaption>
@@ -158,7 +169,14 @@
                                                     <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                         <input type="hidden" name="productId" value="@item.Id" />
                                                         <input type="hidden" name="quantity" value="1" />
-                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                        {
+                                                            <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-danger btn-sm ml-2">Satıcıya Git</a>
+                                                        }
                                                     </form>
                                                 </div>
                                             </div>
@@ -220,7 +238,14 @@
                                                     <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                         <input type="hidden" name="productId" value="@item.Id" />
                                                         <input type="hidden" name="quantity" value="1" />
-                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                        {
+                                                            <button type="submit" class="btn btn-success btn-sm ml-2">Sepete Ekle</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-danger btn-sm ml-2">Satıcıya Git</a>
+                                                        }
                                                     </form>
                                                 </div>
                                             </div>
@@ -236,10 +261,10 @@
                                             }
                                             <div class="property-entry h-100">
                                                 <center>Listelecek Ürün Bulunumadı Lütfen Geri gitmek için tıklayınız.</center>
-                                                    <form asp-controller="Home" asp-action="Index" asp-route-page="@oldpage" method="post">
-                                                        <input type="hidden" name="pageStandOut" value="1" />
-                                                        <button type="submit" class="btn btn-success btn-sm ml-2">Geri<button>
-                                                    </form>
+                                                <form asp-controller="Home" asp-action="Index" asp-route-page="@oldpage" method="post">
+                                                    <input type="hidden" name="pageStandOut" value="1" />
+                                                    <button type="submit" class="btn btn-success btn-sm ml-2">Geri<button>
+                                                </form>
                                             </div>
                                         </div>
                                     }
@@ -281,11 +306,11 @@
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb">
-                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
-                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:210px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:210px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                             <div class="label_product">
-                                                <span class="label_sale">Sale</span>
-                                                <span class="label_new">New</span>
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
                                             </div>
                                             <div class="action_links">
                                                 <ul>
@@ -293,13 +318,15 @@
                                                         <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                             <input type="hidden" name="productId" value="@item.Id" />
                                                             <input type="hidden" name="quantity" value="1" />
-                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                            {
+                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            }
                                                         </form>
                                                     </li>
                                                     <li class="quick_button">
                                                         <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
                                                     </li>
-                                                    <li class="compare"><a data-toggle="modal" data-target="#modal_box" title="İncele"><span class="lnr lnr-sync"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -524,11 +551,11 @@
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb">
-                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
-                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:210px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:210px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                             <div class="label_product">
-                                                <span class="label_sale">Sale</span>
-                                                <span class="label_new">New</span>
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
                                             </div>
                                             <div class="action_links">
                                                 <ul>
@@ -536,7 +563,10 @@
                                                         <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                             <input type="hidden" name="productId" value="@item.Id" />
                                                             <input type="hidden" name="quantity" value="1" />
-                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                            {
+                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            }
                                                         </form>
                                                     </li>
                                                     <li class="quick_button">
@@ -592,8 +622,8 @@
                                             <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                             <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                             <div class="label_product">
-                                                <span class="label_sale">Sale</span>
-                                                <span class="label_new">New</span>
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
                                             </div>
                                             <div class="action_links">
                                                 <ul>
