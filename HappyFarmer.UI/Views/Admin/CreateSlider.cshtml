@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 style="color:green;">Yeni Slider Ekleme Ekranı</h2>
+<marquee direction=right>
+    <h2 style="color:green;">Yeni Slider Ekleme Ekranı</h2>
+</marquee>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
         @if (ViewBag.ErrorMessage != null)
         {
             <div class="text-danger">@ViewBag.ErrorMessage</div>
@@ -58,7 +60,7 @@
             <div class="form-group row">
 
                 <div class="col-md-10 offset-md-2">
-                    <button style="width: 100%; margin-left: 269px;" type="submit" class="btn btn-success">Slider Kaydet</button>
+                    <button style="width: 100%; margin-left:222px;" type="submit" class="btn btn-success">Slider Kaydet</button>
                 </div>
             </div>
         </form>

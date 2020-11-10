@@ -4,12 +4,14 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Kategoriler Sayfası</h1>
+<marquee direction=right>
+    <h1>Kategoriler Sayfası</h1>
+</marquee>
 <hr />
 
-@if(ViewBag.Message != null)
+@if (ViewBag.Message != null)
 {
-<div class="text-success">@ViewBag.Message</div>
+    <div class="text-success">@ViewBag.Message</div>
 }
 
 <div class="clearfix">

@@ -5,8 +5,9 @@
 }
 
 
-
-<h1>Banner Güncelleme Sayfası</h1>
+<marquee direction=right>
+        <h1 style="color:green;">Banner Güncelleme Sayfası</h1>
+</marquee>
 <hr />
 
 
@@ -19,16 +20,16 @@
 
         <div class="col-md-12">
             <div asp-validation-summary="All" class="text-danger"></div>
-            
+
             <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
             <div class="form-group row">
                 <label asp-for="ImageURL" class="col-md-2 col-form-label">Banner Resmi</label>
                 <div class="col-md-10">
                     <input type="hidden" name="ImageUrl" value="@Model.ImageURL" />
-                    
+
                     <img src="~/img/BannerImages/@Model.ImageURL" height="220" width="350" />
                     <br />
-                    <br/>
+                    <br />
                     <input type="file" name="file" class="form-control" />
                     <span asp-validation-for="ImageURL"></span>
                 </div>

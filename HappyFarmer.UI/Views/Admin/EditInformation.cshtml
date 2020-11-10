@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Site Ön Bilgi Güncelleme Sayfası</h1>
+<marquee direction=right>
+    <h1>Site Ön Bilgi Güncelleme Sayfası</h1>
+</marquee>
 <hr />
 
 @section Scripts{
@@ -88,7 +90,7 @@
             <div class="form-group row">
                 <label asp-for="TermsOfUse" class="col-md-2 col-form-label">Kullanım Koşulları</label>
                 <div class="col-md-8">
-                    <textarea id="editor2"asp-for="TermsOfUse" rows="40" class="form-control">@Model.TermsOfUse</textarea>
+                    <textarea id="editor2" asp-for="TermsOfUse" rows="40" class="form-control">@Model.TermsOfUse</textarea>
                     <span asp-validation-for="TermsOfUse"></span>
                 </div>
             </div>
@@ -104,7 +106,7 @@
             <div class="form-group row">
                 <label asp-for="FAQ" class="col-md-2 col-form-label">SSS</label>
                 <div class="col-md-8">
-                    <textarea id="editor4"asp-for="FAQ" rows="40" class="form-control">@Model.FAQ</textarea>
+                    <textarea id="editor4" asp-for="FAQ" rows="40" class="form-control">@Model.FAQ</textarea>
                     <span asp-validation-for="FAQ"></span>
                 </div>
             </div>

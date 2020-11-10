@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Site Blog Sayfası</h1>
+<marquee direction=right>
+    <h1>Site Blog Sayfası</h1>
+</marquee>
 <hr />
 
 @if (ViewBag.Message != null)
@@ -45,7 +47,7 @@
                             {
                                 <tr>
                                     <td>@item.Id</td>
-                                    <td><img height="80" width="80" src="~/img/BlogImages/@item.ImagePath"/></td>
+                                    <td><img height="80" width="80" src="~/img/BlogImages/@item.ImagePath" /></td>
                                     <td>@item.Title</td>
                                     <td>
                                         <textarea id="editor" rows="6" cols="40" class="form-control"> @item.Description</textarea>
@@ -55,7 +57,7 @@
                                     <td>
                                         @foreach (var users in ViewBag.CreatedBlogUsers)
                                         {
-                                            if(item.UserId == users.Id)
+                                            if (item.UserId == users.Id)
                                             {
                                                 <p>@users.Name  @users.Surname </p>
                                             }

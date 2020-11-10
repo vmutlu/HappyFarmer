@@ -4,8 +4,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<h1>Site Ayar Güncelleme Sayfası</h1>
+<marquee direction=right>
+    <h1>Site Ayar Güncelleme Sayfası</h1>
+</marquee>
 <hr />
 
 
@@ -21,7 +22,7 @@
             <div class="form-group row">
                 <label asp-for="Title" class="col-md-2 col-form-label">Site Title</label>
                 <div class="col-md-10">
-                    <input asp-for="Title" required="" value="@Model.Title" class="form-control" />                   
+                    <input asp-for="Title" required="" value="@Model.Title" class="form-control" />
                     <span asp-validation-for="Title"></span>
                 </div>
             </div>
