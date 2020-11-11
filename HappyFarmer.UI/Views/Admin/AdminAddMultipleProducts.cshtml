@@ -3,6 +3,10 @@
     ViewData["Title"] = "AdminAddMultipleProducts";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -27,7 +31,7 @@
                                     <p>Yüklenecek resimlerin bulunduğu klasöre giderek tamamını tek seferde seçerek yükleyebilirsiniz.</p>
 
 
-                                    <form asp-controller="Admin" asp-action="AdminAddMultipleProducts" method="POST" enctype="multipart/form-data"  >
+                                    <form asp-controller="Admin" asp-action="AdminAddMultipleProducts" method="POST" enctype="multipart/form-data">
                                         <div class="fallback">
                                             <input type="hidden" name="id" value="@Model.Id">
                                             <input type="file" name="file" multiple>

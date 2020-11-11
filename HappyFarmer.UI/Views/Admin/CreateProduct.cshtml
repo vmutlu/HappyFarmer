@@ -3,6 +3,11 @@
     ViewData["Title"] = "CreateProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
+
 <div class="container">
 
     <marquee direction=right><h2 style="color:green;">Yeni Ürün Ekleme Ekranı</h2></marquee>

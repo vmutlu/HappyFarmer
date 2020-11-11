@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
+
 <h1>Blog Güncelleme Sayfası</h1>
 <hr />
 

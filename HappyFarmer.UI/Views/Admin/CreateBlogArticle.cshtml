@@ -3,7 +3,10 @@
     ViewData["Title"] = "CreateBlogArticle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
 <div class="container">
     <marquee direction=right><h2 style="color:green;">Yeni Ürün Ekleme Ekranı</h2></marquee>
 </div>
@@ -38,59 +41,59 @@
             <div class="text-danger">@ViewBag.ErrorMessage</div>
         }
 
-    <form asp-controller="Admin" asp-action="CreateBlogArticle" method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-controller="Admin" asp-action="CreateBlogArticle" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="form-group row">
-            <label asp-for="Title" class="col-md-2 col-form-label">Blog Başlığı</label>
-            <div class="col-md-10">
-                <input name="Title" type="text" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="Title" class="col-md-2 col-form-label">Blog Başlığı</label>
+                <div class="col-md-10">
+                    <input name="Title" type="text" class="form-control" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="ImagePath" class="col-md-2 col-form-label">Blog Resmi</label>
-            <div class="col-md-10">
-                <input type="hidden" name="ImagePath" />
-                <input type="file" name="file" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="ImagePath" class="col-md-2 col-form-label">Blog Resmi</label>
+                <div class="col-md-10">
+                    <input type="hidden" name="ImagePath" />
+                    <input type="file" name="file" class="form-control" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="Description" class="col-md-2 col-form-label">Blog Açıklama</label>
-            <div class="col-md-10 ck-editor__editable_inline">
-                <textarea id="edit" style="min-height: 40%;" name="Description" class="form-control"></textarea>
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label">Blog Açıklama</label>
+                <div class="col-md-10 ck-editor__editable_inline">
+                    <textarea id="edit" style="min-height: 40%;" name="Description" class="form-control"></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="CreatedDate" class="col-md-2 col-form-label">Blog Ekleme Tarihi</label>
-            <div class="col-md-10">
-                <input name="CreatedDate" readonly type="text" value="@DateTime.Now.ToShortDateString()" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="CreatedDate" class="col-md-2 col-form-label">Blog Ekleme Tarihi</label>
+                <div class="col-md-10">
+                    <input name="CreatedDate" readonly type="text" value="@DateTime.Now.ToShortDateString()" class="form-control" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="QueueNumber" class="col-md-2 col-form-label">Blog Sıra Numarası</label>
-            <div class="col-md-10">
-                <input name="QueueNumber" type="number" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="QueueNumber" class="col-md-2 col-form-label">Blog Sıra Numarası</label>
+                <div class="col-md-10">
+                    <input name="QueueNumber" type="number" class="form-control" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="UserId" class="col-md-2 col-form-label">Blog Ekleyen Kullanıcı</label>
-            <div class="col-md-10">
-                <select name="UserId" id="UserId" class="form-control">
-                    <option value="@ViewBag.UserId">@ViewBag.UserDetails</option>
-                </select>
+            <div class="form-group row">
+                <label asp-for="UserId" class="col-md-2 col-form-label">Blog Ekleyen Kullanıcı</label>
+                <div class="col-md-10">
+                    <select name="UserId" id="UserId" class="form-control">
+                        <option value="@ViewBag.UserId">@ViewBag.UserDetails</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-10">
-                <center><button style="width:100%; margin-left:222px;" type="submit" class="btn btn-success btn-sm">Blog Kaydet</button> </center>
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <center><button style="width:100%; margin-left:222px;" type="submit" class="btn btn-success btn-sm">Blog Kaydet</button> </center>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
     </div>
 </div>
 

@@ -6,7 +6,7 @@
 
 
 <marquee direction=right>
-        <h1 style="color:green;">Banner Güncelleme Sayfası</h1>
+    <h1 style="color:green;">Banner Güncelleme Sayfası</h1>
 </marquee>
 <hr />
 
@@ -14,6 +14,10 @@
 @if (ViewBag.ErrorMessage != null)
 {
     <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
 }
 <form asp-controller="Admin" asp-action="EditBanner" method="post" enctype="multipart/form-data">
     <div class="row">

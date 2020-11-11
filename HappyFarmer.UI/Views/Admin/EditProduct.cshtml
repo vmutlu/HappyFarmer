@@ -5,6 +5,10 @@
     var counter = 0;
     var permission = Model.PermissionToSell;
 }
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
 <marquee direction=right>
     <h1>Ürün Güncelleme Sayfası</h1>
 </marquee>
