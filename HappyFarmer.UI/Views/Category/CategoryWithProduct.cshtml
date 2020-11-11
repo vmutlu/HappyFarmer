@@ -231,7 +231,14 @@
                                         </div>
                                         <div class="card-footer text-center">
                                             <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
-                                            <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm ml-2">Sepete Ekle</a>
+                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                            {
+                                                <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm ml-2">Sepete Ekle</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-warning btn-sm ml-2">İncele</a>
+                                            }
                                         </div>
                                     </div>
                                 </div>
