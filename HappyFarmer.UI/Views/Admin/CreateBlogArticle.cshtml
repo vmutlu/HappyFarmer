@@ -3,10 +3,7 @@
     ViewData["Title"] = "CreateBlogArticle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@if (@ViewBag.IncerrectImageExtension != null)
-{
-    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
-}
+
 <div class="container">
     <marquee direction=right><h2 style="color:green;">Yeni Ürün Ekleme Ekranı</h2></marquee>
 </div>
@@ -40,7 +37,10 @@
         {
             <div class="text-danger">@ViewBag.ErrorMessage</div>
         }
-
+        @if (@ViewBag.IncerrectImageExtension != null)
+        {
+            <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+        }
         <form asp-controller="Admin" asp-action="CreateBlogArticle" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
 

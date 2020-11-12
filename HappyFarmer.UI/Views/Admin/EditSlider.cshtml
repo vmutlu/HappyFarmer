@@ -16,14 +16,13 @@
 }
 @if (@ViewBag.IncerrectImageExtension != null)
 {
-    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+    <div style="margin-left:265px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
 }
 <form asp-controller="Admin" asp-action="EditSlider" method="post" enctype="multipart/form-data">
     <div class="row">
 
         <div class="col-md-12">
-            <div asp-validation-summary="All" class="text-danger"></div>
-
+           
             <div class="form-group row">
                 <label asp-for="ImagePath" class="col-md-2 col-form-label">Slider Resmi</label>
                 <div class="col-md-10">

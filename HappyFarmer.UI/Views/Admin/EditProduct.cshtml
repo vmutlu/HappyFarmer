@@ -5,10 +5,7 @@
     var counter = 0;
     var permission = Model.PermissionToSell;
 }
-@if (@ViewBag.IncerrectImageExtension != null)
-{
-    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
-}
+
 <marquee direction=right>
     <h1>Ürün Güncelleme Sayfası</h1>
 </marquee>
@@ -42,7 +39,10 @@
 }
 <form asp-controller="Admin" asp-action="EditProduct" asp-route-type="@ViewBag.Type" method="post" enctype="multipart/form-data">
     <div class="row">
-
+        @if (@ViewBag.IncerrectImageExtension != null)
+        {
+            <div style="margin-left:240px; width:1090px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+        }
         <div class="col-md-10">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group row">
@@ -113,29 +113,32 @@
         </div>
 
         <div class="col-md-2">
-            @foreach (var item in (List<HappyFarmer.Entities.FarmerCategory>)ViewBag.Categories)
+            @if (ViewBag.Categories != null)
             {
-                var isCheck = "";
-                if (Model.SelectedCategory.Any(i => i.Id == item.Id))
+                @foreach (var item in (List<HappyFarmer.Entities.FarmerCategory>)ViewBag.Categories)
                 {
-                    isCheck = "checked";
+                    var isCheck = "";
+                    if (Model.SelectedCategory.Any(i => i.Id == item.Id))
+                    {
+                        isCheck = "checked";
 
-                    <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id" />
-                    <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name" />
-                    counter++;
+                        <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id" />
+                        <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name" />
+                        counter++;
+                    }
+                    else
+                        isCheck = "";
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               name="categoryIds"
+                               value="@item.Id" id="category@(item.Id)"
+                               @isCheck>
+                        <label class="form-check-label" for="@(item.Id)">
+                            @item.Name
+                        </label>
+                    </div>
                 }
-                else
-                    isCheck = "";
-
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                           name="categoryIds"
-                           value="@item.Id" id="category@(item.Id)"
-                           @isCheck>
-                    <label class="form-check-label" for="@(item.Id)">
-                        @item.Name
-                    </label>
-                </div>
             }
         </div>
     </div>

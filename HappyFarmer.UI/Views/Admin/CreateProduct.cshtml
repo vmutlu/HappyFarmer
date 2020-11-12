@@ -3,10 +3,6 @@
     ViewData["Title"] = "CreateProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@if (@ViewBag.IncerrectImageExtension != null)
-{
-    <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
-}
 
 <div class="container">
 
@@ -41,6 +37,10 @@
         @if (ViewBag.ErrorMessage != null)
         {
             <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+        @if (@ViewBag.IncerrectImageExtension != null)
+        {
+            <div style="margin-left:225px;" class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
         }
 
         <form asp-controller="Admin" asp-action="CreateProduct" asp-route-type="@ViewBag.Type" method="post" enctype="multipart/form-data">

@@ -206,7 +206,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(model);
                 }
             }
 
@@ -470,7 +470,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(generalSettingsModel);
                 }
             }
             _generalSettingsService.Create(farmerGeneralSettings);
@@ -595,7 +595,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(generalSettingsModel);
                 }
             }
             _generalSettingsService.Update(entity);
@@ -792,7 +792,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(sliderModel);
                 }
             }
             _sliderService.Create(slider);
@@ -1258,7 +1258,7 @@ namespace HappyFarmer.UI.Controllers
                     else
                     {
                         ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                        return View();
+                        return View(productModel);
                     }
                 }
                 _productService.Create(product);
@@ -1397,7 +1397,7 @@ namespace HappyFarmer.UI.Controllers
                     else
                     {
                         ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                        return View();
+                        return View(model);
                     }
                 }
 
@@ -1869,7 +1869,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(loginModel);
                 }
             }
             _userService.Create(userCarier);
@@ -2056,7 +2056,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                    return View();
+                    return View(loginModel);
                 }
             }
             _userService.Create(users);
@@ -2547,7 +2547,7 @@ namespace HappyFarmer.UI.Controllers
                     else
                     {
                         ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                        return View();
+                        return View(model);
                     }
                 }
 
