@@ -3,7 +3,7 @@
     ViewData["Title"] = "UserRegister";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!--breadcrumbs area start-->
+
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
@@ -19,8 +19,12 @@
         </div>
     </div>
 </div>
-<!--breadcrumbs area end-->
-<!-- customer login start -->
+
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
+
 <div class="customer_login">
     <div class="container">
         <div class="row">
@@ -29,7 +33,7 @@
                 <div class="account_form register">
                     <h2>Kayıt Ol</h2>
                     <form asp-controller="User" asp-action="UserRegister" method="post" enctype="multipart/form-data">
-                                                <p>
+                        <p>
                             <label>Profil Resminiz <span>*</span></label>
                             <input type="file" name="file" class="form-control" />
                         </p>
@@ -70,7 +74,6 @@
                     </form>
                 </div>
             </div>
-            <!--register area end-->
         </div>
     </div>
 </div>

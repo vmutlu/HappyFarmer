@@ -18,6 +18,8 @@ namespace HappyFarmer.UI.Controllers
 {
     public class UserController : Controller
     {
+        #region Fields
+
         private readonly IUserService _userService;
         private readonly IProductService _productService;
         private readonly IMessageService _messageService;
@@ -25,6 +27,9 @@ namespace HappyFarmer.UI.Controllers
         private readonly IMultipleProductImagesService _multipleProductImagesService;
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
+
+        #endregion
+
         public UserController(IUserService userService, IProductService productService, IMessageService messageService, IMultipleProductImagesService multipleProductImagesService, IGlobalMessageService globalMessageService, ICartService cartService, IOrderService orderService)
         {
             _userService = userService;
@@ -39,6 +44,7 @@ namespace HappyFarmer.UI.Controllers
         {
             return View();
         }
+
         #region User Messages Methods
 
         [HttpGet]
@@ -111,6 +117,10 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult UserAccount()
         {
+            if(TempData["IncerrectImageExtension"] != null)
+            {
+                ViewBag.IncerrectImageExtension = TempData["IncerrectImageExtension"];
+            }
             if(HttpContext.Session.GetString("ActiveCustomer") == null)
             {
                 TempData["SendMessage"] = "Hesabım Sayfasına Erişebilmek İçin Lütfen Öncelikle Sitemize Üye Olup Giriş Yapmış Oldugunuzdan Emin Olunuz !!!";
@@ -159,36 +169,44 @@ namespace HappyFarmer.UI.Controllers
 
             if (file != null)
             {
-                if (activeCustomer.ImageURL != null)
+                var incerrectImage = Path.GetExtension(file.FileName);
+                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
                 {
-                    //güncelleme yaparken önce resmi sil
-                    var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", activeCustomer.ImageURL);
-                    FileInfo fileInfo = new FileInfo(deletePath);
-                    if (fileInfo != null)
+                    if (activeCustomer.ImageURL != null)
                     {
-                        System.IO.File.Delete(deletePath);
-                        fileInfo.Delete();
+                        //güncelleme yaparken önce resmi sil
+                        var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", activeCustomer.ImageURL);
+                        FileInfo fileInfo = new FileInfo(deletePath);
+                        if (fileInfo != null)
+                        {
+                            System.IO.File.Delete(deletePath);
+                            fileInfo.Delete();
+                        }
                     }
-                }
 
-                //daha sonra resim ekle
-                Random rastgele = new Random();
-                string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                string uret = "";
-                for (int i = 0; i < 6; i++)
+                    //daha sonra resim ekle
+                    Random rastgele = new Random();
+                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                    string uret = "";
+                    for (int i = 0; i < 6; i++)
+                    {
+                        uret += harfler[rastgele.Next(harfler.Length)];
+                    }
+
+                    activeCustomer.ImageURL = uret + ".jpg";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    _userService.Update(activeCustomer);
+                }
+                else
                 {
-                    uret += harfler[rastgele.Next(harfler.Length)];
+                    TempData["IncerrectImageExtension"] = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
                 }
-
-                activeCustomer.ImageURL = uret + ".jpg";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
-
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                _userService.Update(activeCustomer);
             }
             return Redirect("/User/UserAccount");
         }
@@ -312,20 +330,29 @@ namespace HappyFarmer.UI.Controllers
 
                 if (file != null)
                 {
-                    Random rastgele = new Random();
-                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                    string uret = "";
-                    for (int i = 0; i < 6; i++)
+                    var incerrectImage = Path.GetExtension(file.FileName);
+                    if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
                     {
-                        uret += harfler[rastgele.Next(harfler.Length)];
+                        Random rastgele = new Random();
+                        string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                        string uret = "";
+                        for (int i = 0; i < 6; i++)
+                        {
+                            uret += harfler[rastgele.Next(harfler.Length)];
+                        }
+
+                        newUser.ImageURL = uret + ".jpg";
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
+
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream).ConfigureAwait(false);
+                        }
                     }
-
-                    newUser.ImageURL = uret + ".jpg";
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
-
-                    using (var stream = new FileStream(path, FileMode.Create))
+                    else
                     {
-                        await file.CopyToAsync(stream).ConfigureAwait(false);
+                         ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
+                        return View();
                     }
                 }
                 _userService.Create(newUser);
@@ -486,6 +513,7 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserCreateDeclare(ProductModel model, IFormFile file)
         {
+            List<DeclareModel> customerInformation = null;
             var declare = new FarmerProduct()
             {
                 UserName = model.UserName,
@@ -513,26 +541,35 @@ namespace HappyFarmer.UI.Controllers
 
             if (file != null)
             {
-                Random rastgele = new Random();
-                string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                string uret = "";
-                for (int i = 0; i < 6; i++)
+                var incerrectImage = Path.GetExtension(file.FileName);
+                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
                 {
-                    uret += harfler[rastgele.Next(harfler.Length)];
+                    Random rastgele = new Random();
+                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                    string uret = "";
+                    for (int i = 0; i < 6; i++)
+                    {
+                        uret += harfler[rastgele.Next(harfler.Length)];
+                    }
+
+                    declare.ImageUrl = uret + ".jpg";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", uret + ".jpg");
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream).ConfigureAwait(false);
+                    }
+
+                    _productService.Create(declare);
+                    return Redirect("/User/UserAccount");
                 }
-
-                declare.ImageUrl = uret + ".jpg";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", uret + ".jpg");
-
-                using (var stream = new FileStream(path, FileMode.Create))
+                else
                 {
-                    await file.CopyToAsync(stream).ConfigureAwait(false);
+                    ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
+                   customerInformation = new List<DeclareModel>();                    
                 }
-
-                _productService.Create(declare);
-                return Redirect("/User/UserAccount");
             }
-            return View();
+            return View(customerInformation);
         }
 
         [HttpGet]
@@ -611,33 +648,41 @@ namespace HappyFarmer.UI.Controllers
 
             if (file != null)
             {
-                if (entity.ImageUrl != null)
+                var incerrectImage = Path.GetExtension(file.FileName);
+                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
                 {
-                    //güncelleme yaparken önce resmi sil
-                    var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", entity.ImageUrl);
-                    FileInfo fileInfo = new FileInfo(deletePath);
-                    if (fileInfo != null)
+                    if (entity.ImageUrl != null)
                     {
-                        System.IO.File.Delete(deletePath);
-                        fileInfo.Delete();
+                        //güncelleme yaparken önce resmi sil
+                        var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", entity.ImageUrl);
+                        FileInfo fileInfo = new FileInfo(deletePath);
+                        if (fileInfo != null)
+                        {
+                            System.IO.File.Delete(deletePath);
+                            fileInfo.Delete();
+                        }
+                    }
+
+                    //daha sonra resim ekle
+                    Random rastgele = new Random();
+                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                    string uret = "";
+                    for (int i = 0; i < 6; i++)
+                    {
+                        uret += harfler[rastgele.Next(harfler.Length)];
+                    }
+
+                    entity.ImageUrl = uret + ".jpg";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", uret + ".jpg");
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
                     }
                 }
-
-                //daha sonra resim ekle
-                Random rastgele = new Random();
-                string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                string uret = "";
-                for (int i = 0; i < 6; i++)
+                else
                 {
-                    uret += harfler[rastgele.Next(harfler.Length)];
-                }
-
-                entity.ImageUrl = uret + ".jpg";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductImages", uret + ".jpg");
-
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
+                    TempData["IncerrectImageExtension"] = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
                 }
             }
             _productService.Update(entity);
@@ -679,20 +724,28 @@ namespace HappyFarmer.UI.Controllers
         {
             foreach (var item in file)
             {
-                Random rastgele = new Random();
-                string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                string uret = "";
-                for (int i = 0; i < 6; i++)
+                var incerrectImage = Path.GetExtension(item.FileName);
+                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
                 {
-                    uret += harfler[rastgele.Next(harfler.Length)];
+                    Random rastgele = new Random();
+                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                    string uret = "";
+                    for (int i = 0; i < 6; i++)
+                    {
+                        uret += harfler[rastgele.Next(harfler.Length)];
+                    }
+
+                    list.Add(uret + ".jpg");
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductMultipleImages", uret + ".jpg");
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream).ConfigureAwait(false);
+                    }
                 }
-
-                list.Add(uret + ".jpg");
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\ProductMultipleImages", uret + ".jpg");
-
-                using (var stream = new FileStream(path, FileMode.Create))
+                else
                 {
-                    await item.CopyToAsync(stream).ConfigureAwait(false);
+                    TempData["IncerrectImageExtension"] = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
                 }
             }
 

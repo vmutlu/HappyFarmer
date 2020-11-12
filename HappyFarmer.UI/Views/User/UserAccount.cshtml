@@ -53,6 +53,11 @@
     </div>
 </div>
 
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
+
 <section class="main_content_area">
     <div class="container">
         <div class="account_dashboard">

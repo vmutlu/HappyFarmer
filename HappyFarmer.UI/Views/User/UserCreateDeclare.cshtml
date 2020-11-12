@@ -24,7 +24,6 @@
     <h4>@ViewBag.Message</h4>
 </div>
 
-<!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
@@ -40,12 +39,17 @@
         </div>
     </div>
 </div>
-<!--breadcrumbs area end-->
-<!-- customer login start -->
+
+@if (@ViewBag.IncerrectImageExtension != null)
+{
+    <div class="alert alert-danger"><center>@ViewBag.IncerrectImageExtension</center></div>
+}
+
+
 <div class="customer_login">
     <div class="container">
         <div class="row">
-            <!--login area start-->
+
             <div class="col-lg-12 col-md-12">
                 <div class="account_form">
                     <h2>Giriş Yap</h2>
@@ -170,9 +174,6 @@
                     </form>
                 </div>
             </div>
-            <!--login area start-->
-
         </div>
     </div>
 </div>
-<!-- customer login end -->
