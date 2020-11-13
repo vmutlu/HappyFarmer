@@ -3,10 +3,13 @@
     ViewData["Title"] = "AdminProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@if(ViewBag.Type != null)
+{
+    var type = ViewBag.Type;
+}
 <div class="clearfix">
     <div align="right">
-        <a href="/Admin/CreateProduct"><button class="btn btn-success" btn-xs>Yeni Ürün Ekle</button></a>
+        <a asp-controller="Admin" asp-action="CreateProduct" asp-route-type="@ViewBag.Type"><button class="btn btn-success" btn-xs>Yeni Ürün Ekle</button></a>
     </div>
 </div>
 <hr />

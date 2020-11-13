@@ -1216,10 +1216,11 @@ namespace HappyFarmer.UI.Controllers
 
             if (ModelState.IsValid)
             {
+                var clearDescription = RemoveHtml(productModel.Description);
                 var product = new FarmerProduct()
                 {
                     Name = productModel.Name,
-                    Description = productModel.Description,
+                    Description = clearDescription,
                     City = productModel.City,
                     AnimalAge = productModel.AnimalAge,
                     AnnouncementDate = productModel.AnnouncementDate,
@@ -1227,7 +1228,7 @@ namespace HappyFarmer.UI.Controllers
                     FarmerDeclareType = productModel.FarmerDeclareType,
                     Guarantee = productModel.Guarantee,
                     Neighborhood = productModel.Neighborhood,
-                    PermissionToSell = productModel.PermissionToSell,
+                    PermissionToSell = true,
                     Price = productModel.Price,
                     Situation = productModel.Situation,
                     Swap = productModel.Swap,
@@ -1347,9 +1348,9 @@ namespace HappyFarmer.UI.Controllers
                 {
                     return NotFound();
                 }
-
+                var clearDescription = RemoveHtml(model.Description);
                 entity.Name = model.Name;
-                entity.Description = model.Description;
+                entity.Description = clearDescription;
                 entity.Price = model.Price;
                 entity.Situation = model.Situation;
                 entity.Swap = model.Swap;
