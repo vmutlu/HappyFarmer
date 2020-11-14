@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HappyFarmer.Business.Concrate
 {
@@ -173,6 +174,11 @@ namespace HappyFarmer.Business.Concrate
         public List<FarmerProduct> FilterByRegion(string type,string City, string Country, string Neighborhood)
         {
             return _productRepository.FilterByRegion(type,City, Country, Neighborhood);
+        }
+
+        public List<FarmerProduct> GetCategoryWithCount()
+        {
+             return _productRepository.GetCategoryWithCount();
         }
     }
 }

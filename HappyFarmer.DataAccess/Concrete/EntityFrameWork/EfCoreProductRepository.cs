@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
 {
@@ -194,11 +195,11 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
 
         //haftanın ürünleri
         public List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0)
-        {            
+        {
             using (var context = new FarmerContext())
             {
                 var products = context.Products
-                        .Where(i=> i.Situation == "EVET").AsQueryable();
+                        .Where(i => i.Situation == "EVET").AsQueryable();
 
                 return products.Skip((int)((pageStandOut - 1) * pageSize)).Take((int)pageSize).ToList();
             }
@@ -396,7 +397,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
-        public List<FarmerProduct> FilterByRegion(string type,string? City, string? Country, string? Neighborhood)
+        public List<FarmerProduct> FilterByRegion(string type, string? City, string? Country, string? Neighborhood)
         {
             #region Animals Enum
             var productTypeEnumIndex = 0;
@@ -448,7 +449,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                 if (City != null && Country != null && Neighborhood != null)
                 {
                     var response = context.Products
-                        .Where(i=>i.FarmerDeclareType == productTypeEnumIndex)
+                        .Where(i => i.FarmerDeclareType == productTypeEnumIndex)
                         .Where(i => i.City == City)
                         .Where(i => i.Country == Country)
                         .Where(i => i.Neighborhood == Neighborhood)
@@ -458,7 +459,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                     return response;
                 }
 
-                else if(City!=null && Country != null)
+                else if (City != null && Country != null)
                 {
                     var response = context.Products
                         .Where(i => i.FarmerDeclareType == productTypeEnumIndex)
@@ -480,6 +481,26 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
 
                     return response;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Hangi kategoride kaç adet ürün var
+        /// </summary>
+        /// <returns></returns>
+        public List<FarmerProduct> GetCategoryWithCount()
+        {
+
+            using (var context = new FarmerContext())
+            {
+                var response = (from p in context.Products
+                                group p by p.FarmerDeclareType into grup
+                                select new FarmerProduct
+                                {
+                                    FarmerDeclareType = grup.Key,
+                                    StockQty = grup.Count()
+                                }).ToList();
+                return response;
             }
         }
 

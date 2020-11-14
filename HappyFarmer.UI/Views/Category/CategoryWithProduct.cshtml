@@ -39,25 +39,25 @@
                                     </ul>
                                 </li>
                                 @*<li class="widget_sub_categories sub_categories2">
-                                    <a href="javascript:void(0)">Bags</a>
-                                    <ul class="widget_dropdown_categories dropdown_categories2">
-                                        <li><a href="#">Flickr</a></li>
-                                        <li><a href="#">Flip Box</a></li>
-                                        <li><a href="#">Cocktail</a></li>
-                                        <li><a href="#">Frame</a></li>
-                                        <li><a href="#">Flickrq</a></li>
-                                    </ul>
-                                </li>
-                                <li class="widget_sub_categories sub_categories3">
-                                    <a href="javascript:void(0)">Clothing</a>
-                                    <ul class="widget_dropdown_categories dropdown_categories3">
-                                        <li><a href="#">Platform Beds</a></li>
-                                        <li><a href="#">Storage Beds</a></li>
-                                        <li><a href="#">Regular Beds</a></li>
-                                        <li><a href="#">Sleigh Beds</a></li>
-                                        <li><a href="#">Laundry</a></li>
-                                    </ul>
-                                </li>*@
+                                        <a href="javascript:void(0)">Bags</a>
+                                        <ul class="widget_dropdown_categories dropdown_categories2">
+                                            <li><a href="#">Flickr</a></li>
+                                            <li><a href="#">Flip Box</a></li>
+                                            <li><a href="#">Cocktail</a></li>
+                                            <li><a href="#">Frame</a></li>
+                                            <li><a href="#">Flickrq</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="widget_sub_categories sub_categories3">
+                                        <a href="javascript:void(0)">Clothing</a>
+                                        <ul class="widget_dropdown_categories dropdown_categories3">
+                                            <li><a href="#">Platform Beds</a></li>
+                                            <li><a href="#">Storage Beds</a></li>
+                                            <li><a href="#">Regular Beds</a></li>
+                                            <li><a href="#">Sleigh Beds</a></li>
+                                            <li><a href="#">Laundry</a></li>
+                                        </ul>
+                                    </li>*@
                             </ul>
                         </div>
                         <div class="widget_filter">
@@ -123,33 +123,96 @@
 
                                 <input type="text" style="margin-top:2px;" placeholder="İl" value="Konya" class="form-control" name="City">
 
-                                <input class="form-control" style="margin-top:4px;"  placeholder="İlçe" value="Cihanbeyli" type="text" name="Country">
+                                <input class="form-control" style="margin-top:4px;" placeholder="İlçe" value="Cihanbeyli" type="text" name="Country">
 
-                                <input class="form-control" style="margin-top:4px;"  placeholder="Mahalle" value="Ağabeyli" type="text" name="Neighborhood">
+                                <input class="form-control" style="margin-top:4px;" placeholder="Mahalle" value="Ağabeyli" type="text" name="Neighborhood">
 
                                 <button type="submit" style="margin-top:4px; text-align=center; width:100%" class="btn btn-warning btn-sm">Filtrele</button>
 
                             </form>
                         </div>
                         <div class="widget_list widget_manu">
-                            <h3>Manufacturer</h3>
+                            <h3>Kategoriye Göre Ürün Adeti</h3>
                             <ul>
-                                <li>
-                                    <a href="#">Brake Parts <span>(6)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Accessories <span>(10)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine Parts <span>(4)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">hermes <span>(10)</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">louis vuitton <span>(8)</span></a>
-                                </li>
+                                @{
+                                    var productType = "";
+                                    var categoryRecordData = 0;
+                                }
+                                @if (ViewBag.CategoryWithCount != null)
+                                {
+                                    foreach (var item in ViewBag.CategoryWithCount)
+                                    {
+                                        if (item.FarmerDeclareType == 10)
+                                        {
+                                            productType = "Büyük Baş";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 11)
+                                        {
+                                            productType = "Küçük Baş";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 12)
+                                        {
+                                            productType = "Kümes Hayvancılığı";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 13)
+                                        {
+                                            productType = "Evcil Hayvan";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 14)
+                                        {
+                                            productType = "Süt Ürünleri";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 15)
+                                        {
+                                            productType = "Hayvansal Ürünler";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 20)
+                                        {
+                                            productType = "Traktör";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 21)
+                                        {
+                                            productType = "Tarla";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 22)
+                                        {
+                                            productType = "Tarım Ekipmanları";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 23)
+                                        {
+                                            productType = "Sebze";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 24)
+                                        {
+                                            productType = "Meyve";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 25)
+                                        {
+                                            productType = "Tahıl Ürünleri";
+                                            categoryRecordData++;
+                                        }
+                                        else if (item.FarmerDeclareType == 26)
+                                        {
+                                            productType = "Yem & Otsu Bitkiler";
+                                            categoryRecordData++;
+                                        }
 
+                                        <li>
+                                            <a style="color:red;" href="#">@productType<span style="color:blue;">(@item.StockQty)</span></a>
+                                        </li>
+                                    }
+                                }
                             </ul>
                         </div>
                         <div class="widget_list tags_widget">

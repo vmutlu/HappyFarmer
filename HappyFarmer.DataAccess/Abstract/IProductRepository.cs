@@ -1,5 +1,7 @@
 ﻿using HappyFarmer.Entities;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HappyFarmer.DataAccess.Abstract
 {
@@ -18,5 +20,6 @@ namespace HappyFarmer.DataAccess.Abstract
         List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0);
         List<FarmerProduct> FilterByPrice(int lowPrice,int topPrice,string type);
         List<FarmerProduct> FilterByRegion(string type,string? City, string? Country, string? Neighborhood);
+        List<FarmerProduct> GetCategoryWithCount();
     }
 }

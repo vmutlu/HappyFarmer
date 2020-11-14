@@ -30,6 +30,12 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CategoryWithProduct(string type, int? lowPrice, int? topPrice, string? City, string? Country, string? Neighborhood)
         {
+            #region Kategoriye göre veri tabanında o kategoriye ait kaç ürün var 
+
+             ViewBag.CategoryWithCount = _productService.GetCategoryWithCount();            
+
+            #endregion
+
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
 
             ViewBag.LowerBanner = _bannerService.GetLowerAll();
