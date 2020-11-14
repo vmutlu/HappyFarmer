@@ -31,6 +31,8 @@ namespace HappyFarmer.UI.Controllers
 
             #endregion
 
+            ViewBag.AnimalsProduct = _productService.GetAll();
+
             List<string> category = new List<string>();
             ViewBag.ProductsMultipleImages = _multipleProductImagesService.GetByIdMultiImages(id); //ürünle ilişkili çoklu resim getir
             var response = _productService.GetById(id);

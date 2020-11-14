@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
                         <li>Ürün Detayı</li>
                     </ul>
                 </div>
@@ -36,7 +36,7 @@
                             {
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update="" data-image="~/img/ProductMultipleImages/@item.ImageURL" data-zoom-image="~/img/ProductMultipleImages/@item.ImageURL">
-                                        <img src="~/img/ProductMultipleImages/@item.ImageURL" alt="zo-th-1">
+                                        <img style="width:100px; height:90px;" src="~/img/ProductMultipleImages/@item.ImageURL" alt="zo-th-1">
                                     </a>
 
                                 </li>
@@ -67,7 +67,7 @@
                         {
                             <form asp-action="AddToCart" asp-controller="Cart" method="post" style="display:inline;">
 
-                                <input type="hidden" name="productId" value="@Model.Id" /> 
+                                <input type="hidden" name="productId" value="@Model.Id" />
 
                                 <label>Miktar: </label>
                                 <input name="quantity" min="1" max="100" value="1" type="number">
@@ -108,6 +108,7 @@
         </div>
     </div>
 </div>
+
 <div class="product_d_info mb-65">
     <div class="container">
         <div class="row">
@@ -271,3 +272,205 @@
         </div>
     </div>
 </div>
+
+<div class="product_area mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Hayvan İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 10 || item.FarmerDeclareType == 11 || item.FarmerDeclareType == 12 || item.FarmerDeclareType == 13 || item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:275px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:275px;height:210px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                            {
+                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            }
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var olddPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + olddPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product_area mb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Tarım İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 20 || item.FarmerDeclareType == 21 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:275px;height:200px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:275px;height:200px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                            {
+                                                                <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                            }
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var olddPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + olddPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="custom_product_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <p>Yakın zamanda mağazaya eklenen ilanlar</p>
+                    <h2>Sebze - Meyve İlanları</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_carousel product_column5 owl-carousel">
+                        @foreach (var item in ViewBag.AnimalsProduct)
+                        {
+                            if (item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24)
+                            {
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:300px;height:200px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <a class="secondary_img" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:300px;height:200px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                            <div class="label_product">
+                                                <span class="label_sale">Satılık</span>
+                                                <span class="label_new">Yeni</span>
+                                            </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                                            <input type="hidden" name="productId" value="@item.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button title="Add to cart"><span class="lnr lnr-cart"></span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li class="quick_button">
+                                                        <a class="lnr lnr-magnifier" asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h4>
+                                            <p><a href="#">Fruits</a></p>
+                                            <div class="price_box">
+                                                @{
+                                                    var olddPrice = (item.Price * 20) / 100;
+                                                    var newPrice = item.Price + olddPrice;
+                                                }
+                                                <span class="current_price">$@item.Price</span>
+                                                <span class="old_price">$@newPrice</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

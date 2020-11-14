@@ -32,9 +32,11 @@ namespace HappyFarmer.UI.Controllers
         {
             #region Kategoriye göre veri tabanında o kategoriye ait kaç ürün var 
 
-             ViewBag.CategoryWithCount = _productService.GetCategoryWithCount();            
+             ViewBag.CategoryWithCount = _productService.GetCategoryWithCount();
 
             #endregion
+
+            ViewBag.AnimalsProduct = _productService.GetAll();
 
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
 
@@ -69,6 +71,16 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult FindForProductsByCategoryType(string type, string searchText)
         {
+            #region Kategoriye göre veri tabanında o kategoriye ait kaç ürün var 
+
+            ViewBag.CategoryWithCount = _productService.GetCategoryWithCount();
+
+            #endregion
+
+            ViewBag.LowerBanner = _bannerService.GetLowerAll();
+            ViewBag.AnimalsProduct = _productService.GetAll();
+            ViewBag.CityWithFilter = _cityService.GetAll();
+
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
             if (type != "Kategori Seçiniz" && !string.IsNullOrEmpty(type))
                 return View(_productService.FindForProductsByCategoryType(type, searchText));
