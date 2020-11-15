@@ -6,8 +6,7 @@
 @*<marquee behavior=alternate><img src="http://www.sitekodlari.com/img/ari.png"></marquee>*@
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-head-line">Anasayfa</h1>
-        <h1 class="page-subhead-line">This is dummy text , you can replace it with your original text. </h1>
+        <center><h1 class="page-head-line">Anasayfa</h1></center>
     </div>
 </div>
 <div class="row">
@@ -35,6 +34,34 @@
             </a>
         </div>
     </div>
+
+    @*  *@
+    <div class="col-md-4">
+        <div class="main-box mb-pink">
+            <a asp-controller="Admin" asp-action="Blog">
+                <i class="fa fa-certificate fa-5x"></i>
+                <h5>Yayında Olan Blog Yazıları: @ViewBag.FastAccessBlog </h5>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="main-box mb-red">
+            <a asp-controller="Admin" asp-action="Slider">
+                <i class="fa fa-sliders fa-5x"></i>
+                <h5>Yayında Olan Site Slider: @ViewBag.FastAccessSlider </h5>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="main-box mb-dull">
+            <a asp-controller="Admin" asp-action="GetAdminBanner">
+                <i class="fa fa-bell fa-5x"></i>
+                <h5>Yayında Olan Site Banner: @ViewBag.FastAccessBanner </h5>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -49,32 +76,32 @@
 
                             <div class="col-md-10 col-md-offset-1">
 
-                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <h4><i class="fa fa-quote-left"></i>Gerçek çiftçi ürünü göremeyeceği halde toprağı ekendir. <i class="fa fa-quote-right"></i></h4>
                                 <div class="user-img pull-right">
                                     <img src="assets/img/user.gif" alt="" class="img-u image-responsive" />
                                 </div>
-                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                                <h5 class="pull-right"><strong class="c-black">Cicero</strong></h5>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-md-10 col-md-offset-1">
 
-                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <h4><i class="fa fa-quote-left"></i>Çiftçiler güneş batana kadar çalışmazlar, iş bitene kadar çalışırlar.<i class="fa fa-quote-right"></i></h4>
                                 <div class="user-img pull-right">
                                     <img src="assets/img/user.png" alt="" class="img-u image-responsive" />
                                 </div>
-                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                                <h5 class="pull-right"><strong class="c-black">La Edri</strong></h5>
                             </div>
 
                         </div>
                         <div class="item">
                             <div class="col-md-10 col-md-offset-1">
 
-                                <h4><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing  Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
+                                <h4><i class="fa fa-quote-left"></i>Hangi çiftçi tohum ektiği, suladığı, dibini kazdığı, otlarını temizlediği bir ürünün yetişmesinden zevk almaz?  <i class="fa fa-quote-right"></i></h4>
                                 <div class="user-img pull-right">
                                     <img src="assets/img/user.gif" alt="" class="img-u image-responsive" />
                                 </div>
-                                <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
+                                <h5 class="pull-right"><strong class="c-black">Hayati İnanç</strong></h5>
                             </div>
                         </div>
                     </div>

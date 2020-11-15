@@ -75,7 +75,29 @@ namespace HappyFarmer.UI.Controllers
 
             #endregion
 
+            #region Hızlı Erişim Blog
+
+            var fastAccess = _blogService.GetAll();
+            ViewBag.FastAccessBlog = fastAccess.Count();
+
+            #endregion
+
+            #region Hızlı Erişim Banner
+
+            var response = _bannerService.GetAdminBanner();
+            ViewBag.FastAccessBanner = response.Count();
+
+            #endregion
+
+            #region Hızlı Erişim Slider
+
+            var fastSlider = _sliderService.GetAll(true);
+            ViewBag.FastAccessSlider = fastSlider.Count();
+
+            #endregion
+
             var slider = _sliderService.GetAll();
+
             if (HttpContext.Session.GetString("ActiveUser") != null)
             {
                 ViewBag.User = HttpContext.Session.GetString("ActiveUser");
