@@ -131,12 +131,12 @@
                                         <center>
                                             @if (item.CheckStatus == true)
                                             {
-                                                <a asp-controller="Admin" asp-action="EditGlobalMessagePermission" asp-route-id="@item.Id" asp-route-active="no" class="btn btn-success btn-sm">Aktif</a>
+                                                <a asp-controller="Admin" asp-action="EditGlobalMessagePermission" asp-route-id="@item.Id" asp-route-active="no" asp-route-sender="Carrier" class="btn btn-success btn-sm">Aktif</a>
                                             }
 
                                             else
                                             {
-                                                <a asp-controller="Admin" asp-action="EditGlobalMessagePermission" asp-route-id="@item.Id" asp-route-active="yes" class="btn btn-danger btn-sm">Pasif</a>
+                                                <a asp-controller="Admin" asp-action="EditGlobalMessagePermission" asp-route-id="@item.Id" asp-route-active="yes" asp-route-sender="Carrier"  class="btn btn-danger btn-sm">Pasif</a>
                                             }
                                         </center>
                                     </td>

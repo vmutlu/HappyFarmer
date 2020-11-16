@@ -2376,8 +2376,9 @@ namespace HappyFarmer.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult AdminGlobalMessagesPermission()
+        public IActionResult AdminGlobalMessagesPermission(string? type = null)
         {
+            List<FarmerGlobalMessage> result = new List<FarmerGlobalMessage>();
             #region Admin Login Kontrolü
 
             if (HttpContext.Session.GetString("ActiveUser") == null)
@@ -2394,13 +2395,21 @@ namespace HappyFarmer.UI.Controllers
 
             #endregion
 
-            var result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
+            if (type != null)
+            {
+                result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
+            }
+            else
+            {
+                result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
+            }
+
             ViewBag.Users = _userService.GetAll();
             return View(result);
         }
 
         [HttpGet]
-        public IActionResult EditGlobalMessagePermission(int id, string active)
+        public IActionResult EditGlobalMessagePermission(int id, string active, string? sender = null) //sender carrier or farmer
         {
             #region Admin Login Kontrolü
 
@@ -2429,9 +2438,14 @@ namespace HappyFarmer.UI.Controllers
             else if (active == "no")
                 entity.CheckStatus = false;
 
-            _globalMessageService.Update(entity);
+            _globalMessageService.Update(entity);//
 
-            return Redirect("/Admin/AdminGetCarrierGlobalMessages");
+            if (sender == "Carrier")
+                return Redirect("/Admin/AdminGetCarrierGlobalMessages");
+
+            else
+                return Redirect("/Admin/AdminGlobalMessagesPermission");
+
         }
 
         public IActionResult DeleteGlobalMessagePermission(int id)

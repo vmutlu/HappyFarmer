@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using HappyFarmer.Business.Abstract
+@inject IGlobalMessageService _globalMessageService;
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -18,10 +20,14 @@
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
+
 @{ 
     HappyFarmer.DataAccess.Concrete.FarmerContext farmerContext = new HappyFarmer.DataAccess.Concrete.FarmerContext();
     var list = farmerContext.AdminMessages.ToList();
-    var globalListMessageAdmin = farmerContext.GlobalMessages.ToList();
+
+    var globalFarmerMessages = _globalMessageService.GetAll(true);
+    var globalCarrierMessages = _globalMessageService.GetCarrierGlobalMessages(true);
+   
 }
 <body>
     <div id="wrapper">
@@ -39,7 +45,8 @@
             <div class="header-right">
 
                 <a asp-controller="Admin" asp-action="AdminMessages" class="btn btn-info" title="New Message"><b>@list.Count() </b><i class="fa fa-envelope-o fa-2x"></i></a>
-                <a asp-controller="Admin" asp-action="AdminGlobalMessagesPermission" class="btn btn-primary" title="New Task"><b>@globalListMessageAdmin.Count()</b><i class="fa fa-bars fa-2x"></i></a>
+                <a asp-controller="Admin" asp-action="AdminGlobalMessagesPermission" asp-route-type="AdminFarmerComments" class="btn btn-primary" title="Çiftçi Yorumları"><b>@globalFarmerMessages.Count()</b><i class="fa fa-comments fa-2x"></i></a>
+                <a asp-controller="Admin" asp-action="AdminGetCarrierGlobalMessages" class="btn btn-success" title="Nakliyeci Yorumları"><b>@globalCarrierMessages.Result.Count()</b><i class="fa fa-comment-o fa-2x"></i></a>
                 <a asp-controller="Account" asp-action="Logout" class="btn btn-danger" title="Çıkış"><i class="fa fa-exclamation-circle fa-2x"></i></a>
 
             </div>
@@ -147,7 +154,7 @@
                         <a asp-controller="Admin" asp-action="GetAboutUs"><i class="fa fa-bug "></i>Hakkımızda</a>
                     </li>
                     <li>
-                        <a asp-controller="Admin" asp-action="Blog"><i class="fa fa-commenting "></i>Blog Yazıları</a>
+                        <a asp-controller="Admin" asp-action="Blog"><i class="fa fa-id-card "></i>Blog Yazıları</a>
                     </li>
                     <li>
                         <a href="/Admin/AdminCategory/"><i class="fa fa-sign-in "></i>Kategoriler</a>

@@ -32,18 +32,18 @@ namespace HappyFarmer.Business.Concrate
         {
             if (authority == true)
             {
-                return (from a in _globalMessageRepository.GetAll()
-                        where a.FarmerOrCarrier == true
-                        select new FarmerGlobalMessage
-                        {
-                            Id = a.Id,
-                            MessageContent = a.MessageContent,
-                            SenderId = a.SenderId,
-                            CheckStatus = a.CheckStatus,
-                            Subject = a.Subject,
-                            MessageDate = a.MessageDate,
-                            FarmerOrCarrier = a.FarmerOrCarrier
-                        }).ToList();
+                    return (from a in _globalMessageRepository.GetAll()
+                            where a.FarmerOrCarrier != false
+                            select new FarmerGlobalMessage
+                            {
+                                Id = a.Id,
+                                MessageContent = a.MessageContent,
+                                SenderId = a.SenderId,
+                                CheckStatus = a.CheckStatus,
+                                Subject = a.Subject,
+                                MessageDate = a.MessageDate,
+                                FarmerOrCarrier = a.FarmerOrCarrier
+                            }).ToList();
             }
 
             else
