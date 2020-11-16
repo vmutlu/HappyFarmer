@@ -24,8 +24,8 @@
             <div class="form-group row">
                 <label asp-for="ImageURL" class="col-md-2 col-form-label">Kullanıcı Resmi</label>
                 <div class="col-md-10">
-                    <img width="100" height="100" src="~/img/CustomerImages/@Model.ImageURL" />
-                    <input type="file" disabled name="file" class="form-control" />
+                    <img style="width:250px; height:150px;" src="~/img/CustomerImages/@Model.ImageURL" />
+                    <input style="margin-top:5px;" type="file" disabled name="file" class="form-control" />
                 </div>
             </div>
 

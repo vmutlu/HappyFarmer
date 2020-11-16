@@ -4,91 +4,90 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Kategoriler Düzenleme Ekranı</h1>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        @if (Model.Products.Count > 0)
-        {
+<marquee direction=center>
+    <h1>Kategoriler Düzenleme Ekranı</h1>
+    </marquee>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @if (Model.Products.Count > 0)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p style="color:green;">@ViewBag.CategoryName</p> İle İlişkili olan Ürünler
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ürün Resmi</th>
+                                        <th>Ürün Adı</th>
+                                        <th>Ürün Fiyatı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Products)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.ImageUrl</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>
+                                                <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
+                                                <form asp-controller="Admin" asp-action="DeleteFromCategory" method="post" style="display:inline;">
+                                                    <input type="hidden" name="productId" value="@item.Id" />
+                                                    <input type="hidden" name="categoryId" value="@Model.Id" />
+                                                    <button type="submit" class="btn btn-danger btn-sm">İlişkiyi Kaldır</button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <h4>@ViewBag.CategoryName Kategorisi ile ilişkili hiç bir Ürün Kaydı Bulunamadı !</h4>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <p style="color:green;">@ViewBag.CategoryName</p> İle İlişkili olan Ürünler
+                    <p style="color:green;">@ViewBag.CategoryName</p> Kategorisi
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Ürün Resmi</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Ürün Fiyatı</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Products)
-                                {
-                                <tr>
-                                    <td>@item.Id</td>
-                                    <td>@item.ImageUrl</td>
-                                    <td>@item.Name</td>
-                                    <td>@item.Price</td>
-                                    <td>
-                                        <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-success btn-sm mr-2">Düzenle</a>
-                                        <form asp-controller="Admin" asp-action="DeleteFromCategory" method="post" style="display:inline;">
-                                            <input type="hidden" name="productId" value="@item.Id" />
-                                            <input type="hidden" name="categoryId" value="@Model.Id" />
-                                            <button type="submit" class="btn btn-danger btn-sm">İlişkiyi Kaldır</button>
-                                        </form>
+                        <form asp-controller="Admin" asp-action="EditCategory" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
 
-                                    </td>
-                                </tr>
-                                }
+                            <div class="form-group row">
+                                <label asp-for="Name" class="col-md-2 col-form-label">Kategori Adı</label>
+                                <div class="col-md-10">
+                                    <input asp-for="Name" required="" value="@Model.Name" class="form-control" />
+                                </div>
+                            </div>
 
-                            </tbody>
-                        </table>
+                            <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
+
+                            <div class="form-group row">
+                                <div class="col-md-10 offset-md-2">
+                                    <button style="width:100%; margin-left:129px;" type="submit" class="btn btn-success">Kategori Güncelle</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        }
-        else
-        {
-            <div class="alert alert-warning">
-                <h4>@ViewBag.CategoryName Kategorisi ile ilişkili hiç bir Ürün Kaydı Bulunamadı !</h4>
-            </div>
-        }
-        <!-- End  Kitchen Sink -->
-    </div>
-
-    <div class="col-md-6">
-        <!--   Basic Table  -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <p style="color:green;">@ViewBag.CategoryName</p> Kategorisi
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <form asp-controller="Admin" asp-action="EditCategory" method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-
-                        <div class="form-group row">
-                            <label asp-for="Name" class="col-md-2 col-form-label">Ürün Adı</label>
-                            <div class="col-md-10">
-                                <input asp-for="Name" required="" value="@Model.Name" class="form-control" />
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="Id" value="@Model.Id" class="form-control" />
-
-                        <div class="form-group row">
-                            <div class="col-md-10 offset-md-2">
-                                <button style="width:100%; margin-left:129px;" type="submit" class="btn btn-success">Kategori Güncelle</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-        <!-- End  Basic Table  -->
     </div>
-</div>
