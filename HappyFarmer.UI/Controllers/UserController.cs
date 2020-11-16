@@ -117,11 +117,11 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult UserAccount()
         {
-            if(TempData["IncerrectImageExtension"] != null)
+            if (TempData["IncerrectImageExtension"] != null)
             {
                 ViewBag.IncerrectImageExtension = TempData["IncerrectImageExtension"];
             }
-            if(HttpContext.Session.GetString("ActiveCustomer") == null)
+            if (HttpContext.Session.GetString("ActiveCustomer") == null)
             {
                 TempData["SendMessage"] = "Hesabım Sayfasına Erişebilmek İçin Lütfen Öncelikle Sitemize Üye Olup Giriş Yapmış Oldugunuzdan Emin Olunuz !!!";
                 return RedirectToAction("UserLogin", "User");
@@ -351,7 +351,7 @@ namespace HappyFarmer.UI.Controllers
                     }
                     else
                     {
-                         ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
+                        ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
                         return View();
                     }
                 }
@@ -566,7 +566,7 @@ namespace HappyFarmer.UI.Controllers
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
-                   customerInformation = new List<DeclareModel>();                    
+                    customerInformation = new List<DeclareModel>();
                 }
             }
             return View(customerInformation);
@@ -847,7 +847,7 @@ namespace HappyFarmer.UI.Controllers
             }
             var entity = _globalMessageService.GetAll();
             ViewBag.UsersNameSurname = _userService.GetAll();
-            return View(entity);
+            return Redirect("/User/UserChat?type=" + type);
         }
 
         public static string RemoveHtml(string text)
@@ -873,7 +873,7 @@ namespace HappyFarmer.UI.Controllers
                 var user = _userService.FindByEmail(email);
                 if (user != null)
                 {
-                    var callbackUrl = "https://localhost:44393" + Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id)});
+                    var callbackUrl = "https://localhost:44393" + Url.Action("UpdatePassword", "User", new { userId = user.Select(i => i.Id) });
                     var messageBody = "Sitemiz üzerinden bir şifre sıfırlama baglantı talebi gönderildi. Şifre sıfırlama işlemine devam etmek için Lütfen <a href=\"" + callbackUrl + "\">buraya</a> tıklayınız.\nBu işlemi siz taleb etmediyseniz lütfen bu mail adresi üzerinden bizimle iletişime geçiniz.";
                     MailSender.SendMail(messageBody, email);
                     ViewBag.SendMessage = "Mesajınız Gönderildi Lütfen E-Mail Adresinize Gelen Baglantıya Tıklayarak Devam Ediniz.";
@@ -930,7 +930,7 @@ namespace HappyFarmer.UI.Controllers
 
             _userService.Update(user);
             TempData["SendMessage"] = "Şifre Sıfırlama İşlemi Başarılı";
-                return RedirectToAction("UserLogin","User");
+            return RedirectToAction("UserLogin", "User");
         }
 
         #endregion
