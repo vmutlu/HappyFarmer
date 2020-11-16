@@ -2431,7 +2431,7 @@ namespace HappyFarmer.UI.Controllers
 
             _globalMessageService.Update(entity);
 
-            return Redirect("/Admin/AdminGlobalMessagesPermission");
+            return Redirect("/Admin/AdminGetCarrierGlobalMessages");
         }
 
         public IActionResult DeleteGlobalMessagePermission(int id)
