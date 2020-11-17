@@ -37,6 +37,7 @@ namespace HappyFarmer.UI.Controllers
             #endregion
 
             ViewBag.AnimalsProduct = _productService.GetAll();
+            ViewBag.ProductCities = _productService.GetCityProduct();
 
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
 

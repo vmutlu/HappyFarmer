@@ -504,6 +504,18 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
+        public IEnumerable<string> GetCityProduct()
+        {
+            using (var context = new FarmerContext())
+            {
+                var response = (context.Products
+                    .Where(i => i.PermissionToSell == true)
+                    .Select(i => i.City).ToList()).Distinct();
+
+                return response;
+            }
+        }
+
         #endregion
     }
 }

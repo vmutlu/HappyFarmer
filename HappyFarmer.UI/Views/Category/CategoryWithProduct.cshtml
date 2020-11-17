@@ -196,16 +196,15 @@
                             </ul>
                         </div>
                         <div class="widget_list tags_widget">
-                            <h3>Product tags</h3>
+                            <h3>Satışa Sunulan Ürün Şehirleri</h3>
                             <div class="tag_cloud">
-                                <a href="#">Men</a>
-                                <a href="#">Women</a>
-                                <a href="#">Watches</a>
-                                <a href="#">Bags</a>
-                                <a href="#">Dress</a>
-                                <a href="#">Belt</a>
-                                <a href="#">Accessories</a>
-                                <a href="#">Shoes</a>
+                                @if (ViewBag.ProductCities != null)
+                                {
+                                    foreach (var item in ViewBag.ProductCities)
+                                    {
+                                        <a href="#">@item</a>
+                                    }
+                                }
                             </div>
                         </div>
                         <div class="widget_list banner_widget">
@@ -296,7 +295,7 @@
                             <li class="current">1</li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
-                            <li class="next"><a href="#">next</a></li>
+                            <li class="next"><a href="#">İleri</a></li>
                             <li><a href="#">>></a></li>
                         </ul>
                     </div>

@@ -26,5 +26,6 @@ namespace HappyFarmer.Business.Abstract
         void CreateComment(ProductComment productComment);
         List<FarmerProduct> FilterByRegion(string type, string? City, string? Country, string? Neighborhood);
         List<FarmerProduct> GetCategoryWithCount();
+        IEnumerable<string> GetCityProduct();
     }
 }

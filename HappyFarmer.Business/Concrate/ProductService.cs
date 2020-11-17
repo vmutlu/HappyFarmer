@@ -180,5 +180,10 @@ namespace HappyFarmer.Business.Concrate
         {
              return _productRepository.GetCategoryWithCount();
         }
+
+        public IEnumerable<string> GetCityProduct()
+        {
+            return _productRepository.GetCityProduct();
+        }
     }
 }
