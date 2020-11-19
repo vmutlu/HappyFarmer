@@ -67,30 +67,21 @@
                     <form action="#">
 
                         <h1><a href="#">@Model.Name @Model.Surname</a></h1>
-                        <div class="product_nav">
-                            <ul>
-                                <li class="prev"><a href="product-details.html"><i class="fa fa-angle-left"></i></a></li>
-                                <li class="next"><a href="variable-product.html"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>
-                        </div>
                         <div class=" product_ratting">
                             <ul>
-                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                <li class="review"><a href="#"> Nakliyeci Memnuniyeti </a></li>
+                                <li class="review"><a href="#"> Nakliyeci ile iletişim kurmak için alt kısımdan mesaj gönderebilir yahut Nakliyeci Bilgileri kısmından nakliyeci bilgilerine ulaşabilirsiniz.  </a></li>
                             </ul>
 
                         </div>
-                        <div class="price_box">
-                            <span class="current_price">@Model.PhoneNumber</span>
-
-                        </div>
-                        <div class="product_desc">
-                            <p>@Model.Email</p>
-                        </div>
+                        <center>
+                            <h2 style="color:red;">Hızlı İletişim</h2>
+                            <div class="price_box">
+                                Tel No: <span @*class="current_price"*@>@Model.PhoneNumber</span>
+                            </div>
+                            <div class="product_desc">
+                                Email: <span>@Model.Email</span>
+                            </div>
+                        </center>
                     </form>
                         @if (ViewBag.ActiveCustomerId != null)
                         {
