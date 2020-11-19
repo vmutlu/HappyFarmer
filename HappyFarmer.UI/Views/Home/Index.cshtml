@@ -62,10 +62,10 @@
                                     <article class="single_product">
                                         <figure>
                                             <div class="product_thumb">
-                                                <a class="primary_img" href="product-details.html"><img style="width:370px; height:350px;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
+                                                <a class="primary_img" href="product-details.html"><img style="width:100%; height:100%;" src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                                 <a class="secondary_img" href="product-details.html"><img src="~/img/ProductImages/@item.ImageUrl" alt=""></a>
                                                 <div class="label_product">
-                                                    <span class="label_sale">Yıldız Ürün</span>
+                                                    <span style="background-color:green;color:white;" class="label_sale">İndirimli</span>
                                                 </div>
                                                 <div class="action_links">
                                                     <ul>
@@ -96,9 +96,9 @@
                                                     <span class="current_price">₺@item.Price</span>
                                                     <span class="old_price">₺@newPrice</span>
                                                 </div>
-                                                <div class="product_timing">
-                                                    <div data-countdown="2021/12/15"></div>
-                                                </div>
+                                                @*<div class="product_timing">
+                                                    <div data-countdown="2020/11/25"></div>
+                                                </div>*@
                                                 <div class="addto_cart_btn">
                                                     <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
                                                         <input type="hidden" name="productId" value="@item.Id" />
