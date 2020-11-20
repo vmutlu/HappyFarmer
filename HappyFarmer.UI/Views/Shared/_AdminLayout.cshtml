@@ -32,13 +32,13 @@
     </script>
 </head>
 
-@{ 
+@{
     HappyFarmer.DataAccess.Concrete.FarmerContext farmerContext = new HappyFarmer.DataAccess.Concrete.FarmerContext();
     var list = farmerContext.AdminMessages.ToList();
 
     var globalFarmerMessages = _globalMessageService.GetAll(true);
     var globalCarrierMessages = _globalMessageService.GetCarrierGlobalMessages(true);
-   
+
 }
 <body>
     <div id="wrapper">
@@ -165,7 +165,7 @@
                         <a asp-controller="Admin" asp-action="GetAboutUs"><i class="fa fa-bug "></i>Hakkımızda</a>
                     </li>
                     <li>
-                        <a asp-controller="Admin" asp-action="Blog"><i class="fa fa-id-card "></i>Blog Yazıları</a>
+                        <a asp-controller="Admin" asp-action="Blog"><i class="fa fa-crop "></i>Blog Yazıları</a>
                     </li>
                     <li>
                         <a href="/Admin/AdminCategory/"><i class="fa fa-sign-in "></i>Kategoriler</a>
@@ -195,13 +195,14 @@
             @RenderBody()
         </div>
     </div>
-
-    <div id="footer-sec">
-        &copy; 2020 HappyFarmer | Design By : <a href="http://www.veyselmutlu.online/" target="_blank">
-    Veysel MUTLU
-    <a href="http://www.ipadresi.net" title="ip adresi"><img src="http://in3.sitekodlari.com/ipadresi12.php" border="0" alt="ip adresi"></a>
-</a>
-    </div>
+    <center>
+        <div id="footer-sec">
+            &copy; 2020 HappyFarmer | Design By : <a href="http://www.veyselmutlu.online/" target="_blank">
+                Veysel MUTLU
+                <a href="http://www.ipadresi.net" title="ip adresi"><img src="http://in3.sitekodlari.com/ipadresi12.php" border="0" alt="ip adresi"></a>
+            </a>
+        </div>
+    </center>
 
     <!-- /. FOOTER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
