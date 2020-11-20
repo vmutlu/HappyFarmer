@@ -42,6 +42,7 @@ namespace HappyFarmer.UI.Controllers
 
             #endregion
 
+
             const int pageSize = 6;
             const int page = 1;
             const int pageStandOut = 1; //öne çıkan ürünler
