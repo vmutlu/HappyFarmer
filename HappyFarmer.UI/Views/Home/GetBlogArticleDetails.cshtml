@@ -60,7 +60,7 @@
                         </figure>
                     </article>
                     <div class="related_posts">
-                        <h3>Related posts</h3>
+                        <h3>Diğer Blog Yazıları</h3>
                         <div class="row">
                             @foreach (var item in ViewBag.GetAllBlogs)
                             {
@@ -68,7 +68,7 @@
                                     <article class="single_related">
                                         <figure>
                                             <div class="related_thumb">
-                                                <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id"><img width="230" height="150" src="~/img/BlogImages/@item.ImagePath" alt=""></a>
+                                                <a asp-controller="Home" asp-action="GetBlogArticleDetails" asp-route-id="@item.Id"><img style="width:230px; height:150px;" src="~/img/BlogImages/@item.ImagePath" alt=""></a>
                                             </div>
                                             <figcaption class="related_content">
                                                 <h4><a href="#">@item.Title</a></h4>
