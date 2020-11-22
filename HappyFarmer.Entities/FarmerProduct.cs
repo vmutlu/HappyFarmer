@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace HappyFarmer.Entities
 {
-    //[Table("Product")]
     public class FarmerProduct : IBaseEntity<int>
     {
         public FarmerProduct()
@@ -32,8 +31,8 @@ namespace HappyFarmer.Entities
         public bool Swap { get; set; }
         public bool PermissionToSell { get; set; }
         public int AnimalAge { get; set; }
-        public bool Gender { get; set; } //cinsiyet public bool FromWhom { get; set; } //kimden
-        public int StockQty { get; set; } //stok adet
+        public bool Gender { get; set; } 
+        public int StockQty { get; set; } 
         public virtual ICollection<FarmerProductCategory> ProductCategories { get; set; }
         public virtual ICollection<FarmerMultipleProductImages> MultipleProductImages { get; set; }
         public virtual ICollection<FarmerOrderItem> FarmerOrderItems { get; set; }

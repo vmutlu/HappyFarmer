@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace HappyFarmer.Entities
 {
-    //[Table("Category")]
     public class FarmerCategory : IBaseEntity<int>
     {
         public FarmerCategory()

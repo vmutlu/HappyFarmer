@@ -1,7 +1,6 @@
 ﻿using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
@@ -26,34 +25,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                     .Include(i => i.ProductCategories)
                     .ThenInclude(i => i.Product).AsNoTracking()
                     .FirstOrDefault();
-            }
-
-            //using (var context = new FarmerContext())
-            //{
-            //    var response = (from i in context.FarmerCategory
-            //                    from a in i.ProductCategories
-            //                    where i.Id == id
-            //                    select new FarmerCategory()
-            //                    {
-            //                        Id = a.CategoryId,
-            //                        Name = i.Name,
-            //                        ProductCategories = new List<FarmerProductCategory>()
-            //                         {
-            //                          new FarmerProductCategory()
-            //                          {
-            //                              CategoryId = a.CategoryId,
-            //                              Product = new FarmerProduct()
-            //                              {
-            //                                  Id = a.Product.Id,
-            //                                  Name = a.Product.Name
-            //                              },
-            //                              ProductId = a.ProductId
-            //                          }
-            //                      }
-            //                    }).FirstOrDefault();
-
-            //    return response;
-            //}
+            }                       
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using HappyFarmer.Entities;
-using HappyFarmer.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace HappyFarmer.DataAccess.Concrete
 {
-    public class FarmerContext : DbContext//IdentityDbContext<FarmerApplicationUser>
+    public class FarmerContext : DbContext
     {
         private static string ConnectionString { get; set; }
         public static void SetConnectionString(string connectionString)
@@ -24,7 +23,6 @@ namespace HappyFarmer.DataAccess.Concrete
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //"server=localhost;port=3306;database=HappyFarmerDB;uid=root;password=;CharSet=utf8;Convert Zero Datetime=true; Allow Zero Datetime=true"
             optionsBuilder.UseMySQL(ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging();
         }

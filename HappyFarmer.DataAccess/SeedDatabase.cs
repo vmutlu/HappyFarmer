@@ -47,12 +47,6 @@ namespace HappyFarmer.DataAccess
 
         private static FarmerCategory[] Categories =
        {
-            //new FarmerCategory(){Name="Büyük Baş"},
-            //new FarmerCategory(){Name="Küçük Baş"},
-            //new FarmerCategory(){Name="Tarım"},
-            //new FarmerCategory(){Name="Bahçeden Eve"},
-            //new FarmerCategory(){Name="Müşteri Ürünleri"},
-            //new FarmerCategory(){Name="Nakliyeciler"}
             new FarmerCategory(){Name="Küçük Baş"},
             new FarmerCategory(){Name="Büyük Baş"},
             new FarmerCategory(){Name="Kümes Hayvancılığı"},
