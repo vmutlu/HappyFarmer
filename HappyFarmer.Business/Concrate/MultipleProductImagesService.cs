@@ -3,9 +3,7 @@ using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.DataAccess.Concrete;
 using HappyFarmer.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HappyFarmer.Business.Concrate
 {

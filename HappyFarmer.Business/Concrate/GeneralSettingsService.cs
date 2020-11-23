@@ -1,9 +1,7 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HappyFarmer.Business.Concrate
 {

@@ -1,11 +1,8 @@
 ﻿using HappyFarmer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HappyFarmer.Business.Abstract
 {
-   public interface ICartService
+    public interface ICartService
     {
         void InitializeCart(string userId);
         FarmerCart GetCartByUserId(string userId);

@@ -2,12 +2,9 @@
 using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.DataAccess.Concrete;
 using HappyFarmer.Entities;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.Business.Concrate
 {
