@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HappyFarmer.UI.Logging
+﻿namespace HappyFarmer.UI.Logging
 {
     public interface ILogManager<T> where T : class
     {
