@@ -1,5 +1,4 @@
 ﻿using HappyFarmer.Entities;
-using System;
 
 namespace HappyFarmer.UI.Models
 {
