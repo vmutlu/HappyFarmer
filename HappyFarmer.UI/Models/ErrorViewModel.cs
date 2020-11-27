@@ -1,5 +1,3 @@
-using System;
-
 namespace HappyFarmer.UI.Models
 {
     public class ErrorViewModel
