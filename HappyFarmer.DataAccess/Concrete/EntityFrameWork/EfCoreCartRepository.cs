@@ -1,8 +1,8 @@
 ﻿using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
