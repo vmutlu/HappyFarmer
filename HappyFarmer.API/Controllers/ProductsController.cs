@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HappyFarmer.API.DTOs;
-using HappyFarmer.API.Extensions;
 using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
