@@ -1,6 +1,5 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
-using HappyFarmer.UI.Logging;
 using HappyFarmer.UI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
