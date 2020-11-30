@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using HappyFarmer.Business.Abstract;
+﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using HappyFarmer.UI.Logging;
 using HappyFarmer.UI.Models;
@@ -13,6 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace HappyFarmer.UI.Controllers
 {
