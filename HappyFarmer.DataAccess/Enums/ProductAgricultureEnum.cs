@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HappyFarmer.DataAccess.Enums
+﻿namespace HappyFarmer.DataAccess.Enums
 {
     public enum ProductAgricultureEnum
     {
