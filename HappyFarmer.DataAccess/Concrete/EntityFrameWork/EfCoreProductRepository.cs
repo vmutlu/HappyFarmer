@@ -376,7 +376,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                                     UserName = i.UserName,
                                     UserPhoneNumber = i.UserPhoneNumber,
                                     UserSurname = i.UserSurname,
-                                    ProductComments = (from c in i.ProductComments
+                                    ProductComments = i.ProductComments != null ? (from c in  i.ProductComments
                                                        where i.Id == c.ProductId
                                                        select new ProductComment
                                                        {
@@ -389,7 +389,8 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                                                            Surname = c.Surname,
                                                            UserId = c.UserId,
                                                            WebSite = c.WebSite
-                                                       }).ToList()
+                                                       }).ToList(): null
+
                                 }).FirstOrDefault();
 
                 return response;
