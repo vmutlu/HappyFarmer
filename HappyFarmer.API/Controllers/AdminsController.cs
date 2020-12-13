@@ -52,5 +52,40 @@ namespace HappyFarmer.API.Controllers
 
             return Ok(productDTO);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetByIdProducts(int id)
+        {
+            var products = _productService.GetById(id);
+
+            var productDTO =  new FarmerProductDTO
+                 {
+                     AnimalAge = products.AnimalAge,
+                     AnnouncementDate = products.AnnouncementDate,
+                     City = products.City,
+                     Country = products.Country,
+                     Description = products.Country,
+                     FarmerDeclareType = products.FarmerDeclareType,
+                     Gender = products.Gender,
+                     Guarantee = products.Guarantee,
+                     Id = products.Id,
+                     ImageUrl = products.ImageUrl,
+                     Name = products.Name,
+                     Neighborhood = products.Neighborhood,
+                     PermissionToSell = products.PermissionToSell,
+                     Price = products.Price,
+                     Situation = products.Situation,
+                     StockQty = products.StockQty,
+                     Swap = products.Swap,
+                     Title = products.Title,
+                     UserEMail = products.UserEMail,
+                     UserId = products.UserId,
+                     UserName = products.UserName,
+                     UserPhoneNumber = products.UserPhoneNumber,
+                     UserSurname = products.UserSurname
+                 };
+
+            return Ok(productDTO);
+        }
     }
 }
