@@ -24,7 +24,7 @@ namespace HappyFarmer.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var products = _productService.GetAll();
-            return Ok(products);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
         }
 
         [HttpGet("{id}")]
@@ -79,19 +79,19 @@ namespace HappyFarmer.API.Controllers
         public async Task<IActionResult> GetByIdUser(int userId)
         {
             var response = _productService.GetByIdUser(userId);
-            return Ok(response);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(response));
         }
 
         [HttpPost("GetCustomerDeclares")]
         public async Task<IActionResult> GetCustomerDeclares(List<int> id)
         {
-            return Ok(_productService.GetCustomerDeclares(id));
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(id)));
         }
 
         [HttpGet("GetPopularProduct")]
         public async Task<IActionResult> GetPopularProduct()
         {
-            return Ok(_productService.GetPopularProduct());
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetPopularProduct()));
         }
 
 

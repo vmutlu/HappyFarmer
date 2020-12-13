@@ -34,17 +34,17 @@ namespace HappyFarmer.Business.Concrate
 
         public List<FarmerProduct> FindForProductsByCategoryType(string type, string searchText)
         {
-           return _productRepository.FindForProductsByCategoryType(type, searchText);
+            return _productRepository.FindForProductsByCategoryType(type, searchText);
         }
 
-        public List<FarmerProduct> GetAll(int? page = 0,int? pageSize = 0)
+        public List<FarmerProduct> GetAll(int? page = 0, int? pageSize = 0)
         {
             using (var context = new FarmerContext())
             {
                 if (page == 0 && pageSize == 0)
                 {
                     return context.Products
-                        .Where(i => i.PermissionToSell == true)
+                        .Where(i => i.PermissionToSell == true).Include(i => i.ProductCategories).Include(i=>i.ProductComments).Include(i=>i.MultipleProductImages)
                         .ToList();
                 }
 
@@ -135,7 +135,7 @@ namespace HappyFarmer.Business.Concrate
 
         public List<FarmerProduct> GetPopularProduct(int? pageStandOut = 0, int? pageSize = 0)
         {
-            return _productRepository.GetPopularProduct(pageStandOut,pageSize);
+            return _productRepository.GetPopularProduct(pageStandOut, pageSize);
         }
 
         public List<FarmerProduct> GetProductByCategory(string category, int page, int pageSize)
@@ -145,7 +145,7 @@ namespace HappyFarmer.Business.Concrate
 
         public List<FarmerProduct> GetProductByType(string type, int userId)
         {
-            return _productRepository.GetProductByType(type,userId);
+            return _productRepository.GetProductByType(type, userId);
         }
 
         public FarmerProduct GetProductDetails(int id)
@@ -168,14 +168,14 @@ namespace HappyFarmer.Business.Concrate
             _productCommentRepository.Create(productComment);
         }
 
-        public List<FarmerProduct> FilterByRegion(string type,string City, string Country, string Neighborhood)
+        public List<FarmerProduct> FilterByRegion(string type, string City, string Country, string Neighborhood)
         {
-            return _productRepository.FilterByRegion(type,City, Country, Neighborhood);
+            return _productRepository.FilterByRegion(type, City, Country, Neighborhood);
         }
 
         public List<FarmerProduct> GetCategoryWithCount()
         {
-             return _productRepository.GetCategoryWithCount();
+            return _productRepository.GetCategoryWithCount();
         }
 
         public IEnumerable<string> GetCityProduct()

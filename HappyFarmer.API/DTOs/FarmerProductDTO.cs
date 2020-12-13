@@ -1,9 +1,17 @@
 ﻿using HappyFarmer.Entities;
+using System.Collections.Generic;
 
 namespace HappyFarmer.API.DTOs
 {
     public class FarmerProductDTO
     {
+        public FarmerProductDTO()
+        {
+            ProductCategories = new List<FarmerProductCategory>();
+            MultipleProductImages = new List<FarmerMultipleProductImages>();
+            FarmerOrderItems = new List<FarmerOrderItem>();
+            ProductComments = new List<ProductComment>();
+        }
         public int Id { get; set; }
         public string UserName { get; set; }
         public string UserSurname { get; set; }
@@ -28,5 +36,9 @@ namespace HappyFarmer.API.DTOs
         public int AnimalAge { get; set; }
         public bool Gender { get; set; }
         public int StockQty { get; set; }
+        public virtual ICollection<FarmerProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<FarmerMultipleProductImages> MultipleProductImages { get; set; }
+        public virtual ICollection<FarmerOrderItem> FarmerOrderItems { get; set; }
+        public virtual ICollection<ProductComment> ProductComments { get; set; }
     }
 }
