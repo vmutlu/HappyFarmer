@@ -101,6 +101,81 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<FarmerProductDTO>(products));
         }
 
+        [HttpGet("Product/{type}/{userId}")]
+        public IActionResult GetProductByType(string type, int userId)
+        {
+            var products = _productService.GetProductByType(type, userId);
+
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/FindProduct/{type}/{searchText}")]
+        public IActionResult FindForProductsByCategoryType(string type, string searchText)
+        {
+            var products = _productService.FindForProductsByCategoryType(type, searchText);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/User/{userId}")]
+        public IActionResult GetByIdUser(int userId)
+        {
+            var products = _productService.GetByIdUser(userId);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpPost("Product/CustomerDeclares")]
+        public IActionResult GetCustomerDeclares(List<int> type)
+        {
+            var products = _productService.GetCustomerDeclares(type);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/PopularProduct/{pageStandOut}/{pageSize}")]
+        public IActionResult GetPopularProduct(int pageStandOut,int pageSize)
+        {
+            var products = _productService.GetPopularProduct(pageStandOut, pageSize);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/FilterByProduct/{lowPrice}/{topPrice}/{type}")]
+        public IActionResult FilterByPrice(int lowPrice,int topPrice,string type)
+        {
+            var products = _productService.FilterByPrice(lowPrice, topPrice, type);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/FilterByRegion/{type}/{city}/{country}/{neighboard}")]
+        public IActionResult FilterByRegion(string type,string city, string country, string neighboard)
+        {
+            var products = _productService.FilterByRegion(type, city, country, neighboard);
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpPost("Product/Comment")]
+        public IActionResult AddCommentProducts(FarmerProductCommentDTO farmerProductCommentDTO)
+        {
+            if (farmerProductCommentDTO.ProductId <= 0)
+                throw new ArgumentNullException("Ürün hakkında yorum yapabilmek için lütfen geçerli bir ürün Id gönderdiğinizden emin olunuz");
+
+            if (farmerProductCommentDTO.UserId <= 0)
+                throw new ArgumentNullException($"{farmerProductCommentDTO.UserId} 'ye sahip bir kullanıcı bulunamadı");
+
+            _productService.CreateComment(_mapper.Map<ProductComment>(farmerProductCommentDTO));
+            return Ok();
+        }
+
+        [HttpGet("Product/CategoryWithCount")]
+        public IActionResult GetCategoryWithCount()
+        {
+            var products = _productService.GetCategoryWithCount();
+            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
+        }
+
+        [HttpGet("Product/GetCityProduct")]
+        public IActionResult GetCityProduct()
+        {
+            return Ok(_productService.GetCityProduct());
+        }
         #endregion
 
         #region Categories Methods
