@@ -14,12 +14,16 @@ namespace HappyFarmer.API.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IBannerService _bannerService;
+        private readonly IAdminMessageService _adminMessageService;
         private readonly IMapper _mapper;
-        public AdminsController(IProductService productService, IMapper mapper,ICategoryService categoryService)
+        public AdminsController(IProductService productService, IMapper mapper,ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _mapper = mapper;
+            _bannerService = bannerService;
+            _adminMessageService = adminMessageService;
         }
 
         #region Products Methods
@@ -225,5 +229,112 @@ namespace HappyFarmer.API.Controllers
 
         #endregion
 
+        #region Banners Methods
+
+        [HttpGet("Banner")]
+        public IActionResult GetAllBanner()
+        {
+            var bannerService = _bannerService.GetAll();
+            return Ok(_mapper.Map<List<FarmerBannerDTO>>(bannerService));
+        }
+
+        [HttpGet("Banner/{id}")]
+        public IActionResult GetByIdBanner(int id)
+        {
+            var bannerService = _bannerService.GetById(id);
+            return Ok(_mapper.Map<FarmerBannerDTO>(bannerService));
+        }
+
+        [HttpPost("Banner")]
+        public IActionResult CreateBanner(FarmerBannerDTO farmerBannerDTO)
+        {
+            _bannerService.Create(_mapper.Map<FarmerBanner>(farmerBannerDTO));
+            return Ok();
+        }
+
+        [HttpPut("Banner")]
+        public IActionResult UpdateBanner(FarmerBannerDTO farmerBannerDTO)
+        {
+            var result = _bannerService.GetById(farmerBannerDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerBannerDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _bannerService.Update(_mapper.Map<FarmerBanner>(farmerBannerDTO));
+            return Ok();
+        }
+
+        [HttpDelete("Banner")]
+        public IActionResult DeleteBanner(FarmerBannerDTO farmerBannerDTO)
+        {
+            var result = _bannerService.GetById(farmerBannerDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerBannerDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _bannerService.Delete(_mapper.Map<FarmerBanner>(farmerBannerDTO));
+
+            return Ok();
+        }
+
+        [HttpGet("Banner/Admin")]
+        public IActionResult GetAdminBanner()
+        {
+            return Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetAdminBanner()));
+        }
+
+        [HttpGet("Banner/GetLower")]
+        public IActionResult GetLowerAll()
+        {
+            return Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetLowerAll()));
+        }
+
+        #endregion
+
+        #region AdminMessages Methods
+
+        [HttpGet("AdminMessage")]
+        public IActionResult GetAllAdminMessages()
+        {
+            var bannerService = _adminMessageService.GetAll();
+            return Ok(_mapper.Map<List<FarmerAdminMessageDTO>>(bannerService));
+        }
+
+        [HttpGet("AdminMessage/{id}")]
+        public IActionResult GetByIdAdminMessages(int id)
+        {
+            var bannerService = _adminMessageService.GetById(id);
+            return Ok(_mapper.Map<FarmerAdminMessageDTO>(bannerService));
+        }
+
+        [HttpPost("AdminMessage")]
+        public IActionResult CreateAdminMessages(FarmerAdminMessageDTO farmerAdminMessageDTO)
+        {
+            _adminMessageService.Create(_mapper.Map<FarmerAdminMessage>(farmerAdminMessageDTO));
+            return Ok();
+        }
+
+        [HttpPut("AdminMessage")]
+        public IActionResult UpdateAdminMessages(FarmerAdminMessageDTO farmerAdminMessageDTO)
+        {
+            var result = _bannerService.GetById(farmerAdminMessageDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerAdminMessageDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _adminMessageService.Update(_mapper.Map<FarmerAdminMessage>(farmerAdminMessageDTO));
+            return Ok();
+        }
+
+        [HttpDelete("AdminMessage")]
+        public IActionResult DeleteAdminMessages(FarmerAdminMessageDTO farmerAdminMessageDTO)
+        {
+            var result = _bannerService.GetById(farmerAdminMessageDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerAdminMessageDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _adminMessageService.Delete(_mapper.Map<FarmerAdminMessage>(farmerAdminMessageDTO));
+
+            return Ok();
+        }
+
+        #endregion
     }
 }
