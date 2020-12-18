@@ -16,14 +16,16 @@ namespace HappyFarmer.API.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IBannerService _bannerService;
         private readonly IAdminMessageService _adminMessageService;
+        private readonly ISliderService _sliderService;
         private readonly IMapper _mapper;
-        public AdminsController(IProductService productService, IMapper mapper,ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService)
+        public AdminsController(IProductService productService, IMapper mapper,ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _mapper = mapper;
             _bannerService = bannerService;
             _adminMessageService = adminMessageService;
+            _sliderService = sliderService;
         }
 
         #region Products Methods
@@ -331,6 +333,54 @@ namespace HappyFarmer.API.Controllers
                 throw new ArgumentException($"{farmerAdminMessageDTO.Id} 'ye sahip banner kaydı bulunamadı.");
 
             _adminMessageService.Delete(_mapper.Map<FarmerAdminMessage>(farmerAdminMessageDTO));
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region Sliders Methods
+
+        [HttpGet("Slider")]
+        public IActionResult GetAllSliders()
+        {
+            var sliderServices = _sliderService.GetAll();
+            return Ok(_mapper.Map<List<FarmerSliderDTO>>(sliderServices));
+        }
+
+        [HttpGet("Slider/{id}")]
+        public IActionResult GetByIdSliders(int id)
+        {
+            var sliderService = _bannerService.GetById(id);
+            return Ok(_mapper.Map<FarmerSliderDTO>(sliderService));
+        }
+
+        [HttpPost("Slider")]
+        public IActionResult CreateSliders(FarmerSliderDTO farmerSliderDTO)
+        {
+            _sliderService.Create(_mapper.Map<FarmerSlider>(farmerSliderDTO));
+            return Ok();
+        }
+
+        [HttpPut("Slider")]
+        public IActionResult UpdateSliders(FarmerSliderDTO farmerSliderDTO)
+        {
+            var result = _bannerService.GetById(farmerSliderDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerSliderDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _sliderService.Update(_mapper.Map<FarmerSlider>(farmerSliderDTO));
+            return Ok();
+        }
+
+        [HttpDelete("Slider")]
+        public IActionResult DeleteSliders(FarmerSliderDTO farmerSliderDTO)
+        {
+            var result = _bannerService.GetById(farmerSliderDTO.Id);
+            if (result == null)
+                throw new ArgumentException($"{farmerSliderDTO.Id} 'ye sahip banner kaydı bulunamadı.");
+
+            _sliderService.Delete(_mapper.Map<FarmerSlider>(farmerSliderDTO));
 
             return Ok();
         }
