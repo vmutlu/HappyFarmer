@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HappyFarmer.API.DTOs;
 using HappyFarmer.Business.Abstract;
+using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -16,6 +17,43 @@ namespace HappyFarmer.API.Controllers
         {
             _userService = userService;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var users = _userService.GetAll();
+            return Ok(_mapper.Map<List<FarmerUserDTO>>(users));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var users = _userService.GetById(id);
+            return Ok(_mapper.Map<FarmerUserDTO>(users));
+        }
+
+        [HttpPost]
+        public IActionResult Create(FarmerUserDTO farmerUserDTO)
+        {
+            _userService.Create(_mapper.Map<FarmerUser>(farmerUserDTO));
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult Update(FarmerUserDTO farmerUserDTO)
+        {
+            _userService.Update(_mapper.Map<FarmerUser>(farmerUserDTO));
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(FarmerUserDTO farmerUserDTO)
+        {
+            _userService.Delete(_mapper.Map<FarmerUser>(farmerUserDTO));
+            return Ok();
         }
 
         [HttpGet("Customer")]
