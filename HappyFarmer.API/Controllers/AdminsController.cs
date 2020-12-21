@@ -2,9 +2,12 @@
 using HappyFarmer.API.DTOs;
 using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -17,8 +20,10 @@ namespace HappyFarmer.API.Controllers
         private readonly IBannerService _bannerService;
         private readonly IAdminMessageService _adminMessageService;
         private readonly ISliderService _sliderService;
+        private readonly IAboutUsService _aboutUsService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public AdminsController(IProductService productService, IMapper mapper,ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService)
+        public AdminsController(IProductService productService, IMapper mapper, ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService, IAboutUsService aboutUsService, IUserService userService)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -26,6 +31,8 @@ namespace HappyFarmer.API.Controllers
             _bannerService = bannerService;
             _adminMessageService = adminMessageService;
             _sliderService = sliderService;
+            _aboutUsService = aboutUsService;
+            _userService = userService;
         }
 
         #region Products Methods
@@ -74,7 +81,7 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet("Product/Category/{category}/{page}/{pageSize}")]
-        public IActionResult GetProductWithCategories(string category,int page,int pageSize)
+        public IActionResult GetProductWithCategories(string category, int page, int pageSize)
         {
             var products = _productService.GetProductByCategory(category, page,
                 pageSize);
@@ -137,21 +144,21 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet("Product/PopularProduct/{pageStandOut}/{pageSize}")]
-        public IActionResult GetPopularProduct(int pageStandOut,int pageSize)
+        public IActionResult GetPopularProduct(int pageStandOut, int pageSize)
         {
             var products = _productService.GetPopularProduct(pageStandOut, pageSize);
             return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
         }
 
         [HttpGet("Product/FilterByProduct/{lowPrice}/{topPrice}/{type}")]
-        public IActionResult FilterByPrice(int lowPrice,int topPrice,string type)
+        public IActionResult FilterByPrice(int lowPrice, int topPrice, string type)
         {
             var products = _productService.FilterByPrice(lowPrice, topPrice, type);
             return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
         }
 
         [HttpGet("Product/FilterByRegion/{type}/{city}/{country}/{neighboard}")]
-        public IActionResult FilterByRegion(string type,string city, string country, string neighboard)
+        public IActionResult FilterByRegion(string type, string city, string country, string neighboard)
         {
             var products = _productService.FilterByRegion(type, city, country, neighboard);
             return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
@@ -385,6 +392,116 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        #endregion
+
+        #region AboutUs Methods
+
+        [HttpGet("AboutUs")]
+        public IActionResult GetAllAboutUs()
+        {
+            var aboutUs = _aboutUsService.GetAll();
+            return Ok(_mapper.Map<List<FarmerAboutUsDTO>>(aboutUs));
+        }
+
+        [HttpGet("AboutUs/{id}")]
+        public IActionResult GetByIdAboutUs(int id)
+        {
+            var aboutUs = _aboutUsService.GetById(id);
+            if (aboutUs == null)
+                throw new NullReferenceException($"{id} id'sine sahip hakkımızda kaydı bulunamadı.");
+
+            return Ok(_mapper.Map<FarmerAboutUsDTO>(aboutUs));
+        }
+
+        [HttpPost("AboutUs")]
+        public IActionResult CreateAboutUs(FarmerAboutUsDTO farmerAboutUsDTO)
+        {
+            _aboutUsService.Create(_mapper.Map<FarmerAboutUs>(farmerAboutUsDTO));
+
+            return Ok();
+        }
+
+        [HttpPut("AboutUs")]
+        public IActionResult UpdateAboutUs(FarmerAboutUsDTO farmerAboutUsDTO)
+        {
+            var aboutUs = _aboutUsService.GetById(farmerAboutUsDTO.Id);
+            if (aboutUs == null)
+                throw new NullReferenceException($"{farmerAboutUsDTO.Id} id'sine sahip hakkımızda kaydı bulunamadı.");
+
+            _aboutUsService.Update(_mapper.Map<FarmerAboutUs>(farmerAboutUsDTO));
+
+            return NoContent();
+        }
+
+        [HttpDelete("AboutUs")]
+        public IActionResult DeleteAboutUs(FarmerAboutUsDTO farmerAboutUsDTO)
+        {
+            var aboutUs = _aboutUsService.GetById(farmerAboutUsDTO.Id);
+            if (aboutUs == null)
+                throw new NullReferenceException($"{farmerAboutUsDTO.Id} id'sine sahip hakkımızda kaydı bulunamadı.");
+
+            _aboutUsService.Delete(_mapper.Map<FarmerAboutUs>(farmerAboutUsDTO));
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region Carriers Methods
+
+        [HttpGet("Carrier")]
+        public IActionResult GetAllCarrier()
+        {
+            var carriers = _userService.GetAllCarrier();
+            return Ok(_mapper.Map<List<FarmerUserDTO>>(carriers));
+        }
+
+        [HttpPost("Carrier")]
+        public async Task<IActionResult> CreateCarrier(FarmerUserDTO farmerUserDTO,IFormFile file)
+        {
+            var userCarier = new FarmerUser()
+            {
+                Name = farmerUserDTO.Name,
+                Surname = farmerUserDTO.Surname,
+                Email = farmerUserDTO.Email,
+                PhoneNumber = farmerUserDTO.PhoneNumber,
+                Address = farmerUserDTO.Address,
+                Password = farmerUserDTO.Password,
+                UserType = farmerUserDTO.UserType,
+                City = farmerUserDTO.City,
+                RecordData = farmerUserDTO.RecordData
+            };
+
+            if (file != null)
+            {
+                var incerrectImage = Path.GetExtension(file.FileName);
+                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
+                {
+                    Random rastgele = new Random();
+                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
+                    string uret = "";
+                    for (int i = 0; i < 6; i++)
+                    {
+                        uret += harfler[rastgele.Next(harfler.Length)];
+                    }
+
+                    userCarier.ImageURL = uret + ".jpg";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream).ConfigureAwait(false);
+                    }
+                }
+
+                else
+                {
+                    throw new ArgumentNullException("Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...");
+                }
+            }
+            _userService.Create(userCarier);
+            return Ok();
+        }
         #endregion
     }
 }
