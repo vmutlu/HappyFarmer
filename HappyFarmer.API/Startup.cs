@@ -61,6 +61,7 @@ namespace HappyFarmer.API
             services.AddScoped<IBannerRepository, EfCoreBannerRepository>();
             services.AddScoped<ISliderRepository, EfCoreSliderRepository>();
             services.AddScoped<IUserRepository, EfCoreUserRepository>();
+            services.AddScoped<IAboutUsRepository, EfCoreAboutUsRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -72,6 +73,7 @@ namespace HappyFarmer.API
             services.AddScoped<IBannerService, BannerService>();
             services.AddScoped<ISliderService, SliderService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAboutUsService, AboutUsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
