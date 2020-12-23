@@ -22,8 +22,9 @@ namespace HappyFarmer.API.Controllers
         private readonly ISliderService _sliderService;
         private readonly IAboutUsService _aboutUsService;
         private readonly IUserService _userService;
+        private readonly ISecurityInformationService _securityInformationService;
         private readonly IMapper _mapper;
-        public AdminsController(IProductService productService, IMapper mapper, ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService, IAboutUsService aboutUsService, IUserService userService)
+        public AdminsController(IProductService productService, IMapper mapper, ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService, IAboutUsService aboutUsService, IUserService userService, ISecurityInformationService securityInformationService)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -33,6 +34,7 @@ namespace HappyFarmer.API.Controllers
             _sliderService = sliderService;
             _aboutUsService = aboutUsService;
             _userService = userService;
+            _securityInformationService = securityInformationService;
         }
 
         #region Products Methods
@@ -502,6 +504,56 @@ namespace HappyFarmer.API.Controllers
             _userService.Create(userCarier);
             return Ok();
         }
+        #endregion
+
+        #region Security Information Methods
+
+        [HttpGet("SecurityInformation")]
+        public IActionResult GetAllSecurityInformation()
+        {
+            var security = _securityInformationService.GetAll();
+            return Ok(_mapper.Map<List<FarmerSecurityInformationDTO>>(security));
+        }
+
+        [HttpGet("SecurityInformation/{id}")]
+        public IActionResult GetByIdSecurityInformation(int id)
+        {
+            var security = _securityInformationService.GetById(id);
+            if (security == null)
+                throw new ArgumentNullException($"{id} id'sine sahip data bulunamadı !!!");
+
+            return Ok(_mapper.Map<FarmerSecurityInformationDTO>(security));
+        }
+
+        [HttpPost("SecurityInformation")]
+        public IActionResult CreateSecurityInformation(FarmerSecurityInformationDTO farmerSecurityInformationDTO)
+        {
+           _securityInformationService.Create(_mapper.Map<FarmerSecurityInformation>(farmerSecurityInformationDTO));
+            return Ok();
+        }
+
+        [HttpPut("SecurityInformation")]
+        public IActionResult UpdateSecurityInformation(FarmerSecurityInformationDTO farmerSecurityInformationDTO)
+        {
+            var result = _securityInformationService.GetById(farmerSecurityInformationDTO.Id);
+            if (result == null)
+                throw new ArgumentNullException($"{farmerSecurityInformationDTO.Id} id'sine sahip data bulunamadı !!!");
+
+            _securityInformationService.Update(_mapper.Map<FarmerSecurityInformation>(farmerSecurityInformationDTO));
+            return Ok();
+        }
+
+        [HttpDelete("SecurityInformation")]
+        public IActionResult DeleteSecurityInformation(FarmerSecurityInformationDTO farmerSecurityInformationDTO)
+        {
+            var result = _securityInformationService.GetById(farmerSecurityInformationDTO.Id);
+            if (result == null)
+                throw new ArgumentNullException($"{farmerSecurityInformationDTO.Id} id'sine sahip data bulunamadı !!!");
+
+            _securityInformationService.Delete(_mapper.Map<FarmerSecurityInformation>(farmerSecurityInformationDTO));
+            return Ok();
+        }
+
         #endregion
     }
 }
