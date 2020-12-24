@@ -43,6 +43,9 @@ namespace HappyFarmer.API.Mapping
 
             CreateMap<FarmerSecurityInformationDTO, FarmerSecurityInformation>();
             CreateMap<FarmerSecurityInformation, FarmerSecurityInformationDTO>();
+
+            CreateMap<FarmerAdminMessage, FarmerAdminMessageDTO>();
+            CreateMap<FarmerAdminMessageDTO, FarmerAdminMessage>();
         }
     }
 }
