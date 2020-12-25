@@ -555,5 +555,28 @@ namespace HappyFarmer.API.Controllers
         }
 
         #endregion
+
+        #region Popular Products Methods
+
+        [HttpPut("EditPopularUrun")]
+        public IActionResult UpdateEditPopularUrun(int id,string active,string type)
+        {
+            var product = _productService.GetById(id);
+            if (product == null)
+                throw new ArgumentNullException($"{id} id'li ürün bulunamadı !");
+
+            if (active == "yes")
+                product.Situation = "EVET";
+
+            else if (active == "no")
+                product.Situation = "HAYIR";
+
+            _productService.Update(product);
+
+            return NoContent();
+        }
+
+        #endregion
+
     }
 }
