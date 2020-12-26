@@ -20,5 +20,6 @@ namespace HappyFarmer.DataAccess.Abstract
         List<FarmerProduct> FilterByRegion(string type,string? City, string? Country, string? Neighborhood);
         List<FarmerProduct> GetCategoryWithCount();
         IEnumerable<string> GetCityProduct();
+        List<FarmerProduct> GlobalFilter(string filteredByLessToMore);
     }
 }
