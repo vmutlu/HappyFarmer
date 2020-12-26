@@ -182,5 +182,10 @@ namespace HappyFarmer.Business.Concrate
         {
             return _productRepository.GetCityProduct();
         }
+
+        public List<FarmerProduct> GlobalFilter(string filteredByLessToMore)
+        {
+            return _productRepository.GlobalFilter(filteredByLessToMore);
+        }
     }
 }
