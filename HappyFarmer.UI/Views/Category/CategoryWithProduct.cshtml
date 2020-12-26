@@ -1,4 +1,5 @@
-﻿@model List<HappyFarmer.Entities.FarmerProduct>
+﻿@using HappyFarmer.DataAccess.Enums
+@model List<HappyFarmer.Entities.FarmerProduct>
 @{
     ViewData["Title"] = "CategoryWithProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -225,16 +226,15 @@
             <div class="col-lg-9 col-md-12">
                 <div class="shop_toolbar_wrapper">
                     <div class=" niceselect_option">
-                        <form class="select_option" action="#">
-                            <select name="orderby" id="short">
-
-                                <option selected="" value="1">Sort by average rating</option>
-                                <option value="2">Sort by popularity</option>
-                                <option value="3">Sort by newness</option>
-                                <option value="4">Sort by price: low to high</option>
-                                <option value="5">Sort by price: high to low</option>
-                                <option value="6">Product Name: Z</option>
+                        <form asp-controller="Category" asp-action="GlobalFilteredProduct" method="post">
+                            <select name="responseText" id="responseText">
+                                <option selected="">Hızlı Sırala</option>
+                                <option value="@ProductFilteredEnum.A_Z_ye.ToString()">A 'dan Z ' ye</option>
+                                <option value="@ProductFilteredEnum.Z_A_ya.ToString()">Z 'den A ' ya</option>
+                                <option value="@ProductFilteredEnum.Son_ilk.ToString()">Son tarihten ilk tarihe</option>
+                                <option value="@ProductFilteredEnum.Ilk_son.ToString()">İlk tarihten son tarihe</option>
                             </select>
+                            <button class="btn btn-success btn-sm btn-block" type="submit">Sırala</button>
                         </form>
                     </div>
                 </div>
@@ -243,38 +243,78 @@
                 <div class="site-section site-section-sm bg-light">
                     <div class="container">
                         <div class="row mb-5">
-                            @foreach (var item in Model)
+                            @if (ViewBag.SetGlobalFiltered != null)
                             {
-                                <div class="col-md-6 col-lg-4 mb-4">
-                                    <div class="property-entry h-100">
-                                        <a href="property-details.html" class="property-thumbnail">
-                                            <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:250px;height:250px;" src="~/img/ProductImages/@item.ImageUrl" alt="Image" class="img-fluid"></a>
-                                        </a>
+                                foreach (var item in ViewBag.SetGlobalFiltered)
+                                {
+                                    <div class="col-md-6 col-lg-4 mb-4">
+                                        <div class="property-entry h-100">
+                                            <a href="property-details.html" class="property-thumbnail">
+                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:250px;height:250px;" src="~/img/ProductImages/@item.ImageUrl" alt="Image" class="img-fluid"></a>
+                                            </a>
 
-                                        <div class="p-4 property-body">
-                                            <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h5></center>
-                                            <center>
-                                                @{
-                                                    var oldPrice = (item.Price * 20) / 100;
-                                                    var newPrice = item.Price + oldPrice;
+                                            <div class="p-4 property-body">
+                                                <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h5></center>
+                                                <center>
+                                                    @{
+                                                        var oldPrice = (item.Price * 20) / 100;
+                                                        var newPrice = item.Price + oldPrice;
+                                                    }
+                                                    <span class="current_price">₺ @item.Price</span>
+                                                    <span class="old_price"><s>₺ @newPrice</s></span>
+                                                </center>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
+                                                @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                {
+                                                    <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm ml-2">Sepete Ekle</a>
                                                 }
-                                                <span class="current_price">₺ @item.Price</span>
-                                                <span class="old_price"><s>₺ @newPrice</s></span>
-                                            </center>
-                                        </div>
-                                        <div class="card-footer text-center">
-                                            <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
-                                            @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
-                                            {
-                                                <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm ml-2">Sepete Ekle</a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-warning btn-sm ml-2">İncele</a>
-                                            }
+                                                else
+                                                {
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-warning btn-sm ml-2">İncele</a>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                            }
+
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <div class="col-md-6 col-lg-4 mb-4">
+                                        <div class="property-entry h-100">
+                                            <a href="property-details.html" class="property-thumbnail">
+                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id"><img style="width:250px;height:250px;" src="~/img/ProductImages/@item.ImageUrl" alt="Image" class="img-fluid"></a>
+                                            </a>
+
+                                            <div class="p-4 property-body">
+                                                <center> <h5 class="property-title"><a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id">@item.Name</a></h5></center>
+                                                <center>
+                                                    @{
+                                                        var oldPrice = (item.Price * 20) / 100;
+                                                        var newPrice = item.Price + oldPrice;
+                                                    }
+                                                    <span class="current_price">₺ @item.Price</span>
+                                                    <span class="old_price"><s>₺ @newPrice</s></span>
+                                                </center>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detay</a>
+                                                @if (item.FarmerDeclareType == 14 || item.FarmerDeclareType == 15 || item.FarmerDeclareType == 22 || item.FarmerDeclareType == 23 || item.FarmerDeclareType == 24 || item.FarmerDeclareType == 25 || item.FarmerDeclareType == 26)
+                                                {
+                                                    <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm ml-2">Sepete Ekle</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-controller="Product" asp-action="GetAllProductDetails" asp-route-id="@item.Id" class="btn btn-warning btn-sm ml-2">İncele</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             }
                         </div>
                     </div>

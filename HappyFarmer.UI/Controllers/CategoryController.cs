@@ -34,7 +34,7 @@ namespace HappyFarmer.UI.Controllers
 
             ViewBag.AnimalsProduct = _productService.GetAll();
             ViewBag.ProductCities = _productService.GetCityProduct();
-
+            ViewBag.SetGlobalFiltered = TempData["globalFiltered"];
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
 
             ViewBag.LowerBanner = _bannerService.GetLowerAll();
@@ -93,5 +93,12 @@ namespace HappyFarmer.UI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult GlobalFilteredProduct(string responseText)
+        {
+            var products = _productService.GlobalFilter(responseText);
+            TempData["globalFiltered"] = products;
+            return RedirectToAction("CategoryWithProduct");
+        }
     }
 }
