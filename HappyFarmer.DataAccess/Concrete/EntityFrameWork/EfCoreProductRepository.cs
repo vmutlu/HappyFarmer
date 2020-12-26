@@ -376,20 +376,20 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                                     UserName = i.UserName,
                                     UserPhoneNumber = i.UserPhoneNumber,
                                     UserSurname = i.UserSurname,
-                                    ProductComments = i.ProductComments != null ? (from c in  i.ProductComments
-                                                       where i.Id == c.ProductId
-                                                       select new ProductComment
-                                                       {
-                                                           ProductId = c.ProductId,
-                                                           Email = c.Email,
-                                                           CommentDate = c.CommentDate,
-                                                           Id = c.Id,
-                                                           Comment = c.Comment,
-                                                           Name = c.Name,
-                                                           Surname = c.Surname,
-                                                           UserId = c.UserId,
-                                                           WebSite = c.WebSite
-                                                       }).ToList(): null
+                                    ProductComments = i.ProductComments != null ? (from c in i.ProductComments
+                                                                                   where i.Id == c.ProductId
+                                                                                   select new ProductComment
+                                                                                   {
+                                                                                       ProductId = c.ProductId,
+                                                                                       Email = c.Email,
+                                                                                       CommentDate = c.CommentDate,
+                                                                                       Id = c.Id,
+                                                                                       Comment = c.Comment,
+                                                                                       Name = c.Name,
+                                                                                       Surname = c.Surname,
+                                                                                       UserId = c.UserId,
+                                                                                       WebSite = c.WebSite
+                                                                                   }).ToList() : null
 
                                 }).FirstOrDefault();
 
@@ -511,6 +511,31 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
                 var response = (context.Products
                     .Where(i => i.PermissionToSell == true)
                     .Select(i => i.City).ToList()).Distinct();
+
+                return response;
+            }
+        }
+
+        public List<FarmerProduct> GlobalFilter(string filteredByLessToMore)
+        {
+            var response = new List<FarmerProduct>();
+            using (var context = new FarmerContext())
+            {
+                switch (filteredByLessToMore)
+                {
+                    case "A_Z_ye":
+                        response = context.Products.OrderBy(i => i.Name).ToList();
+                        break;
+                    case "Z_A_ya":
+                        response = context.Products.OrderByDescending(i => i.Name).ToList();
+                        break;
+                    case "Son_ilk":
+                        response = context.Products.OrderByDescending(i => i.AnnouncementDate).ToList();
+                        break;
+                    case "Ilk_son":
+                        response = context.Products.OrderBy(i => i.AnnouncementDate).ToList();
+                        break;
+                }
 
                 return response;
             }
