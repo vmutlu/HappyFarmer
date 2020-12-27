@@ -12,51 +12,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
     {
         public List<FarmerProduct> FilterByPrice(int lowPrice, int topPrice, string type)
         {
-
-            #region Animals Enum
-            var productTypeEnumIndex = 0;
-
-            if (type == ProductAnimalEnum.BuyukBas.ToString())
-                productTypeEnumIndex = 10;
-
-            else if (type == ProductAnimalEnum.KucukBas.ToString())
-                productTypeEnumIndex = 11;
-
-            else if (type == ProductAnimalEnum.Kumes.ToString())
-                productTypeEnumIndex = 12;
-
-            else if (type == ProductAnimalEnum.Evcil.ToString())
-                productTypeEnumIndex = 13;
-
-            else if (type == ProductAnimalEnum.Sut.ToString())
-                productTypeEnumIndex = 14;
-
-            else if (type == ProductAnimalEnum.YiyecekIcecek.ToString())
-                productTypeEnumIndex = 15;
-            #endregion
-
-            #region Agriculture Enum
-            if (type == ProductAgricultureEnum.Traktor.ToString())
-                productTypeEnumIndex = 20;
-
-            else if (type == ProductAgricultureEnum.Tarla.ToString())
-                productTypeEnumIndex = 21;
-
-            else if (type == ProductAgricultureEnum.Ekipman.ToString())
-                productTypeEnumIndex = 22;
-
-            else if (type == ProductAgricultureEnum.Sebze.ToString())
-                productTypeEnumIndex = 23;
-
-            else if (type == ProductAgricultureEnum.Meyve.ToString())
-                productTypeEnumIndex = 24;
-
-            else if (type == ProductAgricultureEnum.Tahıl.ToString())
-                productTypeEnumIndex = 25;
-
-            else if (type == ProductAgricultureEnum.YemAndOtsuBitki.ToString())
-                productTypeEnumIndex = 26;
-            #endregion
+            var productTypeEnumIndex = ConvertEnumToInt(type);
 
             using (var context = new FarmerContext())
             {
@@ -225,50 +181,8 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
         //admin panelinde her ilanı ayrı ayrı getir
         public List<FarmerProduct> GetProductByType(string type, int userId)
         {
-            #region Animals Enum
-            var productTypeEnumIndex = 0;
-
-            if (type == ProductAnimalEnum.BuyukBas.ToString())
-                productTypeEnumIndex = 10;
-
-            else if (type == ProductAnimalEnum.KucukBas.ToString())
-                productTypeEnumIndex = 11;
-
-            else if (type == ProductAnimalEnum.Kumes.ToString())
-                productTypeEnumIndex = 12;
-
-            else if (type == ProductAnimalEnum.Evcil.ToString())
-                productTypeEnumIndex = 13;
-
-            else if (type == ProductAnimalEnum.Sut.ToString())
-                productTypeEnumIndex = 14;
-
-            else if (type == ProductAnimalEnum.YiyecekIcecek.ToString())
-                productTypeEnumIndex = 15;
-            #endregion
-
-            #region Agriculture Enum
-            if (type == ProductAgricultureEnum.Traktor.ToString())
-                productTypeEnumIndex = 20;
-
-            else if (type == ProductAgricultureEnum.Tarla.ToString())
-                productTypeEnumIndex = 21;
-
-            else if (type == ProductAgricultureEnum.Ekipman.ToString())
-                productTypeEnumIndex = 22;
-
-            else if (type == ProductAgricultureEnum.Sebze.ToString())
-                productTypeEnumIndex = 23;
-
-            else if (type == ProductAgricultureEnum.Meyve.ToString())
-                productTypeEnumIndex = 24;
-
-            else if (type == ProductAgricultureEnum.Tahıl.ToString())
-                productTypeEnumIndex = 25;
-
-            else if (type == ProductAgricultureEnum.YemAndOtsuBitki.ToString())
-                productTypeEnumIndex = 26;
-            #endregion
+            //burası 27.12.2020 tarihinde degiğtirildi.
+            var productTypeEnumIndex = ConvertEnumToInt(type);
 
             using (var context = new FarmerContext())
             {
@@ -399,50 +313,7 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
 
         public List<FarmerProduct> FilterByRegion(string type, string? City, string? Country, string? Neighborhood)
         {
-            #region Animals Enum
-            var productTypeEnumIndex = 0;
-
-            if (type == ProductAnimalEnum.BuyukBas.ToString())
-                productTypeEnumIndex = 10;
-
-            else if (type == ProductAnimalEnum.KucukBas.ToString())
-                productTypeEnumIndex = 11;
-
-            else if (type == ProductAnimalEnum.Kumes.ToString())
-                productTypeEnumIndex = 12;
-
-            else if (type == ProductAnimalEnum.Evcil.ToString())
-                productTypeEnumIndex = 13;
-
-            else if (type == ProductAnimalEnum.Sut.ToString())
-                productTypeEnumIndex = 14;
-
-            else if (type == ProductAnimalEnum.YiyecekIcecek.ToString())
-                productTypeEnumIndex = 15;
-            #endregion
-
-            #region Agriculture Enum
-            if (type == ProductAgricultureEnum.Traktor.ToString())
-                productTypeEnumIndex = 20;
-
-            else if (type == ProductAgricultureEnum.Tarla.ToString())
-                productTypeEnumIndex = 21;
-
-            else if (type == ProductAgricultureEnum.Ekipman.ToString())
-                productTypeEnumIndex = 22;
-
-            else if (type == ProductAgricultureEnum.Sebze.ToString())
-                productTypeEnumIndex = 23;
-
-            else if (type == ProductAgricultureEnum.Meyve.ToString())
-                productTypeEnumIndex = 24;
-
-            else if (type == ProductAgricultureEnum.Tahıl.ToString())
-                productTypeEnumIndex = 25;
-
-            else if (type == ProductAgricultureEnum.YemAndOtsuBitki.ToString())
-                productTypeEnumIndex = 26;
-            #endregion
+            var productTypeEnumIndex = ConvertEnumToInt(type);
 
             using (var context = new FarmerContext())
             {
@@ -516,29 +387,81 @@ namespace HappyFarmer.DataAccess.Concrete.EntityFrameWork
             }
         }
 
-        public List<FarmerProduct> GlobalFilter(string filteredByLessToMore)
+        public List<FarmerProduct> GlobalFilter(string filteredByLessToMore, string type)
         {
+            var productTypeEnumIndex = ConvertEnumToInt(type);
+
             var response = new List<FarmerProduct>();
             using (var context = new FarmerContext())
             {
                 switch (filteredByLessToMore)
                 {
                     case "A_Z_ye":
-                        response = context.Products.OrderBy(i => i.Name).ToList();
+                        response = context.Products.Where(i => i.FarmerDeclareType == productTypeEnumIndex).OrderBy(i => i.Name).ToList();
                         break;
                     case "Z_A_ya":
-                        response = context.Products.OrderByDescending(i => i.Name).ToList();
+                        response = context.Products.Where(i => i.FarmerDeclareType == productTypeEnumIndex).OrderByDescending(i => i.Name).ToList();
                         break;
                     case "Son_ilk":
-                        response = context.Products.OrderByDescending(i => i.AnnouncementDate).ToList();
+                        response = context.Products.Where(i => i.FarmerDeclareType == productTypeEnumIndex).OrderByDescending(i => i.AnnouncementDate).ToList();
                         break;
                     case "Ilk_son":
-                        response = context.Products.OrderBy(i => i.AnnouncementDate).ToList();
+                        response = context.Products.Where(i => i.FarmerDeclareType == productTypeEnumIndex).OrderBy(i => i.AnnouncementDate).ToList();
                         break;
                 }
 
                 return response;
             }
+        }
+
+        public int ConvertEnumToInt(string type)
+        {
+            #region Animals Enum
+            var productTypeEnumIndex = 0;
+
+            if (type == ProductAnimalEnum.BuyukBas.ToString())
+                productTypeEnumIndex = 10;
+
+            else if (type == ProductAnimalEnum.KucukBas.ToString())
+                productTypeEnumIndex = 11;
+
+            else if (type == ProductAnimalEnum.Kumes.ToString())
+                productTypeEnumIndex = 12;
+
+            else if (type == ProductAnimalEnum.Evcil.ToString())
+                productTypeEnumIndex = 13;
+
+            else if (type == ProductAnimalEnum.Sut.ToString())
+                productTypeEnumIndex = 14;
+
+            else if (type == ProductAnimalEnum.YiyecekIcecek.ToString())
+                productTypeEnumIndex = 15;
+            #endregion
+
+            #region Agriculture Enum
+            if (type == ProductAgricultureEnum.Traktor.ToString())
+                productTypeEnumIndex = 20;
+
+            else if (type == ProductAgricultureEnum.Tarla.ToString())
+                productTypeEnumIndex = 21;
+
+            else if (type == ProductAgricultureEnum.Ekipman.ToString())
+                productTypeEnumIndex = 22;
+
+            else if (type == ProductAgricultureEnum.Sebze.ToString())
+                productTypeEnumIndex = 23;
+
+            else if (type == ProductAgricultureEnum.Meyve.ToString())
+                productTypeEnumIndex = 24;
+
+            else if (type == ProductAgricultureEnum.Tahıl.ToString())
+                productTypeEnumIndex = 25;
+
+            else if (type == ProductAgricultureEnum.YemAndOtsuBitki.ToString())
+                productTypeEnumIndex = 26;
+            #endregion
+
+            return productTypeEnumIndex;
         }
 
         #endregion
