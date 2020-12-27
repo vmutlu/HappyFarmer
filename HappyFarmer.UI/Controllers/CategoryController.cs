@@ -1,7 +1,9 @@
 ﻿using HappyFarmer.Business.Abstract;
+using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace HappyFarmer.UI.Controllers
 {
@@ -11,6 +13,7 @@ namespace HappyFarmer.UI.Controllers
         private readonly IProductService _productService;
         private readonly IBannerService _bannerService;
         private readonly ICityService _cityService;
+        private static List<FarmerProduct> _farmerList = new List<FarmerProduct>();
         public CategoryController(ICategoryService categoryService, IProductService productService, IBannerService bannerService, ICityService cityService)
         {
             _categoryService = categoryService;
@@ -34,8 +37,13 @@ namespace HappyFarmer.UI.Controllers
 
             ViewBag.AnimalsProduct = _productService.GetAll();
             ViewBag.ProductCities = _productService.GetCityProduct();
-            ViewBag.SetGlobalFiltered = TempData["globalFiltered"];
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
+
+            if(TempData["tip"] != null)
+            {
+                ViewBag.SetGlobalFiltered = _farmerList;
+                type = TempData["tip"].ToString();
+            }
 
             ViewBag.LowerBanner = _bannerService.GetLowerAll();
             ViewBag.CityWithFilter = _cityService.GetAll();
@@ -94,10 +102,11 @@ namespace HappyFarmer.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult GlobalFilteredProduct(string responseText)
+        public IActionResult GlobalFilteredProduct(string responseText, string type)
         {
-            var products = _productService.GlobalFilter(responseText);
-            TempData["globalFiltered"] = products;
+            var products = _productService.GlobalFilter(responseText,type);
+            _farmerList = products;
+            TempData["tip"] = type;
             return RedirectToAction("CategoryWithProduct");
         }
     }

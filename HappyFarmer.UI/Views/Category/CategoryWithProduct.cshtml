@@ -226,15 +226,14 @@
             <div class="col-lg-9 col-md-12">
                 <div class="shop_toolbar_wrapper">
                     <div class=" niceselect_option">
-                        <form asp-controller="Category" asp-action="GlobalFilteredProduct" method="post">
+                        <form asp-controller="Category" asp-action="GlobalFilteredProduct" asp-route-type="@ViewBag.type" method="post">
                             <select name="responseText" id="responseText">
-                                <option selected="">Hızlı Sırala</option>
                                 <option value="@ProductFilteredEnum.A_Z_ye.ToString()">A 'dan Z ' ye</option>
                                 <option value="@ProductFilteredEnum.Z_A_ya.ToString()">Z 'den A ' ya</option>
                                 <option value="@ProductFilteredEnum.Son_ilk.ToString()">Son tarihten ilk tarihe</option>
                                 <option value="@ProductFilteredEnum.Ilk_son.ToString()">İlk tarihten son tarihe</option>
                             </select>
-                            <button class="btn btn-success btn-sm btn-block" type="submit">Sırala</button>
+                            <button class="btn btn-success btn-sm btn-block mt-2 mb-2" type="submit">Sırala</button>
                         </form>
                     </div>
                 </div>
@@ -262,6 +261,12 @@
                                                     }
                                                     <span class="current_price">₺ @item.Price</span>
                                                     <span class="old_price"><s>₺ @newPrice</s></span>
+                                                </center>
+                                                <center>
+                                                    <h6>İlan Tarihi: @item.AnnouncementDate</h6>
+                                                </center>  
+                                                <center>
+                                                    <h6>@item.City/@item.Country</h6>
                                                 </center>
                                             </div>
                                             <div class="card-footer text-center">
@@ -299,6 +304,12 @@
                                                     }
                                                     <span class="current_price">₺ @item.Price</span>
                                                     <span class="old_price"><s>₺ @newPrice</s></span>
+                                                </center>
+                                                <center>
+                                                    <h6>İlan Tarihi: @item.AnnouncementDate</h6>
+                                                </center>
+                                                <center>
+                                                    <h6>@item.City/@item.Country</h6>
                                                 </center>
                                             </div>
                                             <div class="card-footer text-center">
