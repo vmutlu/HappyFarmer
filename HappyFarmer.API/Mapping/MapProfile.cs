@@ -49,6 +49,9 @@ namespace HappyFarmer.API.Mapping
 
             CreateMap<FarmerCartDTO, FarmerCart>();
             CreateMap<FarmerCart, FarmerCartDTO>();
+
+            CreateMap<FarmerOrderDTO, FarmerOrder>();
+            CreateMap<FarmerOrder, FarmerOrderDTO>();
         }
     }
 }
