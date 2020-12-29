@@ -2,6 +2,7 @@
 using HappyFarmer.API.DTOs;
 using HappyFarmer.Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -31,6 +32,12 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<FarmerCartDTO>(cart));
         }
 
+        [HttpGet("GetOrders/{userId}")]
+        public IActionResult GetOrders(string userId)
+        {
+            var user = _orderService.GetOrders(userId);
 
+            return Ok(_mapper.Map<List<FarmerOrderDTO>>(user));
+        }
     }
 }
