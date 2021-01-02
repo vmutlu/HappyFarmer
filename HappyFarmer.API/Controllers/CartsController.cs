@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HappyFarmer.API.DTOs;
 using HappyFarmer.Business.Abstract;
+using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -24,6 +25,11 @@ namespace HappyFarmer.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Tüm order tablosu listeleme endpoindi
+        /// </summary>
+        /// <param name="activeCustomerId"></param>
+        /// <returns></returns>
         [HttpGet("ActiveUser")]
         public IActionResult GetCartByUserId(string activeCustomerId)
         {
@@ -32,12 +38,29 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<FarmerCartDTO>(cart));
         }
 
+        /// <summary>
+        /// id ' ye göre sipariş getirme endpoindi
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("GetOrders/{userId}")]
         public IActionResult GetOrders(string userId)
         {
             var user = _orderService.GetOrders(userId);
 
             return Ok(_mapper.Map<List<FarmerOrderDTO>>(user));
+        }
+
+        /// <summary>
+        /// Sipariş ekleme endpointi
+        /// </summary>
+        /// <param name="farmerOrder"></param>
+        /// <returns></returns>
+        [HttpPost("Carts")]
+        public IActionResult Add(FarmerOrder farmerOrder)
+        {
+            _orderService.Create(farmerOrder);
+            return Ok();
         }
     }
 }
