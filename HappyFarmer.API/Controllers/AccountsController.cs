@@ -19,6 +19,10 @@ namespace HappyFarmer.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// tüm kullanıcıları getirme endpointi
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -26,6 +30,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<List<FarmerUserDTO>>(users));
         }
 
+        /// <summary>
+        /// id 'ye göre kullanıcı getirme endpointi
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -33,6 +42,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<FarmerUserDTO>(users));
         }
 
+        /// <summary>
+        /// kullanıcı ekleme endpointi
+        /// </summary>
+        /// <param name="farmerUserDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Create(FarmerUserDTO farmerUserDTO)
         {
@@ -41,6 +55,11 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// kullanıcı güncelleme endpointi
+        /// </summary>
+        /// <param name="farmerUserDTO"></param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult Update(FarmerUserDTO farmerUserDTO)
         {
@@ -49,6 +68,11 @@ namespace HappyFarmer.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// kullanıcı silme endpointi
+        /// </summary>
+        /// <param name="farmerUserDTO"></param>
+        /// <returns></returns>
         [HttpDelete]
         public IActionResult Delete(FarmerUserDTO farmerUserDTO)
         {
@@ -56,6 +80,10 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// sistemde kayotlı tüm müşteriler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Customer")]
         public IActionResult GetAllCustomer()
         {
@@ -63,6 +91,10 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<List<FarmerUserDTO>>(customers));
         }
 
+        /// <summary>
+        /// sistemde kayıtlı tüm nakliyeciler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Carrier")]
         public IActionResult GetAllCarrier()
         {
@@ -70,6 +102,10 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<List<FarmerUserDTO>>(customers));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("OnlyCustomer")]
         public IActionResult GetAllOnlyCustomer()
         {
@@ -77,6 +113,13 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<List<FarmerUserDTO>>(customers));
         }
 
+        /// <summary>
+        /// kullanıcı giriş dogrulama endpointi
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="userPassword"></param>
+        /// <param name="userType"></param>
+        /// <returns></returns>
         [HttpPost("Login")]
         public IActionResult PasswordSignIn(string userEmail, string userPassword, int userType)
         {
@@ -84,6 +127,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(customers);
         }
 
+        /// <summary>
+        /// kulllanıcı mail adresi sistemde varmı endpointi
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpPost("Find")]
         public IActionResult FindByEmail(string email)
         {
