@@ -1,10 +1,7 @@
 using AutoMapper;
-using HappyFarmer.Business.Abstract;
-using HappyFarmer.Business.Concrate;
+using HappyFarmer.API.Extensions;
 using HappyFarmer.DataAccess;
-using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.DataAccess.Concrete;
-using HappyFarmer.DataAccess.Concrete.EntityFrameWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +21,6 @@ namespace HappyFarmer.API
             Configuration = configuration;
         }
 
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
@@ -54,39 +49,9 @@ namespace HappyFarmer.API
                 });
             });
 
-            services.AddScoped<IProductRepository, EfCoreProductRepository>();
-            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
-            services.AddScoped<IMenuRepository, EfCoreMenuRepository>();
-            services.AddScoped<IMessageRepository, EfCoreMessageRepository>();
-            services.AddScoped<IUserRepository, EfCoreUserRepository>();
-            services.AddScoped<IProductCommentRepository, EfCoreProductCommentRepository>();
-            services.AddScoped<IGlobalMessageRepository, EfCoreGlobalMessageRepository>();
-            services.AddScoped<IAdminMessageRepository, EfCoreAdminMessageRepository>();
-            services.AddScoped<IBannerRepository, EfCoreBannerRepository>();
-            services.AddScoped<ISliderRepository, EfCoreSliderRepository>();
-            services.AddScoped<IUserRepository, EfCoreUserRepository>();
-            services.AddScoped<IAboutUsRepository, EfCoreAboutUsRepository>();
-            services.AddScoped<ISecurityInformationRepository, EfCoreSecurityInformationRepository>();
-            services.AddScoped<ICartRepository, EfCoreCartRepository>();
-            services.AddScoped<IOrderRepository, EfCoreOrderRepository>();
-
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGlobalMessageService, GlobalMessageService>();
-            services.AddScoped<IAdminMessageService, AdminMessageService>();
-            services.AddScoped<IBannerService, BannerService>();
-            services.AddScoped<ISliderService, SliderService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAboutUsService, AboutUsService>();
-            services.AddScoped<ISecurityInformationService, SecurityInformationService>();
-            services.AddScoped<ICartService, CartService>();
-            services.AddScoped<IOrderService, OrderService>();
+            services.AddServiceExtension();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
