@@ -19,6 +19,10 @@ namespace HappyFarmer.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Tüm Categorileri listeleyen endpointim
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,6 +30,7 @@ namespace HappyFarmer.API.Controllers
             return Ok(categories);
         }
 
+        //İd'ye göre kategorileri getiren endpointim
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -33,6 +38,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(_mapper.Map<FarmerCategoryDTO>(category));
         }
 
+        /// <summary>
+        /// Yeni Kategori Ekleme endpointim
+        /// </summary>
+        /// <param name="categoryDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Add(FarmerCategoryDTO categoryDTO)
         {
@@ -40,6 +50,11 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// İd'ye göre kategori getiren endpointim
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("Products/{id}")]
         public async Task<IActionResult> GetByIdWithProducts(int id)
         {
@@ -47,6 +62,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(category);
         }
 
+        /// <summary>
+        /// Kategorileri güncelleyen endpointim
+        /// </summary>
+        /// <param name="categoryDTO"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Update(FarmerCategoryDTO categoryDTO)
         {
@@ -54,6 +74,11 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Kategori silme işlemi yapan endpointim
+        /// </summary>
+        /// <param name="categoryDTO"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(FarmerCategoryDTO categoryDTO)
         {
@@ -61,7 +86,12 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
-        //burasına bak
+        /// <summary>
+        /// belli bir id ye sahip kategoriden ürün silme endpointim
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         [HttpDelete("Product/Category")]
         public async Task<IActionResult> Delete(int categoryId,int productId)
         {
