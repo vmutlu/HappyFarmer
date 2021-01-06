@@ -11,8 +11,13 @@ namespace HappyFarmer.API.Controllers
     [ApiController]
     public class CarriersController : ControllerBase
     {
+        #region Fields
+
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+
+        #endregion
+
         public CarriersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
