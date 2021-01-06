@@ -15,6 +15,8 @@ namespace HappyFarmer.API.Controllers
     [ApiController]
     public class AdminsController : ControllerBase
     {
+        #region Fields
+
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IBannerService _bannerService;
@@ -24,6 +26,9 @@ namespace HappyFarmer.API.Controllers
         private readonly IUserService _userService;
         private readonly ISecurityInformationService _securityInformationService;
         private readonly IMapper _mapper;
+
+        #endregion
+
         public AdminsController(IProductService productService, IMapper mapper, ICategoryService categoryService, IBannerService bannerService, IAdminMessageService adminMessageService, ISliderService sliderService, IAboutUsService aboutUsService, IUserService userService, ISecurityInformationService securityInformationService)
         {
             _productService = productService;
