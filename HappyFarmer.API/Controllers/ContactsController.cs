@@ -18,6 +18,11 @@ namespace HappyFarmer.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Mail gönderme endpointi
+        /// </summary>
+        /// <param name="farmerAdminMessageDTO"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult SendAdminMessage(FarmerAdminMessageDTO farmerAdminMessageDTO)
         {
