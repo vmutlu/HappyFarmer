@@ -11,11 +11,15 @@ namespace HappyFarmer.API.Controllers
     [ApiController]
     public class CartsController : ControllerBase
     {
+        #region Fields
+
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+
+        #endregion
         public CartsController(ICartService cartService, IOrderService orderService, IProductService productService, IUserService userService, IMapper mapper)
         {
             _cartService = cartService;
