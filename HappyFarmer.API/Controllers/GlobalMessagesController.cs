@@ -9,12 +9,18 @@ namespace HappyFarmer.API.Controllers
     [ApiController]
     public class GlobalMessagesController : ControllerBase
     {
+        #region Fields
         private readonly IGlobalMessageService _globalMessageService;
+        #endregion
         public GlobalMessagesController(IGlobalMessageService globalMessageService)
         {
             _globalMessageService = globalMessageService;
         }
 
+        /// <summary>
+        /// Global yorumları listeleyen endpointim
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +28,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// İd 'ye göre global mesaj getiren endpointim
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -29,6 +40,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Belirlenen id sahip mesajı atan kullanıcı getiren endpointim
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("User/{id}")]
         public async Task<IActionResult> GetNameById(int id)
         {
@@ -36,6 +52,11 @@ namespace HappyFarmer.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// global mesaj ekleyen endpointim
+        /// </summary>
+        /// <param name="globalMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Add(FarmerGlobalMessage globalMessage)
         {
@@ -43,6 +64,11 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// global mesajı güncellemeye yarayan endpointim
+        /// </summary>
+        /// <param name="globalMessage"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Update(FarmerGlobalMessage globalMessage)
         {
@@ -50,6 +76,11 @@ namespace HappyFarmer.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Global mesajı silmeye yarayan endpointim
+        /// </summary>
+        /// <param name="globalMessage"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(FarmerGlobalMessage globalMessage)
         {
