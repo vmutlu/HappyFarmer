@@ -11,8 +11,13 @@ namespace HappyFarmer.API.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
+        #region Fields
+
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+
+        #endregion
+
         public AccountsController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
