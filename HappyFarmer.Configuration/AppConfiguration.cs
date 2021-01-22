@@ -13,7 +13,7 @@ namespace HappyFarmer.Configuration
 {
     public static class AppConfiguration
     {
-        public static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
+        public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("HappyFarmerContext");
             FarmerContext.SetConnectionString(connectionString);

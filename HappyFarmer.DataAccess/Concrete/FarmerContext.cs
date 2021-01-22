@@ -96,17 +96,12 @@ namespace HappyFarmer.DataAccess.Concrete
            .WithMany(c => c.FarmerOrderItems)
            .HasForeignKey(bc => bc.OrderId);
 
-           modelBuilder.Entity<FarmerOrderItem>()
-          .HasOne(bc => bc.FarmerProduct)
-          .WithMany(c => c.FarmerOrderItems)
-          .HasForeignKey(bc => bc.ProductId);
+            modelBuilder.Entity<FarmerOrderItem>()
+           .HasOne(bc => bc.FarmerProduct)
+           .WithMany(c => c.FarmerOrderItems)
+           .HasForeignKey(bc => bc.ProductId);
 
             modelBuilder.Entity<FarmerAboutUs>().HasKey(a => new { a.Id });
-
-            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(login => login.UserId);
-            //modelBuilder.Entity<IdentityUserRole<string>>().HasKey(login => login.UserId);
-            //modelBuilder.Entity<IdentityUserClaim<string>>().HasKey(login => login.UserId);
-            //modelBuilder.Entity<IdentityUserToken<string>>().HasKey(login => login.UserId);
         }
 
         public virtual DbSet<FarmerProduct> Products { get; set; }
