@@ -104,11 +104,6 @@ namespace HappyFarmer.UI.Controllers
                 TempData["UserId"] = HttpContext.Session.GetString("ActiveUserId");
             }
 
-            //if (HttpContext.Request.Cookies[".HappyFarmer.Session"] == null)
-            //{
-            //    return RedirectToAction("Index","Account");
-            //}
-
             else
             {
                 TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
@@ -128,21 +123,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult GetAdminBanner()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var response = _bannerService.GetAdminBanner();
             var entity = (from i in response
@@ -160,42 +148,30 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateBanner()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBanner(BannerModel model, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var banner = new FarmerBanner()
             {
@@ -239,21 +215,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditBanner(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _bannerService.GetById(id);
 
             if (entity == null)
@@ -276,21 +246,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBanner(BannerModel model, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var entity = _bannerService.GetById(model.Id);
             if (entity == null)
@@ -309,7 +273,6 @@ namespace HappyFarmer.UI.Controllers
                 {
                     if (entity.ImageURL != null)
                     {
-                        //güncelleme yaparken önce resmi sil
                         var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\BannerImages", entity.ImageURL);
                         FileInfo fileInfo = new FileInfo(deletePath);
                         if (fileInfo != null)
@@ -319,7 +282,6 @@ namespace HappyFarmer.UI.Controllers
                         }
                     }
 
-                    //daha sonra resim ekle
                     Random rastgele = new Random();
                     string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
                     string uret = "";
@@ -349,21 +311,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteBanner(int bannerId)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var entity = _bannerService.GetById(bannerId);
             if (entity == null)
@@ -395,21 +351,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult GeneralSettings()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var generalSettings = _generalSettingsService.GetAll();
             return View(generalSettings);
         }
@@ -417,42 +367,30 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateGeneralSetting()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateGeneralSetting(GeneralSettingsModel generalSettingsModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var farmerGeneralSettings = new FarmerGeneralSettings()
             {
@@ -503,21 +441,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditGeneralSetting(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _generalSettingsService.GetById(id);
 
             if (entity == null)
@@ -547,21 +479,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditGeneralSetting(GeneralSettingsModel generalSettingsModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var entity = _generalSettingsService.GetById(generalSettingsModel.Id);
             if (entity == null)
@@ -627,21 +553,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteGeneralSetting(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _generalSettingsService.GetById(id);
             if (entity == null)
             {
@@ -671,42 +591,30 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult AdminMessages()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var adminMessages = _adminMessageService.GetAll();
             return View(adminMessages);
         }
 
         public IActionResult DeleteMessages(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _adminMessageService.GetById(id);
             if (entity == null)
             {
@@ -723,21 +631,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult Slider()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var slider = _sliderService.GetAll(true);
             return View(slider);
         }
@@ -745,42 +647,30 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateSlider()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateSlider(SliderModel sliderModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var slider = new FarmerSlider()
             {
@@ -825,21 +715,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditSlider(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _sliderService.GetById(id);
 
             if (entity == null)
@@ -863,21 +747,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditSlider(SliderModel sliderModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var entity = _sliderService.GetById(sliderModel.Id);
             if (entity == null)
@@ -937,21 +815,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteSlider(int sliderId)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var entity = _sliderService.GetById(sliderId);
             if (entity == null)
             {
@@ -983,21 +855,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult GetAboutUs()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var aboutUs = _aboutUsService.GetAll();
             return View(aboutUs);
         }
@@ -1005,42 +871,30 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateAboutUs()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateAboutUs(AboutUsModel aboutUsModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var clearContent = RemoveHtml(aboutUsModel.Content);
             if (ModelState.IsValid)
             {
@@ -1064,21 +918,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditAboutUs(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var aboutUs = _aboutUsService.GetById(id);
 
             if (aboutUs != null)
@@ -1101,21 +949,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult EditAboutUs(AboutUsModel aboutUsModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var aboutUs = _aboutUsService.GetById(aboutUsModel.Id);
             var clearContent = RemoveHtml(aboutUsModel.Content);
             if (aboutUs != null)
@@ -1135,21 +977,15 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteAboutUs(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             var about = _aboutUsService.GetById(id);
 
             if (about != null)
@@ -1168,21 +1004,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AdminProduct(string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             ViewBag.Type = type;
             var activeUserId = HttpContext.Session.GetString("ActiveUserType");
@@ -1196,21 +1026,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateProduct(string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             ViewBag.Type = type;
             return View();
         }
@@ -1218,21 +1042,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductModel productModel, IFormFile file, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
 
             var userId = Convert.ToInt32(TempData["UserId"]);
 
@@ -1299,21 +1117,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditProduct(int? id, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             ViewBag.Type = type;
             if (id == null)
             {
@@ -1347,21 +1159,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProduct(ProductModel model, int[] categoryIds, IFormFile file, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             if (ModelState.IsValid)
             {
@@ -1440,21 +1245,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteProduct(int productId, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _productService.GetById(productId);
             if (entity == null)
             {
@@ -1490,21 +1288,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AdminCategory()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             return View(new CategoryListModel()
             {
                 Categories = _categoryService.GetAll()
@@ -1514,21 +1305,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditCategory(int? id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             if (id == null)
                 return NotFound();
 
@@ -1550,21 +1334,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult EditCategory(FarmerCategory categoryModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var category = _categoryService.GetById(categoryModel.Id);
             if (category == null)
                 return NotFound();
@@ -1580,21 +1357,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteCategory(int categoryId)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var category = _categoryService.GetById(categoryId);
             if (category == null)
                 return NotFound();
@@ -1608,42 +1378,28 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateCategory()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateCategory(CategoryModel categoryModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var category = new FarmerCategory()
             {
                 Name = categoryModel.Name
@@ -1658,21 +1414,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult DeleteFromCategory(int categoryId, int productId)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             _categoryService.DeleteFromCategory(categoryId, productId);
             return Redirect("/admin/editcategory?id=" + categoryId);
         }
@@ -1683,21 +1432,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CustomerDeclareRequest()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             List<int> type = new List<int>() { 10, 11, 12, 13, 14, 15 };
             return View(_productService.GetCustomerDeclares(type));
         }
@@ -1705,21 +1447,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CustomerEditProduct(int Id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _productService.GetById(Id);
             if (entity == null)
             {
@@ -1762,21 +1497,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult CustomerEditProduct(ProductModel productModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _productService.GetById(productModel.Id);
             if (entity == null)
             {
@@ -1795,21 +1523,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult Carrier()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var getCarierCustomer = _userService.GetAllCarrier();
             return View(getCarierCustomer);
         }
@@ -1817,42 +1538,28 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AddCarrier()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddCarrier(LoginModel loginModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var userCarier = new FarmerUser()
             {
@@ -1903,21 +1610,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditCarrier(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _userService.GetById(id);
             if (entity == null)
             {
@@ -1947,21 +1647,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult EditCarrier(LoginModel loginModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _userService.GetById(loginModel.Id);
 
             if (entity == null)
@@ -1983,21 +1676,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult Users()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var getAllOnlyCustomer = _userService.GetAllOnlyCustomer();
             return View(getAllOnlyCustomer);
         }
@@ -2005,42 +1691,28 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AddOnlyUser()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddOnlyUser(LoginModel loginModel, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var users = new FarmerUser()
             {
@@ -2090,21 +1762,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditOnlyUser(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _userService.GetById(id);
             if (entity == null)
             {
@@ -2134,21 +1799,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult EditOnlyUser(LoginModel loginModel)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _userService.GetById(loginModel.Id);
 
             if (entity == null)
@@ -2170,21 +1828,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AdminAddMultipleProducts(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var products = _productService.GetById(id);
 
             var product = new ProductModel()
@@ -2199,21 +1850,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> AdminAddMultipleProducts(int id, IFormFile[] file, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             foreach (var item in file)
             {
@@ -2250,21 +1894,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult AdminGetMultipleProductImages(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var ımages = _multipleProductImagesService.GetByIdMultiImages(id);
             return View(ımages);
         }
@@ -2272,21 +1909,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> AdminDeleteMultiImages(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var images = _multipleProductImagesService.GetById(id);
             if (images == null)
             {
@@ -2315,21 +1945,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditPopularUrun(int id, string active, string type)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _productService.GetById(id);
             if (entity == null)
             {
@@ -2354,21 +1977,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> AdminGetCarrierGlobalMessages()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var result = await _globalMessageService.GetCarrierGlobalMessages(true).ConfigureAwait(false); //admin oldugu için tüm kayıtları getir
             ViewBag.Users = _userService.GetAll();
@@ -2379,21 +1995,14 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult AdminGlobalMessagesPermission(string? type = null)
         {
             List<FarmerGlobalMessage> result = new List<FarmerGlobalMessage>();
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             if (type != null)
             {
@@ -2411,22 +2020,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditGlobalMessagePermission(int id, string active, string? sender = null) //sender carrier or farmer
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
-
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _globalMessageService.GetById(id);
             if (entity == null)
             {
@@ -2450,21 +2051,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteGlobalMessagePermission(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var deleteGlobal = _globalMessageService.GetById(id);
             if (deleteGlobal == null)
             {
@@ -2481,21 +2075,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult Blog()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var result = _blogService.GetAll();
             ViewBag.CreatedBlogUsers = _userService.GetAll();
@@ -2505,21 +2092,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateBlogArticle()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var userId = HttpContext.Session.GetString("ActiveUserId");
             var Users = _userService.GetById(Convert.ToInt32(userId));
             ViewBag.UserDetails = Users.Name + " " + Users.Surname;
@@ -2530,21 +2110,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlogArticle(BlogModel model, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var cleatModelContent = RemoveHtml(model.Description);
             var userId = HttpContext.Session.GetString("ActiveUserId");
@@ -2600,21 +2173,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditBlogArticle(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
             var userId = HttpContext.Session.GetString("ActiveUserId");
             var Users = _userService.GetById(Convert.ToInt32(userId));
@@ -2649,22 +2215,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBlogArticle(BlogModel model, IFormFile file)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
-
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var cleatModelContent = RemoveHtml(model.Description);
             var entity = _blogService.GetById(model.Id);
 
@@ -2726,21 +2284,14 @@ namespace HappyFarmer.UI.Controllers
 
         public IActionResult DeleteBlogArticle(int Id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _blogService.GetById(Id);
 
             if (entity == null)
@@ -2772,21 +2323,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult GeneralInformation()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             var entity = _securityInformationService.GetAll();
             return View(entity);
         }
@@ -2794,42 +2338,28 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult CreateInformation()
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateInformation(SecurityInformationModel model)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             if (model != null)
             {
                 var clearSSS = RemoveHtml(model.FAQ);
@@ -2855,21 +2385,14 @@ namespace HappyFarmer.UI.Controllers
         [HttpGet]
         public IActionResult EditInformation(int id)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
-
-            #endregion
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
             if (id > 0)
             {
                 var entity = _securityInformationService.GetById(id);
@@ -2895,21 +2418,15 @@ namespace HappyFarmer.UI.Controllers
         [HttpPost]
         public IActionResult EditInformation(SecurityInformationModel model)
         {
-            #region Admin Login Kontrolü
-
-            if (HttpContext.Session.GetString("ActiveUser") == null)
-            {
-                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+            if (Verify())
                 return RedirectToAction("Index", new RouteValueDictionary(
-                    new
-                    {
-                        Controller = "Account",
-                        Action = "Index",
-                        message = TempData["Message"]
-                    }));
-            }
+                  new
+                  {
+                      Controller = "Account",
+                      Action = "Index",
+                      message = TempData["Message"]
+                  }));
 
-            #endregion
             if (model != null)
             {
                 var entity = _securityInformationService.GetById(model.Id);
@@ -2939,6 +2456,20 @@ namespace HappyFarmer.UI.Controllers
         public static string RemoveHtml(string text)
         {
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
+        }
+
+        public bool Verify()
+        {
+            #region Admin Login Kontrolü
+
+            if (HttpContext.Session.GetString("ActiveUser") == null)
+            {
+                TempData["Message"] = "Erişiminiz kısıtlandı !!! Admin girişi yapmadan admin paneline erişemezsiniz.";
+                return true;
+            }
+
+            return false;
+            #endregion
         }
     }
 }
