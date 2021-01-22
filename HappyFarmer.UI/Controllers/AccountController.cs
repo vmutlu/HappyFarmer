@@ -102,71 +102,10 @@ namespace HappyFarmer.UI.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> Login(LoginModel loginModel)
-        //{
-        //    var captchaImage = HttpContext.Request.Form["g-recaptcha-response"];
-        //    if (string.IsNullOrEmpty(captchaImage))
-        //    {
-        //        ViewBag.Captcha = "Captcha doğrulanmamış";
-        //        return View();
-        //    }
-
-        //    var verified = await CheckCaptcha();
-        //    if (!verified)
-        //    {
-        //        ViewBag.Captcha = "Captcha yanlış doğrulanmış";
-        //        return View();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        var user = _userService.FindByEmail(loginModel.Email);
-        //        var activeUserId = 0;
-        //        var activeUserType = 0;
-        //        foreach (var item in user)
-        //        {
-        //            activeUserId = item.Id;
-        //            activeUserType = item.UserType;
-        //        }
-
-        //        if(user == null)
-        //        {
-        //            ModelState.AddModelError("", "Bu Email adresi ile eşleşen bir Email Adresi Bulunamadı");
-        //        }
-
-        //        var userState = 1; //admin
-        //        var userLogin = _userService.PasswordSignIn(loginModel.Email, loginModel.Password,userState);
-
-        //        if (userLogin)
-        //        {
-        //            HttpContext.Session.SetString("ActiveUser", loginModel.Email);
-        //            HttpContext.Session.SetString("ActiveUserId", activeUserId.ToString());
-        //            HttpContext.Session.SetString("ActiveUserType", activeUserType.ToString());
-        //            return RedirectToAction("Index", "Admin");
-        //        }
-
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "Email veya Şifre Hatalı !");
-        //            ViewBag.Message = "Email veya Şifre Hatalı !";
-        //            return View("Index");
-        //        }
-        //    }
-
-        //    return View();
-        //}
-
         public IActionResult Logout()
         {
-           // HttpContext.Session.Clear();
             HttpContext.Session.Remove("ActiveUser");
             HttpContext.Session.Remove("ActiveUserId");
-
-            //foreach (var cookie in Request.Cookies.Keys)
-            //{
-            //    Response.Cookies.Delete(cookie);
-            //}
 
             return RedirectToAction("Index");
         }
