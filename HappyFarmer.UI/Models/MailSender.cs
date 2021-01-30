@@ -28,7 +28,7 @@ namespace HappyFarmer.UI.Models
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(from.Address, "Veysel97.2")
+                Credentials = new NetworkCredential(from.Address, "Mail Adrese girilen email adresin şifresi girilecek")
             })
             {
                 using (var message = new MailMessage(from, response) { Subject = submit, Body = body })
