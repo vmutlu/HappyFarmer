@@ -4,9 +4,6 @@ using HappyFarmer.Business.Concrate;
 using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.DataAccess.Concrete.EntityFrameWork;
 using HappyFarmer.DataAccess.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HappyFarmer.Business.DependencyResolvers.Autofac
 {
@@ -65,7 +62,6 @@ namespace HappyFarmer.Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CityService>().As<ICityService>().SingleInstance();
             builder.RegisterType<EfCoreCityRepository>().As<ICityRepository>().SingleInstance();
-
         }
     }
 }

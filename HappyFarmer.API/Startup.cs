@@ -1,5 +1,4 @@
 using AutoMapper;
-using HappyFarmer.API.Extensions;
 using HappyFarmer.DataAccess;
 using HappyFarmer.DataAccess.Concrete;
 using Microsoft.AspNetCore.Builder;
@@ -48,8 +47,6 @@ namespace HappyFarmer.API
                     }
                 });
             });
-
-            services.AddServiceExtension();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
