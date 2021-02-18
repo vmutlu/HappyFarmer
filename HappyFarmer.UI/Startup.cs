@@ -1,4 +1,4 @@
-using HappyFarmer.Configuration;
+using HappyFarmer.Business.Extensions;
 using HappyFarmer.DataAccess;
 using HappyFarmer.UI.Extensions;
 using HappyFarmer.UI.Logging.ErrorLogRecord;
@@ -22,7 +22,7 @@ namespace HappyFarmer.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ILog, LogNLog>();
-            AppConfiguration.ConfigureServices(services, Configuration);
+            ServiceExtensions.ConfigureServices(services, Configuration);
             services.AddControllersWithViews();
         }
 

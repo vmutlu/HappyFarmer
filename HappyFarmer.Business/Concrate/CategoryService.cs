@@ -1,4 +1,6 @@
 ﻿using HappyFarmer.Business.Abstract;
+using HappyFarmer.Business.ValidationRules.FluentValidation;
+using HappyFarmer.Core.Aspects.Autofac.Validation;
 using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.Entities;
 using System.Collections.Generic;
@@ -12,6 +14,8 @@ namespace HappyFarmer.Business.Concrate
         {
             _categoryRepository = categoryRepository;
         }
+
+        [ValidationAspect(typeof(CategoryValidator))]
         public void Create(FarmerCategory entity)
         {
             _categoryRepository.Create(entity);

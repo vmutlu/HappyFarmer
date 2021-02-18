@@ -1,6 +1,9 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
+using Castle.DynamicProxy;
 using HappyFarmer.Business.Abstract;
 using HappyFarmer.Business.Concrate;
+using HappyFarmer.Core.Utilities.Interceptors;
 using HappyFarmer.DataAccess.Abstract;
 using HappyFarmer.DataAccess.Concrete.EntityFrameWork;
 using HappyFarmer.DataAccess.DataAccess;
@@ -62,6 +65,14 @@ namespace HappyFarmer.Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CityService>().As<ICityService>().SingleInstance();
             builder.RegisterType<EfCoreCityRepository>().As<ICityRepository>().SingleInstance();
+
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+                {
+                    Selector = new AspectInterceptorSelector()
+                }).SingleInstance();
         }
     }
 }

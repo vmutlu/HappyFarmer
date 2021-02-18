@@ -1,4 +1,5 @@
 using AutoMapper;
+using HappyFarmer.Business.Extensions;
 using HappyFarmer.DataAccess;
 using HappyFarmer.DataAccess.Concrete;
 using Microsoft.AspNetCore.Builder;
@@ -24,9 +25,7 @@ namespace HappyFarmer.API
         {
             services.AddAutoMapper(typeof(Startup));
 
-            string connectionString = Configuration.GetConnectionString("HappyFarmerContext");
-            FarmerContext.SetConnectionString(connectionString);
-            services.AddDbContext<FarmerContext>(opts => opts.UseMySQL(connectionString, i => i.MigrationsAssembly("HappyFarmer.DataAccess")));
+            ServiceExtensions.ConfigureServices(services, Configuration);
 
             services.AddControllers();
 

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HappyFarmer.Business\HappyFarmer.Business.csproj" />
-    <ProjectReference Include="..\HappyFarmer.Configuration\HappyFarmer.Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
