@@ -8,33 +8,21 @@ namespace HappyFarmer.Business.Concrate
     public class MenuService : IMenuService
     {
         private readonly IMenuRepository _menuRepository;
-        public MenuService(IMenuRepository menuRepository)
-        {
+        public MenuService(IMenuRepository menuRepository) =>
             _menuRepository = menuRepository;
-        }
-        public void Create(FarmerMenu entity)
-        {
+        public void Create(FarmerMenu entity) =>
             _menuRepository.Create(entity);
-        }
 
-        public void Delete(FarmerMenu entity)
-        {
+        public void Delete(FarmerMenu entity) =>
             _menuRepository.Delete(entity);
-        }
 
-        public List<FarmerMenu> GetAll()
-        {
-            return _menuRepository.GetAll();
-        }
+        public List<FarmerMenu> GetAll() =>
+             _menuRepository.GetAll();
 
-        public FarmerMenu GetById(int id)
-        {
-            return _menuRepository.GetById(id);
-        }
+        public FarmerMenu GetById(int id) =>
+             _menuRepository.GetById(id);
 
-        public void Update(FarmerMenu entity)
-        {
+        public void Update(FarmerMenu entity) =>
             _menuRepository.Update(entity);
-        }
     }
 }
