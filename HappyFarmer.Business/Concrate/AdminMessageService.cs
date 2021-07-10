@@ -8,33 +8,21 @@ namespace HappyFarmer.Business.Concrate
     public class AdminMessageService : IAdminMessageService
     {
         private readonly IAdminMessageRepository _adminMessageRepository;
-        public AdminMessageService(IAdminMessageRepository adminMessageRepository)
-        {
+        public AdminMessageService(IAdminMessageRepository adminMessageRepository) =>
             _adminMessageRepository = adminMessageRepository;
-        }
-        public void Create(FarmerAdminMessage entity)
-        {
+        public void Create(FarmerAdminMessage entity) =>
             _adminMessageRepository.Create(entity);
-        }
 
-        public void Delete(FarmerAdminMessage entity)
-        {
+        public void Delete(FarmerAdminMessage entity) =>
             _adminMessageRepository.Delete(entity);
-        }
 
-        public List<FarmerAdminMessage> GetAll()
-        {
-            return _adminMessageRepository.GetAll();
-        }
+        public List<FarmerAdminMessage> GetAll() =>
+             _adminMessageRepository.GetAll();
 
-        public FarmerAdminMessage GetById(int id)
-        {
-            return _adminMessageRepository.GetById(id);
-        }
+        public FarmerAdminMessage GetById(int id) =>
+             _adminMessageRepository.GetById(id);
 
-        public void Update(FarmerAdminMessage entity)
-        {
+        public void Update(FarmerAdminMessage entity) =>
             _adminMessageRepository.Update(entity);
-        }
     }
 }
