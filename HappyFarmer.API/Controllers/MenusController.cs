@@ -1,7 +1,6 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -10,41 +9,31 @@ namespace HappyFarmer.API.Controllers
     public class MenusController : ControllerBase
     {
         private readonly IMenuService _menuService;
-        public MenusController(IMenuService menuService)
-        {
+        public MenusController(IMenuService menuService) =>
             _menuService = menuService;
-        }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var response = _menuService.GetAll();
-            return Ok(response);
-        }
+        public IActionResult GetAll() => Ok(_menuService.GetAll());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var response = _menuService.GetById(id);
-            return Ok(response);
-        }
+        public IActionResult GetById(int id) => Ok(_menuService.GetById(id));
 
         [HttpPut]
-        public async Task<IActionResult> Update(FarmerMenu farmerMenu)
+        public IActionResult Update(FarmerMenu farmerMenu)
         {
             _menuService.Update(farmerMenu);
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(FarmerMenu farmerMenu)
+        public IActionResult Add(FarmerMenu farmerMenu)
         {
             _menuService.Create(farmerMenu);
             return Ok();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(FarmerMenu farmerMenu)
+        public IActionResult Delete(FarmerMenu farmerMenu)
         {
             _menuService.Delete(farmerMenu);
             return Ok();
