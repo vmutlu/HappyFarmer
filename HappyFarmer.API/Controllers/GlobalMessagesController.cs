@@ -1,7 +1,6 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -12,21 +11,15 @@ namespace HappyFarmer.API.Controllers
         #region Fields
         private readonly IGlobalMessageService _globalMessageService;
         #endregion
-        public GlobalMessagesController(IGlobalMessageService globalMessageService)
-        {
+        public GlobalMessagesController(IGlobalMessageService globalMessageService) =>
             _globalMessageService = globalMessageService;
-        }
 
         /// <summary>
         /// Global yorumları listeleyen endpointim
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var response = _globalMessageService.GetAll();
-            return Ok(response);
-        }
+        public IActionResult GetAll() => Ok(_globalMessageService.GetAll());
 
         /// <summary>
         /// İd 'ye göre global mesaj getiren endpointim
@@ -34,11 +27,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var response = _globalMessageService.GetById(id);
-            return Ok(response);
-        }
+        public IActionResult GetById(int id) => Ok(_globalMessageService.GetById(id));
 
         /// <summary>
         /// Belirlenen id sahip mesajı atan kullanıcı getiren endpointim
@@ -46,11 +35,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost("User/{id}")]
-        public async Task<IActionResult> GetNameById(int id)
-        {
-            var response = _globalMessageService.GetNameById(id);
-            return Ok(response);
-        }
+        public IActionResult GetNameById(int id) => Ok(_globalMessageService.GetNameById(id));
 
         /// <summary>
         /// global mesaj ekleyen endpointim
@@ -58,7 +43,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="globalMessage"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(FarmerGlobalMessage globalMessage)
+        public IActionResult Add(FarmerGlobalMessage globalMessage)
         {
             _globalMessageService.Create(globalMessage);
             return Ok();
@@ -70,7 +55,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="globalMessage"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(FarmerGlobalMessage globalMessage)
+        public  IActionResult Update(FarmerGlobalMessage globalMessage)
         {
             _globalMessageService.Update(globalMessage);
             return Ok();
@@ -82,7 +67,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="globalMessage"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(FarmerGlobalMessage globalMessage)
+        public  IActionResult Delete(FarmerGlobalMessage globalMessage)
         {
             _globalMessageService.Delete(globalMessage);
             return Ok();
