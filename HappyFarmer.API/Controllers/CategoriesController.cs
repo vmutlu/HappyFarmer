@@ -24,19 +24,11 @@ namespace HappyFarmer.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var categories = _categoryService.GetAll();
-            return Ok(categories);
-        }
+        public async Task<IActionResult> GetAll() => Ok(_categoryService.GetAll());
 
         //İd'ye göre kategorileri getiren endpointim
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var category = _categoryService.GetById(id);
-            return Ok(_mapper.Map<FarmerCategoryDTO>(category));
-        }
+        public IActionResult GetById(int id) => Ok(_mapper.Map<FarmerCategoryDTO>(_categoryService.GetById(id)));
 
         /// <summary>
         /// Yeni Kategori Ekleme endpointim
@@ -44,7 +36,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="categoryDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(FarmerCategoryDTO categoryDTO)
+        public IActionResult Add(FarmerCategoryDTO categoryDTO)
         {
             _categoryService.Create(_mapper.Map<FarmerCategory>(categoryDTO));
             return Ok();
@@ -56,11 +48,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Products/{id}")]
-        public async Task<IActionResult> GetByIdWithProducts(int id)
-        {
-            var category = _categoryService.GetByIdWithProducts(id);
-            return Ok(category);
-        }
+        public IActionResult GetByIdWithProducts(int id) => Ok(_categoryService.GetByIdWithProducts(id));
 
         /// <summary>
         /// Kategorileri güncelleyen endpointim
@@ -68,7 +56,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="categoryDTO"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(FarmerCategoryDTO categoryDTO)
+        public IActionResult Update(FarmerCategoryDTO categoryDTO)
         {
             _categoryService.Update(_mapper.Map<FarmerCategory>(categoryDTO));
             return Ok();
@@ -80,7 +68,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="categoryDTO"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(FarmerCategoryDTO categoryDTO)
+        public IActionResult Delete(FarmerCategoryDTO categoryDTO)
         {
             _categoryService.Delete(_mapper.Map<FarmerCategory>(categoryDTO));
             return Ok();
@@ -93,9 +81,9 @@ namespace HappyFarmer.API.Controllers
         /// <param name="productId"></param>
         /// <returns></returns>
         [HttpDelete("Product/Category")]
-        public async Task<IActionResult> Delete(int categoryId,int productId)
+        public IActionResult Delete(int categoryId, int productId)
         {
-            _categoryService.DeleteFromCategory(categoryId,productId);
+            _categoryService.DeleteFromCategory(categoryId, productId);
             return Ok();
         }
     }
