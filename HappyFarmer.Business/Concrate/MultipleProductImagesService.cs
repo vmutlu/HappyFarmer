@@ -10,19 +10,14 @@ namespace HappyFarmer.Business.Concrate
     public class MultipleProductImagesService : IMultipleProductImagesService
     {
         private readonly IMultipleProductImagesRepository _multipleProductImagesRepository;
-        public MultipleProductImagesService(IMultipleProductImagesRepository multipleProductImagesRepository)
-        {
+        public MultipleProductImagesService(IMultipleProductImagesRepository multipleProductImagesRepository) =>
             _multipleProductImagesRepository = multipleProductImagesRepository;
-        }
-        public void Create(FarmerMultipleProductImages entity)
-        {
-            _multipleProductImagesRepository.Create(entity);
-        }
 
-        public void Create(int productId, List<string> multipleImages)
-        {
+        public void Create(FarmerMultipleProductImages entity) =>
+            _multipleProductImagesRepository.Create(entity)
+
+        public void Create(int productId, List<string> multipleImages) =>
             _multipleProductImagesRepository.Create(productId, multipleImages);
-        }
 
         public void Delete(FarmerMultipleProductImages entity)
         {
@@ -33,24 +28,16 @@ namespace HappyFarmer.Business.Concrate
             }
         }
 
-        public List<FarmerMultipleProductImages> GetAll()
-        {
-            return _multipleProductImagesRepository.GetAll();
-        }
+        public List<FarmerMultipleProductImages> GetAll() =>
+             _multipleProductImagesRepository.GetAll();
 
-        public FarmerMultipleProductImages GetById(int id)
-        {
-            return _multipleProductImagesRepository.GetById(id);
-        }
+        public FarmerMultipleProductImages GetById(int id) =>
+             _multipleProductImagesRepository.GetById(id);
 
-        public List<FarmerMultipleProductImages> GetByIdMultiImages(int id)
-        {
-            return _multipleProductImagesRepository.GetByIdMultiImages(id);
-        }
+        public List<FarmerMultipleProductImages> GetByIdMultiImages(int id) =>
+             _multipleProductImagesRepository.GetByIdMultiImages(id);
 
-        public void Update(FarmerMultipleProductImages entity)
-        {
+        public void Update(FarmerMultipleProductImages entity) =>
             _multipleProductImagesRepository.Update(entity);
-        }
     }
 }
