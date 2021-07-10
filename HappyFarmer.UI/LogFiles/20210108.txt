@@ -1,2 +1,0 @@
-2021-01-08 23:11:35.619 +03:00 [Information] {test}{ FirstName = Veysel, LastName = MUTLU, Message = Giriş Log Mesajıdır. }
-2021-01-08 23:19:47.146 +03:00 [Information] {test}{ FirstName = Veysel, LastName = MUTLU, Message = Giriş Log Mesajıdır. }

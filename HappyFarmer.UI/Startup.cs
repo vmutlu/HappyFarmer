@@ -12,10 +12,8 @@ namespace HappyFarmer.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
 
@@ -33,19 +31,25 @@ namespace HappyFarmer.UI
                 app.UseDeveloperExceptionPage();
                 SeedDatabase.Seed();
             }
+
             else
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.ConfigureExceptionHandler(logger);
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
             app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

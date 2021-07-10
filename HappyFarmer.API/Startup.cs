@@ -1,10 +1,8 @@
 using AutoMapper;
 using HappyFarmer.Business.Extensions;
 using HappyFarmer.DataAccess;
-using HappyFarmer.DataAccess.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,10 +14,8 @@ namespace HappyFarmer.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
-        }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,7 +38,7 @@ namespace HappyFarmer.API
                     {
                         Name = "Veysel MUTLU",
                         Email = "veysel_mutlu42@hotmail.com",
-                        Url = new Uri("http://veyselmutlu.online/")
+                        Url = new Uri("https://mutluveysel.online/")
                     }
                 });
             });

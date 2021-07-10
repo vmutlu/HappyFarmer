@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="LogFiles\" />
     <Folder Include="wwwroot\img\CustomerImages\" />
     <Folder Include="wwwroot\img\GeneralSettings\" />
     <Folder Include="wwwroot\img\CustomerDeclareImages\" />
