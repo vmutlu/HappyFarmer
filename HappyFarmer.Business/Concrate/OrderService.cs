@@ -8,28 +8,19 @@ namespace HappyFarmer.Business.Concrate
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository)
-        {
+        public OrderService(IOrderRepository orderRepository) =>
             _orderRepository = orderRepository;
-        }
-        public void Create(FarmerOrder entity)
-        {
+
+        public void Create(FarmerOrder entity) =>
             _orderRepository.Create(entity);
-        }
 
-        public FarmerOrder GetById(string orderId)
-        {
-            return _orderRepository.GetById(orderId);
-        }
+        public FarmerOrder GetById(string orderId) =>
+             _orderRepository.GetById(orderId);
 
-        public List<FarmerOrder> GetOrders(string userId)
-        {
-            return _orderRepository.GetOrders(userId);
-        }
+        public List<FarmerOrder> GetOrders(string userId) =>
+             _orderRepository.GetOrders(userId);
 
-        public int GetPopularProduct()
-        {
-            return _orderRepository.GetPopularProduct();
-        }
+        public int GetPopularProduct() =>
+             _orderRepository.GetPopularProduct();
     }
 }
