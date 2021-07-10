@@ -18,15 +18,11 @@ namespace HappyFarmer.Business.Concrate
             _commentRepository = commentRepository;
         }
 
-        public void Create(FarmerBlog entity)
-        {
+        public void Create(FarmerBlog entity) =>
             _blogRepository.Create(entity);
-        }
 
-        public void Delete(FarmerBlog entity)
-        {
+        public void Delete(FarmerBlog entity) =>
             _blogRepository.Delete(entity);
-        }
 
         public List<FarmerBlog> GetAll(int? page = 0, int? pageSize = 0)
         {
@@ -46,7 +42,7 @@ namespace HappyFarmer.Business.Concrate
 
                     blogs = blogs
                         .OrderByDescending(i => i.CreatedDate)
-                        .AsNoTracking();                        
+                        .AsNoTracking();
 
                     return blogs.Skip((int)((page - 1) * pageSize)).Take((int)pageSize).ToList();
                 }
@@ -89,15 +85,10 @@ namespace HappyFarmer.Business.Concrate
             }
         }
 
-        public void Update(FarmerBlog entity)
-        {
+        public void Update(FarmerBlog entity) =>
             _blogRepository.Update(entity);
-        }
 
-        public void CreateComment(FarmerComment entity)
-        {
+        public void CreateComment(FarmerComment entity) =>
             _commentRepository.Create(entity);
-        }
-
     }
 }
