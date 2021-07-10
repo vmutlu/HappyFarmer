@@ -8,43 +8,27 @@ namespace HappyFarmer.Business.Concrate
     public class MessageService : IMessageService
     {
         private readonly IMessageRepository _messageRepository;
-        public MessageService(IMessageRepository messageRepository)
-        {
+        public MessageService(IMessageRepository messageRepository) =>
             _messageRepository = messageRepository;
-        }
-        public void Create(FarmerMessage entity)
-        {
+        public void Create(FarmerMessage entity) =>
             _messageRepository.Create(entity);
-        }
 
-        public void Delete(FarmerMessage entity)
-        {
+        public void Delete(FarmerMessage entity) =>
             _messageRepository.Delete(entity);
-        }
 
-        public List<FarmerMessage> GetAll()
-        {
-            return _messageRepository.GetAll();
-        }
+        public List<FarmerMessage> GetAll() =>
+             _messageRepository.GetAll();
 
-        public FarmerMessage GetById(int id)
-        {
-            return _messageRepository.GetById(id);
-        }
+        public FarmerMessage GetById(int id) =>
+             _messageRepository.GetById(id);
 
-        public List<FarmerMessage> GetByReceiverId(int id)
-        {
-            return _messageRepository.GetByReceiverId(id);
-        }
+        public List<FarmerMessage> GetByReceiverId(int id) =>
+             _messageRepository.GetByReceiverId(id);
 
-        public List<FarmerMessage> GetBySenderId(int id)
-        {
-            return _messageRepository.GetBySenderId(id);
-        }
+        public List<FarmerMessage> GetBySenderId(int id) =>
+             _messageRepository.GetBySenderId(id);
 
-        public void Update(FarmerMessage entity)
-        {
+        public void Update(FarmerMessage entity) =>
             _messageRepository.Update(entity);
-        }
     }
 }
