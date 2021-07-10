@@ -14,7 +14,7 @@ namespace HappyFarmer.Business.Concrate
             _multipleProductImagesRepository = multipleProductImagesRepository;
 
         public void Create(FarmerMultipleProductImages entity) =>
-            _multipleProductImagesRepository.Create(entity)
+            _multipleProductImagesRepository.Create(entity);
 
         public void Create(int productId, List<string> multipleImages) =>
             _multipleProductImagesRepository.Create(productId, multipleImages);

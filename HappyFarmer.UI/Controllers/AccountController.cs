@@ -13,10 +13,8 @@ namespace HappyFarmer.UI.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;       
-        public AccountController(IUserService userService)
-        {
+        public AccountController(IUserService userService)=>
             _userService = userService;
-        }
 
         #region ReCapctcha
 

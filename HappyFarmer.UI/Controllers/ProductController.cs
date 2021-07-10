@@ -40,9 +40,7 @@ namespace HappyFarmer.UI.Controllers
             var entitys = _productService.GetByIdWithCategories((int)id);
 
             foreach (var item in entitys.ProductCategories)
-            {
                  category.Add(item.Category.Name);
-            }
 
             ViewBag.CategoriesWith = category;
             ViewBag.GetAllProductDetails = response;

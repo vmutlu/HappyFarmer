@@ -21,10 +21,8 @@ namespace HappyFarmer.UI.Controllers
             _bannerService = bannerService;
             _cityService = cityService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
+        public IActionResult Index()=> View();
 
         [HttpGet]
         public IActionResult CategoryWithProduct(string type, int? lowPrice, int? topPrice, string? City, string? Country, string? Neighborhood)
@@ -59,8 +57,10 @@ namespace HappyFarmer.UI.Controllers
 
             if (City != null && Country != null && Neighborhood != null)
                 return View(_productService.FilterByRegion(type, City, Country, Neighborhood));
+
             if (City != null && Country != null)
                 return View(_productService.FilterByRegion(type, City, Country, null));
+
             if (City != null && Country == null && Neighborhood == null)
                 return View(_productService.FilterByRegion(type, City, null, null));
 

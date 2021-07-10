@@ -135,10 +135,7 @@ namespace HappyFarmer.UI.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
         #region Blog Methods
 
@@ -151,9 +148,8 @@ namespace HappyFarmer.UI.Controllers
             var result = _blogService.GetAll((int)page, pageSize);
 
             foreach (var item in result)
-            {
                 blogUserId = item.UserId;
-            }
+
             var user = _userService.GetById(blogUserId);
 
             ViewBag.BlogUsers = user.Name + " " + user.Surname;
@@ -169,10 +165,10 @@ namespace HappyFarmer.UI.Controllers
             const int pageSize = 3;
             result = _blogService.GetAll(page, pageSize);
             ViewBag.PageCount = page;
+
             foreach (var item in result)
-            {
                 blogUserId = item.UserId;
-            }
+
             if (blogUserId > 0)
             {
                 var user = _userService.GetById(blogUserId);
@@ -194,10 +190,9 @@ namespace HappyFarmer.UI.Controllers
         {
             var userId = HttpContext.Session.GetString("ActiveCustomerId");
             var response = _blogService.GetById(id);
+
             if (response == null)
-            {
                 return NotFound();
-            }
 
             var entity = new BlogModel()
             {
@@ -226,9 +221,8 @@ namespace HappyFarmer.UI.Controllers
             var result = _blogService.GetAll();
 
             foreach (var item in result)
-            {
                 blogUserId = item.UserId;
-            }
+
             var user = _userService.GetById(blogUserId);
 
             ViewBag.BlogUsers = user.Name + " " + user.Surname;
@@ -242,20 +236,15 @@ namespace HappyFarmer.UI.Controllers
         #region Security Information Methods
 
         [HttpGet]
-        public IActionResult GetInformation()
-        {
-            var response = _securityInformationService.GetAll();
-            var entity = (from i in response
-                          select new SecurityInformationModel
-                          {
-                              Id = i.Id,
-                              AdversitingRule = i.AdversitingRule,
-                              FAQ = i.FAQ,
-                              PrivacyPolicy = i.PrivacyPolicy,
-                              TermsOfUse = i.TermsOfUse
-                          });
-            return View(entity);
-        }
+        public IActionResult GetInformation() => View((from i in _securityInformationService.GetAll()
+                                                       select new SecurityInformationModel
+                                                       {
+                                                           Id = i.Id,
+                                                           AdversitingRule = i.AdversitingRule,
+                                                           FAQ = i.FAQ,
+                                                           PrivacyPolicy = i.PrivacyPolicy,
+                                                           TermsOfUse = i.TermsOfUse
+                                                       }));
 
         #endregion
 

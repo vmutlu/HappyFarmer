@@ -32,9 +32,7 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult Index()
         {
             if (HttpContext.Session.GetString("ActiveCustomerId") == null)
-            {
                 return RedirectToAction("UserLogin", "User");
-            }
 
             var cart = _cartService.GetCartByUserId(HttpContext.Session.GetString("ActiveCustomerId"));
 
@@ -59,9 +57,8 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult AddToCart(int productId, int quantity)
         {
             if (HttpContext.Session.GetString("ActiveCustomerId") == null)
-            {
                 return RedirectToAction("UserLogin", "User");
-            }
+
             _cartService.AddToCart(HttpContext.Session.GetString("ActiveCustomerId"), productId, quantity);
             return RedirectToAction("Index");
         }
@@ -70,9 +67,8 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult DeleteFromCart(int productId)
         {
             if (HttpContext.Session.GetString("ActiveCustomerId") == null)
-            {
                 return RedirectToAction("UserLogin", "User");
-            }
+
             _cartService.DeleteFromCart(HttpContext.Session.GetString("ActiveCustomerId"), productId);
             return RedirectToAction("Index");
         }
@@ -85,9 +81,7 @@ namespace HappyFarmer.UI.Controllers
         public IActionResult CheckOut()
         {
             if (HttpContext.Session.GetString("ActiveCustomerId") == null)
-            {
                 return RedirectToAction("UserLogin", "User");
-            }
 
             var cart = _cartService.GetCartByUserId(HttpContext.Session.GetString("ActiveCustomerId"));
             var orderModel = new OrderModel();

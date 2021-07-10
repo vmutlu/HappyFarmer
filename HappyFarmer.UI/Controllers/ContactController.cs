@@ -14,12 +14,7 @@ namespace HappyFarmer.UI.Controllers
             _adminMessageService = adminMessageService;
             _generalSettingService = generalSettingService;
         }
-        public IActionResult Index()
-        {
-            var generalSettings = _generalSettingService.GetAll();
-
-            return View(generalSettings);
-        }
+        public IActionResult Index()=> View(_generalSettingService.GetAll());
 
         [HttpPost]
         public IActionResult AdminMessageSend(AdminMessageModel adminMessageModel)

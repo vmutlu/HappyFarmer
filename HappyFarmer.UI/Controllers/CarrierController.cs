@@ -17,11 +17,8 @@ namespace HappyFarmer.UI.Controllers
             _userService = userService;
             _messageService = messageService;
         }
-        public IActionResult Index()
-        {
-            var response = _userService.GetAllCarrier();
-            return View(response);
-        }
+
+        public IActionResult Index() => View(_userService.GetAllCarrier());
 
         [HttpGet]
         public IActionResult GetCarierByDetails(int id)
@@ -72,9 +69,6 @@ namespace HappyFarmer.UI.Controllers
             return Redirect("/Carrier/GetCarierByDetails?id=" + carierId);
         }
 
-        public static string RemoveHtml(string text)
-        {
-            return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
-        }
+        public static string RemoveHtml(string text) => Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
     }
 }

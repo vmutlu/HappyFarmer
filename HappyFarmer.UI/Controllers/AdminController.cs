@@ -258,9 +258,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _bannerService.GetById(model.Id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.Active = model.Active;
             entity.QueueNumber = model.QueueNumber;
@@ -323,9 +321,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _bannerService.GetById(bannerId);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (entity.ImageURL != null)
             {
@@ -453,9 +449,7 @@ namespace HappyFarmer.UI.Controllers
             var entity = _generalSettingsService.GetById(id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             var model = new GeneralSettingsModel()
             {
@@ -491,9 +485,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _generalSettingsService.GetById(generalSettingsModel.Id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.Title = generalSettingsModel.Title;
             entity.Description = generalSettingsModel.Description;
@@ -528,9 +520,7 @@ namespace HappyFarmer.UI.Controllers
                     string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
                     string uret = "";
                     for (int i = 0; i < 6; i++)
-                    {
                         uret += harfler[rastgele.Next(harfler.Length)];
-                    }
 
                     entity.LogoUrl = uret + ".jpg";
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\GeneralSettings", uret + ".jpg");
@@ -564,9 +554,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _generalSettingsService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (entity.LogoUrl != null)
             {
@@ -617,9 +605,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _adminMessageService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             _adminMessageService.Delete(entity);
             return Redirect("/Admin/AdminMessages");
@@ -640,8 +626,7 @@ namespace HappyFarmer.UI.Controllers
                       message = TempData["Message"]
                   }));
 
-            var slider = _sliderService.GetAll(true);
-            return View(slider);
+            return View(_sliderService.GetAll(true));
         }
 
         [HttpGet]
@@ -727,9 +712,7 @@ namespace HappyFarmer.UI.Controllers
             var entity = _sliderService.GetById(id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             var model = new SliderModel()
             {
@@ -759,9 +742,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _sliderService.GetById(sliderModel.Id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.Name = sliderModel.Name;
             entity.SequenceNumber = sliderModel.SequenceNumber;
@@ -826,9 +807,7 @@ namespace HappyFarmer.UI.Controllers
 
             var entity = _sliderService.GetById(sliderId);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (entity.ImagePath != null)
             {
@@ -864,8 +843,7 @@ namespace HappyFarmer.UI.Controllers
                       message = TempData["Message"]
                   }));
 
-            var aboutUs = _aboutUsService.GetAll();
-            return View(aboutUs);
+            return View(_aboutUsService.GetAll());
         }
 
         [HttpGet]
@@ -1128,16 +1106,13 @@ namespace HappyFarmer.UI.Controllers
 
             ViewBag.Type = type;
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var entity = _productService.GetByIdWithCategories((int)id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
+
             ViewBag.ProductName = entity.Name;
             var model = new ProductModel()
             {
@@ -1253,11 +1228,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _productService.GetById(productId);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (entity.ImageUrl != null)
             {
@@ -1296,6 +1270,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             return View(new CategoryListModel()
             {
                 Categories = _categoryService.GetAll()
@@ -1313,6 +1288,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             if (id == null)
                 return NotFound();
 
@@ -1342,6 +1318,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var category = _categoryService.GetById(categoryModel.Id);
             if (category == null)
                 return NotFound();
@@ -1365,6 +1342,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var category = _categoryService.GetById(categoryId);
             if (category == null)
                 return NotFound();
@@ -1400,6 +1378,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var category = new FarmerCategory()
             {
                 Name = categoryModel.Name
@@ -1422,6 +1401,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             _categoryService.DeleteFromCategory(categoryId, productId);
             return Redirect("/admin/editcategory?id=" + categoryId);
         }
@@ -1440,6 +1420,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             List<int> type = new List<int>() { 10, 11, 12, 13, 14, 15 };
             return View(_productService.GetCustomerDeclares(type));
         }
@@ -1455,11 +1436,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _productService.GetById(Id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             List<ProductModel> customerEdit = new List<ProductModel>()
             {
@@ -1507,9 +1487,7 @@ namespace HappyFarmer.UI.Controllers
                   }));
             var entity = _productService.GetById(productModel.Id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.PermissionToSell = productModel.PermissionToSell;
 
@@ -1531,6 +1509,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var getCarierCustomer = _userService.GetAllCarrier();
             return View(getCarierCustomer);
         }
@@ -1546,6 +1525,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             return View();
         }
 
@@ -1618,11 +1598,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _userService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             var carierUpdate = new LoginModel()
             {
@@ -1655,12 +1634,11 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _userService.GetById(loginModel.Id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.UserState = loginModel.UserState; //sadece kullanıyı aktif pasif etme yetkisine sahip
 
@@ -1684,6 +1662,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var getAllOnlyCustomer = _userService.GetAllOnlyCustomer();
             return View(getAllOnlyCustomer);
         }
@@ -1699,6 +1678,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             return View();
         }
 
@@ -1748,6 +1728,7 @@ namespace HappyFarmer.UI.Controllers
                         await file.CopyToAsync(stream).ConfigureAwait(false);
                     }
                 }
+
                 else
                 {
                     ViewBag.IncerrectImageExtension = "Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...";
@@ -1770,11 +1751,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _userService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             var usersUpdate = new LoginModel()
             {
@@ -1807,12 +1787,11 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _userService.GetById(loginModel.Id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.UserState = loginModel.UserState; //sadece kullanıyı aktif pasif etme yetkisine sahip
 
@@ -1902,8 +1881,8 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
-            var ımages = _multipleProductImagesService.GetByIdMultiImages(id);
-            return View(ımages);
+
+            return View(_multipleProductImagesService.GetByIdMultiImages(id));
         }
 
         [HttpGet]
@@ -1917,11 +1896,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var images = _multipleProductImagesService.GetById(id);
             if (images == null)
-            {
                 return NotFound();
-            }
 
             var imagesURL = images.ImageURL;
 
@@ -1953,14 +1931,14 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _productService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (active == "yes")
                 entity.Situation = "EVET";
+
             else if (active == "no")
                 entity.Situation = "HAYIR";
 
@@ -1986,9 +1964,8 @@ namespace HappyFarmer.UI.Controllers
                       message = TempData["Message"]
                   }));
 
-            var result = await _globalMessageService.GetCarrierGlobalMessages(true).ConfigureAwait(false); //admin oldugu için tüm kayıtları getir
             ViewBag.Users = _userService.GetAll();
-            return View(result);
+            return View(await _globalMessageService.GetCarrierGlobalMessages(true).ConfigureAwait(false)); //admin oldugu için tüm kayıtları getir);
         }
 
         [HttpGet]
@@ -2005,13 +1982,10 @@ namespace HappyFarmer.UI.Controllers
                   }));
 
             if (type != null)
-            {
                 result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
-            }
+
             else
-            {
                 result = _globalMessageService.GetAll(true); //admin oldugu için tüm kayıtları getir
-            }
 
             ViewBag.Users = _userService.GetAll();
             return View(result);
@@ -2028,14 +2002,14 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _globalMessageService.GetById(id);
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (active == "yes")
                 entity.CheckStatus = true;
+
             else if (active == "no")
                 entity.CheckStatus = false;
 
@@ -2059,11 +2033,10 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var deleteGlobal = _globalMessageService.GetById(id);
             if (deleteGlobal == null)
-            {
                 return NotFound();
-            }
 
             _globalMessageService.Delete(deleteGlobal);
             return Redirect("/Admin/AdminGlobalMessagesPermission");
@@ -2084,9 +2057,8 @@ namespace HappyFarmer.UI.Controllers
                       message = TempData["Message"]
                   }));
 
-            var result = _blogService.GetAll();
             ViewBag.CreatedBlogUsers = _userService.GetAll();
-            return View(result);
+            return View(_blogService.GetAll());
         }
 
         [HttpGet]
@@ -2100,6 +2072,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var userId = HttpContext.Session.GetString("ActiveUserId");
             var Users = _userService.GetById(Convert.ToInt32(userId));
             ViewBag.UserDetails = Users.Name + " " + Users.Surname;
@@ -2188,16 +2161,12 @@ namespace HappyFarmer.UI.Controllers
             ViewBag.UserId = Users.Id;
 
             if (id == 0)
-            {
                 return NotFound();
-            }
 
             var entity = _blogService.GetById(id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             var model = new BlogModel()
             {
@@ -2223,13 +2192,12 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var cleatModelContent = RemoveHtml(model.Description);
             var entity = _blogService.GetById(model.Id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             entity.Title = model.Title;
             entity.Description = cleatModelContent;
@@ -2258,9 +2226,7 @@ namespace HappyFarmer.UI.Controllers
                     string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
                     string uret = "";
                     for (int i = 0; i < 6; i++)
-                    {
                         uret += harfler[rastgele.Next(harfler.Length)];
-                    }
 
                     entity.ImagePath = uret + ".jpg";
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\BlogImages", uret + ".jpg");
@@ -2292,12 +2258,11 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             var entity = _blogService.GetById(Id);
 
             if (entity == null)
-            {
                 return NotFound();
-            }
 
             if (entity.ImagePath != null)
             {
@@ -2331,8 +2296,8 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
-            var entity = _securityInformationService.GetAll();
-            return View(entity);
+
+            return View(_securityInformationService.GetAll());
         }
 
         [HttpGet]
@@ -2346,6 +2311,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             return View();
         }
 
@@ -2360,6 +2326,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             if (model != null)
             {
                 var clearSSS = RemoveHtml(model.FAQ);
@@ -2393,6 +2360,7 @@ namespace HappyFarmer.UI.Controllers
                       Action = "Index",
                       message = TempData["Message"]
                   }));
+
             if (id > 0)
             {
                 var entity = _securityInformationService.GetById(id);
@@ -2453,10 +2421,7 @@ namespace HappyFarmer.UI.Controllers
 
         #endregion
 
-        public static string RemoveHtml(string text)
-        {
-            return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
-        }
+        public static string RemoveHtml(string text) => Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
 
         public bool Verify()
         {

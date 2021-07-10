@@ -123,7 +123,7 @@ namespace HappyFarmer.API.Controllers
         public IActionResult GetByIdUser(int userId) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetByIdUser(userId)));
 
         [HttpPost("Product/CustomerDeclares")]
-        public IActionResult GetCustomerDeclares(List<int> type) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(type));
+        public IActionResult GetCustomerDeclares(List<int> type) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(type)));
 
         [HttpGet("Product/PopularProduct/{pageStandOut}/{pageSize}")]
         public IActionResult GetPopularProduct(int pageStandOut, int pageSize) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetPopularProduct(pageStandOut, pageSize)));
