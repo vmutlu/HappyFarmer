@@ -3,7 +3,6 @@ using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -29,11 +28,7 @@ namespace HappyFarmer.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var response = _userService.GetAll();
-            return Ok(response);
-        }
+        public IActionResult GetAll() => Ok(_userService.GetAll());
 
         /// <summary>
         /// User tablosundaki kullanıcıları Id 'lerine göre getirir.
@@ -41,11 +36,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var response = _userService.GetById(id);
-            return Ok(response);
-        }
+        public IActionResult GetById(int id) => Ok(_userService.GetById(id));
 
         /// <summary>
         /// Kullanıcı Ekleme endpointi. Eklenecek kullanıcı nesnesinin FarmerUserDTO alır ve FarmerUser nesnesine mapler.
@@ -53,7 +44,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="farmer"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(FarmerUser farmer)
+        public IActionResult Create(FarmerUser farmer)
         {
             _userService.Create(farmer);
             return Ok();
@@ -65,7 +56,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="farmer"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(FarmerUser farmer)
+        public IActionResult Update(FarmerUser farmer)
         {
             if (farmer.Id <= 0)
                 throw new Exception("Güncelleme işlemi yapabilmek için lütfen kullanıcı Id değerini gönderiniz");
@@ -80,7 +71,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="farmer"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(FarmerUser farmer)
+        public IActionResult Delete(FarmerUser farmer)
         {
             if (farmer.Id <= 0)
                 throw new Exception("Silme işlemi yapabilmek için lütfen kullanıcı Id değerini gönderiniz");
@@ -95,11 +86,10 @@ namespace HappyFarmer.API.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("Carrier")]
-        public async Task<IActionResult> FindByEmail(FarmerUser user)
+        public IActionResult FindByEmail(FarmerUser user)
         {
             string email = user.Email;
-            var response = _userService.FindByEmail(email);
-            return Ok(response);
+            return Ok(_userService.FindByEmail(email));
         }
 
         /// <summary>
@@ -107,32 +97,20 @@ namespace HappyFarmer.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllCustomer")]
-        public async Task<IActionResult> GetAllCustomer()
-        {
-            var response = _userService.GetAllCustomer();
-            return Ok(response);
-        }
+        public IActionResult GetAllCustomer() => Ok(_userService.GetAllCustomer());
 
         /// <summary>
         /// User tablosunda sadece nakliyecileri getirir. Normal kullanıcı ve adminleri ge
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllCarrier")]
-        public async Task<IActionResult> GetAllCarrier()
-        {
-            var response = _userService.GetAllCarrier();
-            return Ok(response);
-        }
+        public IActionResult GetAllCarrier() => Ok(_userService.GetAllCarrier());
 
         /// <summary>
         /// User tablosundan sadece admin olanları getirir.
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllOnlyCustomer")]
-        public async Task<IActionResult> GetAllOnlyCustomer()
-        {
-            var response = _userService.GetAllOnlyCustomer();
-            return Ok(response);
-        }
+        public IActionResult GetAllOnlyCustomer() => Ok(_userService.GetAllOnlyCustomer());
     }
 }
