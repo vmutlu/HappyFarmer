@@ -8,43 +8,28 @@ namespace HappyFarmer.Business.Concrate
     public class BannerService : IBannerService
     {
         private readonly IBannerRepository _bannerRepository;
-        public BannerService(IBannerRepository bannerRepository)
-        {
+        public BannerService(IBannerRepository bannerRepository) =>
             _bannerRepository = bannerRepository;
-        }
-        public void Create(FarmerBanner entity)
-        {
+
+        public void Create(FarmerBanner entity) =>
             _bannerRepository.Create(entity);
-        }
 
-        public void Delete(FarmerBanner entity)
-        {
+        public void Delete(FarmerBanner entity) =>
             _bannerRepository.Delete(entity);
-        }
 
-        public List<FarmerBanner> GetAdminBanner()
-        {
-            return _bannerRepository.GetAdminBanner();
-        }
+        public List<FarmerBanner> GetAdminBanner() =>
+             _bannerRepository.GetAdminBanner();
 
-        public List<FarmerBanner> GetAll()
-        {
-            return _bannerRepository.GetAll();
-        }
+        public List<FarmerBanner> GetAll() =>
+             _bannerRepository.GetAll();
 
-        public FarmerBanner GetById(int id)
-        {
-            return _bannerRepository.GetById(id);
-        }
+        public FarmerBanner GetById(int id) =>
+             _bannerRepository.GetById(id);
 
-        public List<FarmerBanner> GetLowerAll()
-        {
-            return _bannerRepository.GetLowerAll();
-        }
+        public List<FarmerBanner> GetLowerAll() =>
+             _bannerRepository.GetLowerAll();
 
-        public void Update(FarmerBanner entity)
-        {
+        public void Update(FarmerBanner entity) =>
             _bannerRepository.Update(entity);
-        }
     }
 }
