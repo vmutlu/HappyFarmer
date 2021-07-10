@@ -1,7 +1,6 @@
 ﻿using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -10,41 +9,31 @@ namespace HappyFarmer.API.Controllers
     public class MessagesController : ControllerBase
     {
         private readonly IMessageService _messageService;
-        public MessagesController(IMessageService messageService)
-        {
+        public MessagesController(IMessageService messageService) =>
             _messageService = messageService;
-        }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var response = _messageService.GetAll();
-            return Ok(response);
-        }
+        public IActionResult GetAll() => Ok(_messageService.GetAll());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var response = _messageService.GetById(id);
-            return Ok(response);
-        }
+        public IActionResult GetById(int id) => Ok(_messageService.GetById(id));
 
         [HttpPost]
-        public async Task<IActionResult> Add(FarmerMessage message)
+        public IActionResult Add(FarmerMessage message)
         {
             _messageService.Create(message);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(FarmerMessage message)
+        public IActionResult Update(FarmerMessage message)
         {
             _messageService.Update(message);
             return Ok();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(FarmerMessage message)
+        public IActionResult Delete(FarmerMessage message)
         {
             _messageService.Delete(message);
             return Ok();
