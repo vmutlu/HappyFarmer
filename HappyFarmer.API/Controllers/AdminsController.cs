@@ -45,18 +45,10 @@ namespace HappyFarmer.API.Controllers
         #region Products Methods
 
         [HttpGet("Product")]
-        public IActionResult GetAllProducts()
-        {
-            var products = _productService.GetAll();
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetAllProducts() => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetAll()));
 
         [HttpGet("Product/{id}")]
-        public IActionResult GetByIdProducts(int id)
-        {
-            var products = _productService.GetById(id);
-            return Ok(_mapper.Map<FarmerProductDTO>(products));
-        }
+        public IActionResult GetByIdProducts(int id) => Ok(_mapper.Map<FarmerProductDTO>(_productService.GetById(id)));
 
         [HttpPost("Product")]
         public IActionResult AddProducts(FarmerProductDTO farmerProductDTO)
@@ -122,54 +114,26 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet("Product/{type}/{userId}")]
-        public IActionResult GetProductByType(string type, int userId)
-        {
-            var products = _productService.GetProductByType(type, userId);
-
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetProductByType(string type, int userId) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetProductByType(type, userId)));
 
         [HttpGet("Product/FindProduct/{type}/{searchText}")]
-        public IActionResult FindForProductsByCategoryType(string type, string searchText)
-        {
-            var products = _productService.FindForProductsByCategoryType(type, searchText);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult FindForProductsByCategoryType(string type, string searchText) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.FindForProductsByCategoryType(type, searchText)));
 
         [HttpGet("Product/User/{userId}")]
-        public IActionResult GetByIdUser(int userId)
-        {
-            var products = _productService.GetByIdUser(userId);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetByIdUser(int userId) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetByIdUser(userId)));
 
         [HttpPost("Product/CustomerDeclares")]
-        public IActionResult GetCustomerDeclares(List<int> type)
-        {
-            var products = _productService.GetCustomerDeclares(type);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetCustomerDeclares(List<int> type) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(type));
 
         [HttpGet("Product/PopularProduct/{pageStandOut}/{pageSize}")]
-        public IActionResult GetPopularProduct(int pageStandOut, int pageSize)
-        {
-            var products = _productService.GetPopularProduct(pageStandOut, pageSize);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetPopularProduct(int pageStandOut, int pageSize) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetPopularProduct(pageStandOut, pageSize)));
 
         [HttpGet("Product/FilterByProduct/{lowPrice}/{topPrice}/{type}")]
-        public IActionResult FilterByPrice(int lowPrice, int topPrice, string type)
-        {
-            var products = _productService.FilterByPrice(lowPrice, topPrice, type);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult FilterByPrice(int lowPrice, int topPrice, string type) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.FilterByPrice(lowPrice, topPrice, type)));
 
         [HttpGet("Product/FilterByRegion/{type}/{city}/{country}/{neighboard}")]
-        public IActionResult FilterByRegion(string type, string city, string country, string neighboard)
-        {
-            var products = _productService.FilterByRegion(type, city, country, neighboard);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult FilterByRegion(string type, string city, string country, string neighboard) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.FilterByRegion(type, city, country, neighboard)));
+
 
         [HttpPost("Product/Comment")]
         public IActionResult AddCommentProducts(FarmerProductCommentDTO farmerProductCommentDTO)
@@ -185,34 +149,20 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet("Product/CategoryWithCount")]
-        public IActionResult GetCategoryWithCount()
-        {
-            var products = _productService.GetCategoryWithCount();
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetCategoryWithCount() => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCategoryWithCount()));
 
         [HttpGet("Product/GetCityProduct")]
-        public IActionResult GetCityProduct()
-        {
-            return Ok(_productService.GetCityProduct());
-        }
+        public IActionResult GetCityProduct() => Ok(_productService.GetCityProduct());
+
         #endregion
 
         #region Categories Methods
 
         [HttpGet("Category")]
-        public IActionResult GetAllCategories()
-        {
-            var products = _categoryService.GetAll();
-            return Ok(_mapper.Map<List<FarmerCategoryDTO>>(products));
-        }
+        public IActionResult GetAllCategories() => Ok(_mapper.Map<List<FarmerCategoryDTO>>(_categoryService.GetAll()));
 
         [HttpGet("Category/{id}")]
-        public IActionResult GetByIdCategories(int id)
-        {
-            var products = _categoryService.GetById(id);
-            return Ok(_mapper.Map<FarmerCategoryDTO>(products));
-        }
+        public IActionResult GetByIdCategories(int id) => Ok(_mapper.Map<FarmerCategoryDTO>(_categoryService.GetById(id)));
 
         [HttpPost("Category")]
         public IActionResult CreateCategories(FarmerCategoryDTO farmerCategoryDTO)
@@ -248,18 +198,10 @@ namespace HappyFarmer.API.Controllers
         #region Banners Methods
 
         [HttpGet("Banner")]
-        public IActionResult GetAllBanner()
-        {
-            var bannerService = _bannerService.GetAll();
-            return Ok(_mapper.Map<List<FarmerBannerDTO>>(bannerService));
-        }
+        public IActionResult GetAllBanner() => Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetAll()));
 
         [HttpGet("Banner/{id}")]
-        public IActionResult GetByIdBanner(int id)
-        {
-            var bannerService = _bannerService.GetById(id);
-            return Ok(_mapper.Map<FarmerBannerDTO>(bannerService));
-        }
+        public IActionResult GetByIdBanner(int id) => Ok(_mapper.Map<FarmerBannerDTO>(_bannerService.GetById(id)));
 
         [HttpPost("Banner")]
         public IActionResult CreateBanner(FarmerBannerDTO farmerBannerDTO)
@@ -292,34 +234,20 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet("Banner/Admin")]
-        public IActionResult GetAdminBanner()
-        {
-            return Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetAdminBanner()));
-        }
+        public IActionResult GetAdminBanner() => Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetAdminBanner()));
 
         [HttpGet("Banner/GetLower")]
-        public IActionResult GetLowerAll()
-        {
-            return Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetLowerAll()));
-        }
+        public IActionResult GetLowerAll() => Ok(_mapper.Map<List<FarmerBannerDTO>>(_bannerService.GetLowerAll()));
 
         #endregion
 
         #region AdminMessages Methods
 
         [HttpGet("AdminMessage")]
-        public IActionResult GetAllAdminMessages()
-        {
-            var bannerService = _adminMessageService.GetAll();
-            return Ok(_mapper.Map<List<FarmerAdminMessageDTO>>(bannerService));
-        }
+        public IActionResult GetAllAdminMessages() => Ok(_mapper.Map<List<FarmerAdminMessageDTO>>(_adminMessageService.GetAll()));
 
         [HttpGet("AdminMessage/{id}")]
-        public IActionResult GetByIdAdminMessages(int id)
-        {
-            var bannerService = _adminMessageService.GetById(id);
-            return Ok(_mapper.Map<FarmerAdminMessageDTO>(bannerService));
-        }
+        public IActionResult GetByIdAdminMessages(int id) => Ok(_mapper.Map<FarmerAdminMessageDTO>(_adminMessageService.GetById(id)));
 
         [HttpPost("AdminMessage")]
         public IActionResult CreateAdminMessages(FarmerAdminMessageDTO farmerAdminMessageDTO)
@@ -356,18 +284,10 @@ namespace HappyFarmer.API.Controllers
         #region Sliders Methods
 
         [HttpGet("Slider")]
-        public IActionResult GetAllSliders()
-        {
-            var sliderServices = _sliderService.GetAll();
-            return Ok(_mapper.Map<List<FarmerSliderDTO>>(sliderServices));
-        }
+        public IActionResult GetAllSliders() => Ok(_mapper.Map<List<FarmerSliderDTO>>(_sliderService.GetAll()));
 
         [HttpGet("Slider/{id}")]
-        public IActionResult GetByIdSliders(int id)
-        {
-            var sliderService = _bannerService.GetById(id);
-            return Ok(_mapper.Map<FarmerSliderDTO>(sliderService));
-        }
+        public IActionResult GetByIdSliders(int id) => Ok(_mapper.Map<FarmerSliderDTO>(_bannerService.GetById(id)));
 
         [HttpPost("Slider")]
         public IActionResult CreateSliders(FarmerSliderDTO farmerSliderDTO)
@@ -404,11 +324,7 @@ namespace HappyFarmer.API.Controllers
         #region AboutUs Methods
 
         [HttpGet("AboutUs")]
-        public IActionResult GetAllAboutUs()
-        {
-            var aboutUs = _aboutUsService.GetAll();
-            return Ok(_mapper.Map<List<FarmerAboutUsDTO>>(aboutUs));
-        }
+        public IActionResult GetAllAboutUs() => Ok(_mapper.Map<List<FarmerAboutUsDTO>>(_aboutUsService.GetAll()));
 
         [HttpGet("AboutUs/{id}")]
         public IActionResult GetByIdAboutUs(int id)
@@ -457,56 +373,13 @@ namespace HappyFarmer.API.Controllers
         #region Carriers Methods
 
         [HttpGet("Carrier")]
-        public IActionResult GetAllCarrier()
-        {
-            var carriers = _userService.GetAllCarrier();
-            return Ok(_mapper.Map<List<FarmerUserDTO>>(carriers));
-        }
+        public IActionResult GetAllCarrier() => Ok(_mapper.Map<List<FarmerUserDTO>>(_userService.GetAllCarrier()));
 
         [HttpPost("Carrier")]
-        public async Task<IActionResult> CreateCarrier(FarmerUserDTO farmerUserDTO,IFormFile file)
+        public async Task<IActionResult> CreateCarrier(FarmerUserDTO farmerUserDTO, IFormFile file)
         {
-            var userCarier = new FarmerUser()
-            {
-                Name = farmerUserDTO.Name,
-                Surname = farmerUserDTO.Surname,
-                Email = farmerUserDTO.Email,
-                PhoneNumber = farmerUserDTO.PhoneNumber,
-                Address = farmerUserDTO.Address,
-                Password = farmerUserDTO.Password,
-                UserType = farmerUserDTO.UserType,
-                City = farmerUserDTO.City,
-                RecordData = farmerUserDTO.RecordData
-            };
-
-            if (file != null)
-            {
-                var incerrectImage = Path.GetExtension(file.FileName);
-                if (incerrectImage == ".jpg" || incerrectImage == ".jpeg" || incerrectImage == ".png" || incerrectImage == ".bmp" || incerrectImage == ".gif" || incerrectImage == ".tiff")
-                {
-                    Random rastgele = new Random();
-                    string harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZabcçdefgğhıijklmnoöprsştuüvyz";
-                    string uret = "";
-                    for (int i = 0; i < 6; i++)
-                    {
-                        uret += harfler[rastgele.Next(harfler.Length)];
-                    }
-
-                    userCarier.ImageURL = uret + ".jpg";
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\CustomerImages", uret + ".jpg");
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream).ConfigureAwait(false);
-                    }
-                }
-
-                else
-                {
-                    throw new ArgumentNullException("Hata !!! Desteklenmeyen dosya uzantısı yüklemeye çalıştınız lütfen yükleyeceginiz dosyanın uzantısının \"jpg, png, jpeg, tiff, bmp\" oldugundan emin olunuz...");
-                }
-            }
-            _userService.Create(userCarier);
+            var farmerUser = _mapper.Map<FarmerUser>(farmerUserDTO);
+            _userService.Create(await _userService.CreateCarrier(farmerUser, file));
             return Ok();
         }
         #endregion
@@ -514,11 +387,7 @@ namespace HappyFarmer.API.Controllers
         #region Security Information Methods
 
         [HttpGet("SecurityInformation")]
-        public IActionResult GetAllSecurityInformation()
-        {
-            var security = _securityInformationService.GetAll();
-            return Ok(_mapper.Map<List<FarmerSecurityInformationDTO>>(security));
-        }
+        public IActionResult GetAllSecurityInformation() => Ok(_mapper.Map<List<FarmerSecurityInformationDTO>>(_securityInformationService.GetAll()));
 
         [HttpGet("SecurityInformation/{id}")]
         public IActionResult GetByIdSecurityInformation(int id)
@@ -533,7 +402,7 @@ namespace HappyFarmer.API.Controllers
         [HttpPost("SecurityInformation")]
         public IActionResult CreateSecurityInformation(FarmerSecurityInformationDTO farmerSecurityInformationDTO)
         {
-           _securityInformationService.Create(_mapper.Map<FarmerSecurityInformation>(farmerSecurityInformationDTO));
+            _securityInformationService.Create(_mapper.Map<FarmerSecurityInformation>(farmerSecurityInformationDTO));
             return Ok();
         }
 
@@ -564,7 +433,7 @@ namespace HappyFarmer.API.Controllers
         #region Popular Products Methods
 
         [HttpPut("EditPopularUrun")]
-        public IActionResult UpdateEditPopularUrun(int id,string active,string type)
+        public IActionResult UpdateEditPopularUrun(int id, string active, string type)
         {
             var product = _productService.GetById(id);
             if (product == null)
