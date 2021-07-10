@@ -11,40 +11,30 @@ namespace HappyFarmer.Business.Concrate
     public class GlobalMessageService : IGlobalMessageService
     {
         private readonly IGlobalMessageRepository _globalMessageRepository;
-        public GlobalMessageService(IGlobalMessageRepository globalMessageRepository)
-        {
+        public GlobalMessageService(IGlobalMessageRepository globalMessageRepository) =>
             _globalMessageRepository = globalMessageRepository;
-        }
-        public void Create(FarmerGlobalMessage entity)
-        {
+        public void Create(FarmerGlobalMessage entity) =>
             _globalMessageRepository.Create(entity);
-        }
 
-        public void Delete(FarmerGlobalMessage entity)
-        {
+        public void Delete(FarmerGlobalMessage entity) =>
             _globalMessageRepository.Delete(entity);
-        }
 
         public List<FarmerGlobalMessage> GetAll(bool? authority = false)
         {
             if (authority == true)
-            {
-                    return (from a in _globalMessageRepository.GetAll()
-                            where a.FarmerOrCarrier != false
-                            select new FarmerGlobalMessage
-                            {
-                                Id = a.Id,
-                                MessageContent = a.MessageContent,
-                                SenderId = a.SenderId,
-                                CheckStatus = a.CheckStatus,
-                                Subject = a.Subject,
-                                MessageDate = a.MessageDate,
-                                FarmerOrCarrier = a.FarmerOrCarrier
-                            }).ToList();
-            }
-
+                return (from a in _globalMessageRepository.GetAll()
+                        where a.FarmerOrCarrier != false
+                        select new FarmerGlobalMessage
+                        {
+                            Id = a.Id,
+                            MessageContent = a.MessageContent,
+                            SenderId = a.SenderId,
+                            CheckStatus = a.CheckStatus,
+                            Subject = a.Subject,
+                            MessageDate = a.MessageDate,
+                            FarmerOrCarrier = a.FarmerOrCarrier
+                        }).ToList();
             else
-            {
                 return (from i in _globalMessageRepository.GetAll()
                         where i.CheckStatus == true
                         where i.FarmerOrCarrier == true
@@ -57,23 +47,16 @@ namespace HappyFarmer.Business.Concrate
                             Subject = i.Subject,
                             MessageDate = i.MessageDate
                         }).ToList();
-            }
         }
 
-        public FarmerGlobalMessage GetById(int id)
-        {
-            return _globalMessageRepository.GetById(id);
-        }
+        public FarmerGlobalMessage GetById(int id) =>
+            _globalMessageRepository.GetById(id);
 
-        public async Task<List<FarmerGlobalMessage>> GetCarrierGlobalMessages(bool? authority = false)
-        {
-            return await _globalMessageRepository.GetCarrierGlobalMessages(authority);
-        }
+        public async Task<List<FarmerGlobalMessage>> GetCarrierGlobalMessages(bool? authority = false) =>
+             await _globalMessageRepository.GetCarrierGlobalMessages(authority);
 
-        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type)
-        {
-            return _globalMessageRepository.GetCityWithMessages(cityId, type);
-        }
+        public List<FarmerGlobalMessage> GetCityWithMessages(int cityId, string type) =>
+             _globalMessageRepository.GetCityWithMessages(cityId, type);
 
         public FarmerGlobalMessage GetNameById(int id)
         {
@@ -96,14 +79,10 @@ namespace HappyFarmer.Business.Concrate
             }
         }
 
-        public List<FarmerGlobalMessage> GetTypeGlobalMessages(string type)
-        {
-            return _globalMessageRepository.GetTypeGlobalMessages(type);
-        }
+        public List<FarmerGlobalMessage> GetTypeGlobalMessages(string type) =>
+             _globalMessageRepository.GetTypeGlobalMessages(type);
 
-        public void Update(FarmerGlobalMessage entity)
-        {
+        public void Update(FarmerGlobalMessage entity) =>
             _globalMessageRepository.Update(entity);
-        }
     }
 }
