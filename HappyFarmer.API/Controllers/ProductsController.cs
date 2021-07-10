@@ -4,7 +4,6 @@ using HappyFarmer.Business.Abstract;
 using HappyFarmer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace HappyFarmer.API.Controllers
 {
@@ -21,35 +20,23 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var products = _productService.GetAll();
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(products));
-        }
+        public IActionResult GetAll() => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetAll()));
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var product = _productService.GetById(id);
-            return Ok(_mapper.Map<FarmerProductDTO>(product));
-        }
+        public IActionResult GetById(int id) => Ok(_mapper.Map<FarmerProductDTO>(_productService.GetById(id)));
 
         [HttpGet("Category/{id}")]
-        public async Task<IActionResult> GetByIdWithCategories(int id)
-        {
-            var category = _productService.GetByIdWithCategories(id);
-            return Ok(category);
-        }
+        public IActionResult GetByIdWithCategories(int id) => Ok(_productService.GetByIdWithCategories(id));
 
         [HttpPost("Product")]
-        public async Task<IActionResult> AddProduct(FarmerProductDTO farmerProduct)
+        public IActionResult AddProduct(FarmerProductDTO farmerProduct)
         {
             _productService.Create(_mapper.Map<FarmerProduct>(farmerProduct));
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProduct(FarmerProduct farmerProduct)
+        public IActionResult UpdateProduct(FarmerProduct farmerProduct)
         {
             var id = new int[] { 1 };
             _productService.Update(farmerProduct, id);
@@ -57,7 +44,7 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteProduct(FarmerProductDTO farmerProduct)
+        public IActionResult DeleteProduct(FarmerProductDTO farmerProduct)
         {
             var products = _productService.GetById(farmerProduct.Id);
             _productService.Delete(_mapper.Map<FarmerProduct>(products));
@@ -65,35 +52,23 @@ namespace HappyFarmer.API.Controllers
         }
 
         [HttpPost("GetProductByCategory")]
-        public async Task<IActionResult> GetProductByCategory(string category, int page, int pageSize)
+        public IActionResult GetProductByCategory(string category, int page, int pageSize)
         {
-            if(page == 0)
+            if (page == 0)
                 page = 1;
 
             pageSize = 3;
-            var response = _productService.GetProductByCategory(category, page, pageSize);
-            return Ok(response);
+            return Ok(_productService.GetProductByCategory(category, page, pageSize));
         }
 
         [HttpGet("Products/{userId}")]
-        public async Task<IActionResult> GetByIdUser(int userId)
-        {
-            var response = _productService.GetByIdUser(userId);
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(response));
-        }
+        public IActionResult GetByIdUser(int userId) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetByIdUser(userId)));
 
         [HttpPost("GetCustomerDeclares")]
-        public async Task<IActionResult> GetCustomerDeclares(List<int> id)
-        {
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(id)));
-        }
+        public IActionResult GetCustomerDeclares(List<int> id) => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetCustomerDeclares(id)));
 
         [HttpGet("GetPopularProduct")]
-        public async Task<IActionResult> GetPopularProduct()
-        {
-            return Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetPopularProduct()));
-        }
-
+        public IActionResult GetPopularProduct() => Ok(_mapper.Map<List<FarmerProductDTO>>(_productService.GetPopularProduct()));
 
     }
 }
