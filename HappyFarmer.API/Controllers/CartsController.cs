@@ -35,12 +35,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="activeCustomerId"></param>
         /// <returns></returns>
         [HttpGet("ActiveUser")]
-        public IActionResult GetCartByUserId(string activeCustomerId)
-        {
-            var cart = _cartService.GetCartByUserId(activeCustomerId);
-
-            return Ok(_mapper.Map<FarmerCartDTO>(cart));
-        }
+        public IActionResult GetCartByUserId(string activeCustomerId) => Ok(_mapper.Map<FarmerCartDTO>(_cartService.GetCartByUserId(activeCustomerId)));
 
         /// <summary>
         /// id ' ye göre sipariş getirme endpoindi
@@ -48,12 +43,7 @@ namespace HappyFarmer.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetOrders/{userId}")]
-        public IActionResult GetOrders(string userId)
-        {
-            var user = _orderService.GetOrders(userId);
-
-            return Ok(_mapper.Map<List<FarmerOrderDTO>>(user));
-        }
+        public IActionResult GetOrders(string userId) => Ok(_mapper.Map<List<FarmerOrderDTO>>(_orderService.GetOrders(userId)));
 
         /// <summary>
         /// Sipariş ekleme endpointi
