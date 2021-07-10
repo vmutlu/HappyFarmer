@@ -9,33 +9,22 @@ namespace HappyFarmer.Business.Concrate
     {
         private readonly IAboutUsRepository _aboutUsRepository;
 
-        public AboutUsService(IAboutUsRepository aboutUsRepository)
-        {
+        public AboutUsService(IAboutUsRepository aboutUsRepository) =>
             _aboutUsRepository = aboutUsRepository;
-        }
-        public void Create(FarmerAboutUs entity)
-        {
+
+        public void Create(FarmerAboutUs entity) =>
             _aboutUsRepository.Create(entity);
-        }
 
-        public void Delete(FarmerAboutUs entity)
-        {
+        public void Delete(FarmerAboutUs entity) =>
             _aboutUsRepository.Delete(entity);
-        }
 
-        public List<FarmerAboutUs> GetAll()
-        {
-            return _aboutUsRepository.GetAll();
-        }
+        public List<FarmerAboutUs> GetAll() =>
+            _aboutUsRepository.GetAll();
 
-        public FarmerAboutUs GetById(int id)
-        {
-            return _aboutUsRepository.GetById(id);
-        }
+        public FarmerAboutUs GetById(int id) =>
+            _aboutUsRepository.GetById(id);
 
-        public void Update(FarmerAboutUs entity)
-        {
+        public void Update(FarmerAboutUs entity) =>
             _aboutUsRepository.Update(entity);
-        }
     }
 }
